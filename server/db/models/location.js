@@ -33,13 +33,13 @@ const Location = db.define('location', {
   },
   gallery: {
     type: Sequelize.ARRAY(Sequelize.STRING),
-    validate: {
+    /*validate: {
       isLteFive(value) {
         if (value.length > 5) {
           throw new Error('Gallery can only hold up to five images.')
         }
       }
-    }
+    }*/
   }
 })
 

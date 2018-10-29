@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Amenities = db.define('amenities', {
   incidents: {
-    type: Sequelize.INTEGER
+    type: Sequelize.INTEGER,
   },
   humanOccupants: {
     type: Sequelize.INTEGER
@@ -15,15 +15,17 @@ const Amenities = db.define('amenities', {
     type: Sequelize.STRING
   },
   nearestGraveyardDistance: {
-    type: Sequelize.NUMBER
+    type: Sequelize.FLOAT
   },
   nearestChurch: {
     type: Sequelize.STRING
   },
   nearestChurchDistance: {
-    type: Sequelize.NUMBER
+    type: Sequelize.FLOAT
   },
   skeletonsInCloset: {
-    type: Sequelize.NUMBER
+    type: Sequelize.INTEGER
   }
 })
+
+module.exports = Amenities
