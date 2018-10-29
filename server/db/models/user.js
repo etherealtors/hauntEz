@@ -35,10 +35,6 @@ const User = db.define('user', {
 		type: Sequelize.BOOLEAN,
 		defaultValue: false
 	},
-
-	address: {
-		type: Sequelize.STRING
-	},
 	role: {
 		type: Sequelize.STRING,
 		validate: {
