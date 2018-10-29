@@ -2,7 +2,11 @@ const crypto = require('crypto');
 const Sequelize = require('sequelize');
 const db = require('../db');
 
-const Ghost = db.define('ghost', {
+const User = db.define('user', {
+	name: {
+		type: Sequelize.STRING,
+		allowNull: false
+	},
 	email: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -26,38 +30,55 @@ const Ghost = db.define('ghost', {
 	},
 	googleId: {
 		type: Sequelize.STRING
+	},
+	isAdmin: {
+		type: Sequelize.BOOLEAN,
+		defaultValue: false
+	},
+
+	address: {
+		type: Sequelize.STRING
+	},
+	role: {
+		type: Sequelize.STRING,
+		validate: {
+			isIn: [ [ 'buyer', 'seller' ] ]
+		}
+	},
+	image: {
+		type: Sequelize.STRING
 	}
 });
 
-module.exports = Ghost;
+module.exports = User;
 
 /**
  * instanceMethods
  */
-Ghost.prototype.correctPassword = function(candidatePwd) {
-	return Ghost.encryptPassword(candidatePwd, this.salt()) === this.password();
+User.prototype.correctPassword = function(candidatePwd) {
+	return User.encryptPassword(candidatePwd, this.salt()) === this.password();
 };
 
 /**
  * classMethods
  */
-Ghost.generateSalt = function() {
+User.generateSalt = function() {
 	return crypto.randomBytes(16).toString('base64');
 };
 
-Ghost.encryptPassword = function(plainText, salt) {
+User.encryptPassword = function(plainText, salt) {
 	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
 };
 
 /**
  * hooks
  */
-const setSaltAndPassword = (ghost) => {
-	if (ghost.changed('password')) {
-		ghost.salt = Ghost.generateSalt();
-		ghost.password = Ghost.encryptPassword(ghost.password(), ghost.salt());
+const setSaltAndPassword = (user) => {
+	if (user.changed('password')) {
+		user.salt = User.generateSalt();
+		user.password = User.encryptPassword(user.password(), user.salt());
 	}
 };
 
-Ghost.beforeCreate(setSaltAndPassword);
-Ghost.beforeUpdate(setSaltAndPassword);
+User.beforeCreate(setSaltAndPassword);
+User.beforeUpdate(setSaltAndPassword);
