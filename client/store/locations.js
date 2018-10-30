@@ -4,7 +4,7 @@ import axios from 'axios'
 const GET_LOCATIONS = 'GET_LOCATIONS'
 
 // INITIAL STATE
-const defaultLocations = {}
+const defaultLocations = []
 
 // ACTION CREATORS
 const getLocations = locations => ({type: GET_LOCATIONS, locations})
