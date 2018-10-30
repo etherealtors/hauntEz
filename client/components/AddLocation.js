@@ -1,8 +1,9 @@
 import React, {Component} from 'react' 
 import {connect} from 'react-redux';  
 import {withRouter} from 'react-router-dom';
-import {addLocation} from '../store/location'; 
+import {addLocation} from '../store/locations'; 
 //user uploading this will need to be decided/built somewhere 
+//also does not have amenities 
 
 class AddLocation extends Component { 
     constructor(props) { 
