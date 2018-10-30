@@ -22,27 +22,39 @@ async function seed() {
 			role: 'seller',
 			image:
 				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3EO40pPzRET-MS570WOt-4i0K4AB2FgJh5eyH39sWa1huRgUjmw'
+		}),
+		User.create({
+			name: 'Earl Jackson',
+			email: 'Earl@jackson.com',
+			password: '456',
+			role: 'buyer',
+			image:
+				'https://static01.nyt.com/images/2017/01/11/blogs/11-lens-maurice-slide-XQMQ/11-lens-maurice-slide-XQMQ-superJumbo.jpg'
+		}),
+		User.create({
+			name: 'Carmelita Souls',
+			email: 'Carmel@apple.com',
+			password: '567',
+			role: 'seller',
+			image:
+				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5M2CFBdJ00cWFPZv4LawshY7l9ZGRsiMDMc5zhGeUC2iyt9uz4Q'
+		}),
+		User.create({
+			name: 'Amanda Cartwright',
+			email: 'amanda@busted.com',
+			password: '678',
+			role: 'buyer',
+			image:
+				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxEbOqBUmLbVohyEJgtbmAujAUGBO20cz7Ec5P0sSKdMtVfmxH'
+		}),
+		User.create({
+			name: 'Abagail Hauntson',
+			email: 'abagail@haunt.com',
+			password: '789',
+			role: 'buyer',
+			image:
+				'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTik9xOrLHcsoFbkRt_Cyy0HOsxBZKOoANm_hWGhWp9z15fxa9I6Q'
 		})
-		// User.create({
-		// 	name:,
-		// 	email:,
-		// 	password:
-		// 	role:,
-		// 	image:
-		// }),
-		// User.create({
-		// 	name:,
-		// 	email:,
-		// 	password:
-		// 	role:,
-		// 	image:
-		// }),	User.create({
-		// 	name:,
-		// 	email:,
-		// 	password:
-		// 	role:,
-		// 	image:
-		// })
 	]);
 
 	console.log(`seeded ${users.length} users`);
