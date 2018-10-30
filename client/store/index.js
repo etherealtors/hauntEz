@@ -6,6 +6,7 @@ import user from './user'
 import locations from './locations'
 
 const reducer = combineReducers({user, locations})
+
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 )

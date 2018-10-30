@@ -23,6 +23,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
           <Link to="/">Home</Link>
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
+          <Link to="/addLocation">AddLocation</Link>
         </div>
       )}
     </nav>
