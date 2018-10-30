@@ -21,3 +21,22 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.post('/', async (req, res, next) => { 
+  console.log('posting!'); 
+  try{ 
+    //change to make more secure after figuring out 
+    const newLocation = {category: req.body.category,
+      address: req.body.address, 
+      description: req.body.description, 
+      quantity: req.body.quantity,
+      price: req.body.price,
+      imageUrl: req.body.imageUrl }
+    console.log('newLocation', newLocation)
+    const addedLocation = await Location.create(newLocation); 
+    res.status(200).json(addedLocation)
+  }
+  catch(err){ 
+    next(err); 
+  }
+})
