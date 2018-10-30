@@ -40,6 +40,7 @@ router.post('/', async (req, res, next) => {
   console.log('posting!'); 
   try{ 
     //change to make more secure after figuring out 
+    //is this actually a more secure way to do this or should I really just do Location.create(req.body)?
     const newLocation = {category: req.body.category,
       address: req.body.address, 
       description: req.body.description, 
@@ -55,3 +56,12 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+router.put('/:locationId', async(req, res, next)=> { 
+  try{ 
+    const updated = await Location.update(req.body, 
+      {returning:true, where: { id: req.params.locationId}}); 
+    res.status(200).json(updated[1][0]); 
+  }catch(err){ 
+    next(err); 
+  }
+})

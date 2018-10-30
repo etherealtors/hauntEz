@@ -1,6 +1,7 @@
 import {connect} from 'react-redux'
 import React from 'react'
 import {getAllLocations} from '../store'
+import {Link} from 'react-router-dom'
 
 class AllLocations extends React.Component {
   componentDidMount() {
@@ -18,8 +19,10 @@ class AllLocations extends React.Component {
         <div>
           {this.props.locations.map(location => (
             <div key={location.id}>
+            <Link to={`/singleLocation/${location.id}`}>
               <img src={location.imageUrl} />
               {location.address} - ${location.price}
+            </Link>
             </div>
           ))}
         </div>
