@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 
+let categories = ['Manse', 'Boat', 'Shack', 'Apartment']
 /**
  * COMPONENT
  */
@@ -10,7 +11,7 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      
     </div>
   )
 }
