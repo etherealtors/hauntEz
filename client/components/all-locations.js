@@ -40,14 +40,17 @@ class AllLocations extends React.Component {
             ))}
           </select>
         </div>
-        <div>
-          {this.props.locations.map(location => (
-            <div key={location.id}>
-              <img src={location.imageUrl} />
-              {location.address} - ${location.price}
-            </div>
-          ))}
-        </div>
+      <div className="displayAll">
+					{this.props.locations.map((location) => (
+						<div key={location.id} className="toDisplay">
+							<img src={location.imageUrl} className="homepageImg" />
+							<div className="formatListing">
+								{' '}
+								{location.address} - ${location.price}
+							</div>
+						</div>
+					))}
+				</div>
       </div>
     )
   }
