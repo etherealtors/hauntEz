@@ -62,11 +62,18 @@ describe('User model', () => {
 	describe('instanceMethods', () => {
 		describe('correctPassword', () => {
 			let cody;
+			let rodney;
 
 			beforeEach(async () => {
 				cody = await User.create({
-					email: 'cody@puppybook.com',
+					name: 'babz',
+					email: 'cody@puppyboojkjgdkbkjbjbk.com',
 					password: 'bones'
+				});
+				rodney = await User.create({
+					name: 'cody',
+					email: 'cody@rodnhvjjey.com',
+					password: 'farrah'
 				});
 			});
 
@@ -75,7 +82,7 @@ describe('User model', () => {
 			});
 
 			it('returns false if the password is incorrect', () => {
-				expect(cody.correctPassword('bonez')).to.be.equal(false);
+				expect(rodney.correctPassword('boned')).to.be.equal(false);
 			});
 		}); // end describe('correctPassword')
 	}); // end describe('instanceMethods')

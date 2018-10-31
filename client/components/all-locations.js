@@ -51,15 +51,19 @@ class AllLocations extends React.Component {
       </div>
     )
   }
+
+
 }
 
-const mapStateToProps = state => ({
-  locations: state.locations
-})
+const mapStateToProps = (state) => ({
+	locations: state.locations
+});
+
 
 const mapDispatchToProps = dispatch => ({
   getAllLocations: () => dispatch(getAllLocations()),
   getFilteredLocations: category => dispatch(getFilteredLocations(category))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllLocations)
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllLocations);
