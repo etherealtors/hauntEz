@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { logout, search } from '../store';
+import store, { logout, search } from '../store';
 
 const Navbar = ({ handleClick, isLoggedIn, handleSubmit }) => (
 	<div>
@@ -19,7 +19,7 @@ const Navbar = ({ handleClick, isLoggedIn, handleSubmit }) => (
 				<form>
 					<input type="text" placeholder="Search.." />{' '}
 				</form>
-				<button type="submit" onSubmit={handleSubmit}>
+				<button type="submit" onSubmit={handleSubmit()}>
 					<img
 						src="https://image.freepik.com/free-icon/magnifying-glass_318-79044.jpg"
 						className="searchButton"
@@ -72,8 +72,8 @@ const mapDispatch = (dispatch) => {
 		handleClick() {
 			dispatch(logout());
 		},
-		handleSubmit() {
-			dispatch(search());
+		handleSubmit(input) {
+			dispatch(search(input));
 		}
 	};
 };

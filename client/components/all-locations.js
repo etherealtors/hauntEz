@@ -1,6 +1,9 @@
 import {connect} from 'react-redux'
 import React from 'react'
+
 import {getAllLocations, getFilteredLocations} from '../store'
+import {Link} from 'react-router-dom'
+
 
 class AllLocations extends React.Component {
   constructor() {
@@ -21,6 +24,7 @@ class AllLocations extends React.Component {
   }
 
   render() {
+    console.log('props', this.props)
     return (
       <div>
         <div className="dropdown">
@@ -42,12 +46,15 @@ class AllLocations extends React.Component {
         </div>
         <div className="displayAll">
           {this.props.locations.map(location => (
+
             <div key={location.id} className="toDisplay">
-              <img src={location.imageUrl} className="homepageImg" />
-              <div className="formatListing">
-                {' '}
-                {location.address} - ${location.price}
-              </div>
+              <Link to={{ pathname: `/singleLocation/${location.id}`, state: location}}>
+                <img src={location.imageUrl} className="homepageImg" />
+                <div className="formatListing">
+                  {' '}
+                  {location.address} - ${location.price}
+                </div>
+              </Link>
             </div>
           ))}
         </div>
@@ -57,7 +64,7 @@ class AllLocations extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  locations: state.locations
+  locations: state.locations.locations
 })
 
 const mapDispatchToProps = dispatch => ({
