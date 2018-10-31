@@ -29,7 +29,8 @@ class Routes extends Component {
         {/* route below needs to be added to an area that is only accessible as admin */}
         <Route path="/addLocation" component={AddLocation}/>
         <Route path="/updateLocation" component={UpdateLocation}/>
-        <Route path="/singleLocation/:locationId" component={SingleLocation}/>
+        <Route exact path="/singleLocation/:locationId" component={SingleLocation}/>
+        <Route exact path="/singleLocation/:locationId/update" component={UpdateLocation}/>
 
         {isLoggedIn && (
           <Switch>

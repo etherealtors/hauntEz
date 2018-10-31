@@ -1,31 +1,39 @@
 import React, {Component} from 'react' 
 import {connect} from 'react-redux';  
 import {withRouter} from 'react-router-dom';
-import {updateLocation} from '../store/locations'; 
+import {updateLocation, getOneLocation} from '../store/locations'; 
 //user uploading this will need to be decided/built somewhere 
 //also does not have amenities 
 
-class AddLocation extends Component { 
+class UpdateLocation extends Component { 
     constructor(props) { 
         super(props); 
         this.state = {
-            id: this.props.singleLocation.id, //security issue? 
-            address: this.props.singleLocation.address, 
-            imageUrl: this.props.singleLocation.imageUrl, 
-            quantity: this.props.singleLocation.quantity, 
-            description: this.props.singleLocation.description, 
-            price: this.props.singleLocation.price,
-            category: this.props.singleLocation.category
+            id: this.props.location.state.singleLocation.id, //security issue? 
+            address: this.props.location.state.singleLocation.address, 
+            imageUrl: this.props.location.state.singleLocation.imageUrl, 
+            quantity: this.props.location.state.singleLocation.quantity, 
+            description: this.props.location.state.singleLocation.description, 
+            price: this.props.location.state.singleLocation.price,
+            category: this.props.location.state.singleLocation.category
         }
         this.handleChange= this.handleChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this); 
     } 
 
-    componentDidMount(){ 
-        console.log("Inside UpdatLoc", this.props);
-        const locationId = Number(this.props.match.params.locationId); 
-        console.log('update locationID', locationId); 
-    }
+    // componentDidMount(){ 
+    //     let locationId = Number(this.props.match.params.locationId); 
+    //     this.props.getLocation(locationId); 
+    //     this.setState({ 
+    //         id: this.props.singleLocation.id, //security issue? 
+    //         address: this.props.singleLocation.address, 
+    //         imageUrl: this.props.singleLocation.imageUrl, 
+    //         quantity: this.props.singleLocation.quantity, 
+    //         description: this.props.singleLocation.description, 
+    //         price: this.props.singleLocation.price,
+    //         category: this.props.singleLocation.category
+    //     })
+    // }
 
     handleChange(event){ 
         this.setState({[event.target.name]: event.target.value})
@@ -35,19 +43,12 @@ class AddLocation extends Component {
         console.log('reached handlesubmit', this.props.addLocation)
         const updatedLocation = {...this.state}
         this.props.updateLocation(updatedLocation)
-        /*this.setState({
-            address: '', 
-            imageUrl: '', 
-            quantity: '', 
-            description: '', 
-            price: '',
-            category: '', 
-        })*/
     }
 
     render(){ 
-        console.log('addLocation')
-        console.log('state', this.state); 
+
+        
+        console.log('update Location props', this.props); 
         return(
             <div className ="update-location">
                 <h2>Update a Location</h2> 
@@ -67,7 +68,7 @@ class AddLocation extends Component {
                     </label>
                     <label> 
                         Description: 
-                        <input type="text" name="descriptionInput" value={this.state.descriptionInput} onChange={this.handleChange}/>
+                        <input type="text" name="descriptionInput" value={this.state.description} onChange={this.handleChange}/>
                     </label>
                     <label> 
                         Number of Available Haunts: 
@@ -93,8 +94,15 @@ const mapDispatchToProps = (dispatch) => {
     console.log('reached map dispatch to props')
     return (
     { 
-        updateLocation: (updatedLoc) => dispatch(updateLocation(updatedLoc))
+        updateLocation: (updatedLoc) => dispatch(updateLocation(updatedLoc)), 
+        getLocation: (id) => dispatch(getOneLocation(id))
     }
 )}
 
-export default withRouter(connect(null, mapDispatchToProps)(AddLocation))
+// const mapStateToProps = (state) => (
+//     { 
+//         singleLocation: state.locations.selectedLocation
+//     }
+// )
+
+export default withRouter(connect(null, mapDispatchToProps)(UpdateLocation))
