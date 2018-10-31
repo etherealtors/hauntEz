@@ -1,21 +1,71 @@
 body {
-  font-family: sans-serif;
+	font-family: spirax, sans-serif;
+	background-image: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/ggZAv9L/dark-and-stormy-night-animation_4jjt88ivg__F0000.png');
+	color: white;
+	font-size: 22px;
 }
 
 a {
-  text-decoration: none;
+	text-decoration: none;
 }
 
 label {
-  display: block;
+	display: block;
 }
 
 nav a {
-  display: inline-block;
-  margin: 1em;
+	display: inline-block;
+	margin: 1em;
 }
 
 form div {
-  margin: 1em;
-  display: inline-block;
+	margin: 1em;
+	display: inline-block;
+}
+
+#logo {
+	display: flex;
+	justify-content: space-between;
+}
+
+.homepageImg {
+	width: 250px;
+	height: 250px;
+	padding: 1px;
+	border: 5px solid goldenrod;
+}
+
+.creepyFont {
+	font-family: unifrakturcook, blackletter;
+	font-size: 55px;
+	color: white;
+}
+
+#centered {
+	display: flex;
+	justify-content: center;
+}
+
+/* .homeDisplay {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	flex-wrap: wrap;
+} */
+
+.formatListing {
+	display: grid;
+	align-items: end;
+	grid-template-columns: 100px 100px 100px;
+	grid-template-rows: 120px 120px 120px;
+}
+.links {
+	color: white;
+}
+.toDisplay {
+	display: inline-grid;
+	grid-template-columns: 100px 100px 100px;
+	grid-template-rows: 120px 120px 120px;
+	grid-auto-flow: column;
+	align-content: center;
 }
