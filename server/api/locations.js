@@ -36,32 +36,30 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => { 
-  console.log('posting!'); 
-  try{ 
-    //change to make more secure after figuring out 
-    //is this actually a more secure way to do this or should I really just do Location.create(req.body)?
-    const newLocation = {category: req.body.category,
-      address: req.body.address, 
-      description: req.body.description, 
+router.post('/', async (req, res, next) => {
+  console.log('posting!')
+  try {
+    //change to make more secure after figuring out
+    const newLocation = {
+      category: req.body.category,
+      address: req.body.address,
+      description: req.body.description,
       quantity: req.body.quantity,
       price: req.body.price,
-      imageUrl: req.body.imageUrl }
+      imageUrl: req.body.imageUrl
+    }
     console.log('newLocation', newLocation)
-    const addedLocation = await Location.create(newLocation); 
+    const addedLocation = await Location.create(newLocation)
     res.status(200).json(addedLocation)
-  }
-  catch(err){ 
-    next(err); 
+  } catch (err) {
+    next(err)
   }
 })
 
 router.put('/:locationId', async(req, res, next)=> { 
   try{ 
-    console.log("updated location within api", req.body)
     const updated = await Location.update(req.body, 
       {returning:true, where: { id: req.params.locationId}}); 
-    console.log("returned updated loc within api", updated[1][0]);
     res.status(200).json(updated[1][0]); 
   }catch(err){ 
     next(err); 
