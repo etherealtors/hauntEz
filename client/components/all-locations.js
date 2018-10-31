@@ -24,6 +24,7 @@ class AllLocations extends React.Component {
   }
 
   render() {
+    console.log('props', this.props)
     return (
       <div>
         <div className="dropdown">
@@ -63,7 +64,7 @@ class AllLocations extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  locations: state.locations
+  locations: state.locations.locations
 })
 
 const mapDispatchToProps = dispatch => ({
