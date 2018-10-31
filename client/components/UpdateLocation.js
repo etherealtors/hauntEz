@@ -8,19 +8,21 @@ import {updateLocation} from '../store/locations';
 class AddLocation extends Component { 
     constructor(props) { 
         super(props); 
-        this.state = { 
-            addressInput: '', 
-            imageInput: '', 
-            quantityInput: '', 
-            descriptionInput: '', 
-            priceInput:'',
-            category: ''
+        this.state = {
+            id: this.props.singleLocation.id, //security issue? 
+            address: this.props.singleLocation.address, 
+            imageUrl: this.props.singleLocation.imageUrl, 
+            quantity: this.props.singleLocation.quantity, 
+            description: this.props.singleLocation.description, 
+            price: this.props.singleLocation.price,
+            category: this.props.singleLocation.category
         }
         this.handleChange= this.handleChange.bind(this); 
         this.handleSubmit = this.handleSubmit.bind(this); 
     } 
 
     componentDidMount(){ 
+        console.log("Inside UpdatLoc", this.props);
         const locationId = Number(this.props.match.params.locationId); 
         console.log('update locationID', locationId); 
     }
@@ -32,15 +34,15 @@ class AddLocation extends Component {
         event.preventDefault(); 
         console.log('reached handlesubmit', this.props.addLocation)
         const updatedLocation = {...this.state}
-        this.props.updateLocation(updatedLocation, locationId)
-        this.setState({
-            addressInput: '', 
-            imageInput: '', 
-            quantityInput: '', 
-            descriptionInput: '', 
-            priceInput: '',
+        this.props.updateLocation(updatedLocation)
+        /*this.setState({
+            address: '', 
+            imageUrl: '', 
+            quantity: '', 
+            description: '', 
+            price: '',
             category: '', 
-        })
+        })*/
     }
 
     render(){ 
@@ -61,7 +63,7 @@ class AddLocation extends Component {
                     </label>
                     <label> 
                         Address: 
-                        <input type="text" name="addressInput" value={this.state.addressInput} onChange={this.handleChange}/>
+                        <input type="text" name="address" value={this.state.address} onChange={this.handleChange}/>
                     </label>
                     <label> 
                         Description: 
@@ -69,15 +71,15 @@ class AddLocation extends Component {
                     </label>
                     <label> 
                         Number of Available Haunts: 
-                        <input type="number" name="quantityInput" value={this.state.quantityInput} onChange={this.handleChange}/>
+                        <input type="number" name="quantity" value={this.state.quantity} onChange={this.handleChange}/>
                     </label>
-                    <label> 
+    description             <label> 
                         Price per Haunt: 
-                        <input type="number" name="priceInput" value={this.state.priceInput} onChange={this.handleChange}/>
+                        <input type="number" name="price" value={this.state.price} onChange={this.handleChange}/>
                     </label>
                     <label>
                         Image URL: 
-                        <input type="text" name="imageInput" value={this.state.imageInput} onChange={this.handleChange}/> 
+                        <input type="text" name="imageUrl" value={this.state.imageUrl} onChange={this.handleChange}/> 
                     </label>
                     <button type="button" onClick={this.handleSubmit}>Submit</button>
                 </form>
@@ -91,7 +93,7 @@ const mapDispatchToProps = (dispatch) => {
     console.log('reached map dispatch to props')
     return (
     { 
-        updateLocation: (updatedLoc, locationId) => dispatch(updateLocation(updatedLoc, locationId))
+        updateLocation: (updatedLoc) => dispatch(updateLocation(updatedLoc))
     }
 )}
 

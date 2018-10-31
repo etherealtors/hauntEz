@@ -19,7 +19,7 @@ class AllLocations extends React.Component {
         <div>
           {this.props.locations.map(location => (
             <div key={location.id}>
-            <Link to={`/singleLocation/${location.id}`}>
+            <Link to={{ pathname: `/singleLocation/${location.id}`, state: location}}>
               <img src={location.imageUrl} />
               {location.address} - ${location.price}
             </Link>

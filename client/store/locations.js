@@ -56,9 +56,10 @@ export const addLocation = (address, imageUrl, quantity, description, category, 
     }
 }
 
-export const updateLocation = ({updatedLocation}, locationId) => async (dispatch) => { 
+export const updateLocation = (updatedLocation) => async (dispatch) => { 
     try{ 
-        const data = await axios.put(`/api/locations/${locationId}`, updatedLocation); 
+        console.log("updatedLocation within thunk", updatedLocation);
+        const data = await axios.put(`/api/locations/${updatedLocation.id}`, updatedLocation); 
         console.log('updated data', data); 
         dispatch(updateExistingLocation(data));
     }catch(err){ 
@@ -74,7 +75,11 @@ export default function(state = defaultLocations, action){
         case GET_LOCATIONS:
             return action.locations
         case UPDATE_LOCATION: 
-            return action.locations
+            let locations = [...state]
+            let locationToUpdateIdx = locations.findIndex(location => location.id === action.location.id)
+            let updatedLocation = {...locations[locationToUpdateIdx], ...action.location}
+            locations[locationToUpdateIdx] = updatedLocation
+            return locations
         default: 
             return state
     }

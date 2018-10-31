@@ -58,8 +58,10 @@ router.post('/', async (req, res, next) => {
 
 router.put('/:locationId', async(req, res, next)=> { 
   try{ 
+    console.log("updated location within api", req.body)
     const updated = await Location.update(req.body, 
       {returning:true, where: { id: req.params.locationId}}); 
+    console.log("returned updated loc within api", updated[1][0]);
     res.status(200).json(updated[1][0]); 
   }catch(err){ 
     next(err); 

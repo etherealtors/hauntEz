@@ -4,45 +4,22 @@ import {withRouter} from 'react-router-dom';
 import {getOneLocation} from '../store'; 
 import UpdateLocation from './UpdateLocation';
 
-class SingleLocation extends Component{ 
-    constructor(props){ 
-        super(props); 
-        this.state={
-            locationId: ''
-            // currentLocation : {}
-        }
-    }
+export default class SingleLocation extends Component{ 
 
-    componentDidMount(){ 
-        const locationId = Number(this.props.match.params.locationId); 
-        this.setState({locationId})
-        this.props.getOneLocation(locationId); 
-    }
+    render() { 
+        let singleLocation = this.props.location.state;
 
-    render(){ 
-        //console.log(this.props); 
-        console.log(this.props.locations)
         return(
-           <div>
-            <h2>{this.state.locationId}</h2>
-            {/* {}fill in with other info! */}
-            <UpdateLocation />
+            <div>
+                <img src={singleLocation.imageUrl} />
+                <h2>{singleLocation.address}</h2>
+                <h2>{singleLocation.description}</h2>
+                <h3>Number of haunts available: {singleLocation.quantity}</h3>
+                <h3>Price: ${singleLocation.price}</h3>
+                <h3>Category: {singleLocation.category}</h3>
+                
+                <UpdateLocation singleLocation={singleLocation}/>
             </div>
         )
     }
 }
-
-const mapStateToProps = state => (
-    { 
-      locations: state.locations  
-    }
-)
-
-
-const mapDispatchToProps = dispatch => (
-    {
-        getOneLocation: (id) => dispatch(getOneLocation(id))
-    }
-)
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleLocation))
