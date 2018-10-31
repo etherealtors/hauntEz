@@ -24,7 +24,7 @@ class AllLocations extends React.Component {
     return (
       <div>
         <div className="dropdown">
-          <select>
+          <select onChange={this.changeFilter}>
             {[
               'All',
               'Shack',
@@ -34,39 +34,35 @@ class AllLocations extends React.Component {
               'Castle',
               'Boat'
             ].map(type => (
-              <option key={type} value={type} onClick={this.changeFilter}>
+              <option key={type} value={type}>
                 {type}
               </option>
             ))}
           </select>
         </div>
-      <div className="displayAll">
-					{this.props.locations.map((location) => (
-						<div key={location.id} className="toDisplay">
-							<img src={location.imageUrl} className="homepageImg" />
-							<div className="formatListing">
-								{' '}
-								{location.address} - ${location.price}
-							</div>
-						</div>
-					))}
-				</div>
+        <div className="displayAll">
+          {this.props.locations.map(location => (
+            <div key={location.id} className="toDisplay">
+              <img src={location.imageUrl} className="homepageImg" />
+              <div className="formatListing">
+                {' '}
+                {location.address} - ${location.price}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
-
-
 }
 
-const mapStateToProps = (state) => ({
-	locations: state.locations
-});
-
+const mapStateToProps = state => ({
+  locations: state.locations
+})
 
 const mapDispatchToProps = dispatch => ({
   getAllLocations: () => dispatch(getAllLocations()),
   getFilteredLocations: category => dispatch(getFilteredLocations(category))
 })
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(AllLocations);
+export default connect(mapStateToProps, mapDispatchToProps)(AllLocations)
