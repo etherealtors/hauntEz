@@ -55,3 +55,13 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.put('/:locationId', async(req, res, next)=> { 
+  try{ 
+    const updated = await Location.update(req.body, 
+      {returning:true, where: { id: req.params.locationId}}); 
+    res.status(200).json(updated[1][0]); 
+  }catch(err){ 
+    next(err); 
+  }
+})

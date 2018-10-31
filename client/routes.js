@@ -5,6 +5,9 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AddLocation from './components/AddLocation'
 import {me} from './store'
+import UpdateLocation from './components/UpdateLocation';
+import SingleLocation from './components/SingleLocation';
+
 
 /**
  * COMPONENT
@@ -25,6 +28,8 @@ class Routes extends Component {
 
         {/* route below needs to be added to an area that is only accessible as admin */}
         <Route path="/addLocation" component={AddLocation}/>
+        <Route path="/updateLocation" component={UpdateLocation}/>
+        <Route path="/singleLocation/:locationId" component={SingleLocation}/>
 
         {isLoggedIn && (
           <Switch>
