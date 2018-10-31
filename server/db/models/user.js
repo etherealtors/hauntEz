@@ -66,6 +66,16 @@ User.encryptPassword = function(plainText, salt) {
 	return crypto.createHash('RSA-SHA256').update(plainText).update(salt).digest('hex');
 };
 
+User.findBySearch = (input) => {
+	return User.findAll({
+		where: {
+			[Sequelize.Op.or]: [
+				{ name: { [Sequelize.Op.iLike]: `%${input}%` } },
+				{ role: { [Sequelize.Op.iLike]: `%${input}%` } }
+			]
+		}
+	});
+};
 /**
  * hooks
  */

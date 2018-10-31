@@ -1,5 +1,5 @@
 const User = require('./user');
-const Location = require('./location');
+const { Location } = require('./location');
 const Amenities = require('./amenities');
 
 /**
