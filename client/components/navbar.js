@@ -14,6 +14,16 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 				{'     '}
 				<img src="http://rs353.pbsrc.com/albums/r376/swfan67/1967/ghost.gif~c200" />
 			</span>
+			<div>
+				{' '}
+				<input type="text" placeholder="Search.." />{' '}
+				<button type="submit">
+					<img
+						src="https://image.freepik.com/free-icon/magnifying-glass_318-79044.jpg"
+						className="searchButton"
+					/>
+				</button>
+			</div>
 			{isLoggedIn ? (
 				<div>
 					{/* The navbar will show these links after you log in */}

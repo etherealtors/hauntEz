@@ -46,12 +46,9 @@ form div {
 	justify-content: center;
 }
 
-/* .homeDisplay {
-	display: flex;
-	flex-direction: row;
-	align-items: baseline;
-	flex-wrap: wrap;
-} */
+.searchButton {
+	width: 12px;
+}
 
 .formatListing {
 	display: grid;
