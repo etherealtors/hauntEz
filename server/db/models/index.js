@@ -1,6 +1,7 @@
-const User = require('./user');
-const Location = require('./location');
-const Amenities = require('./amenities');
+const User = require('./user')
+const Location = require('./location')
+const Amenities = require('./amenities')
+const Orders = require('./orders')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -16,14 +17,21 @@ const Amenities = require('./amenities');
  * instead of: const User = require('../db/models/user')
  */
 
-Location.belongsTo(Amenities);
-Amenities.hasOne(Location);
-Location.belongsTo(User);
-User.hasMany(Location);
-Location.belongsToMany(User, { through: 'Favs' });
+Location.belongsTo(Amenities)
+Amenities.hasOne(Location)
+Location.belongsTo(User)
+User.hasMany(Location)
+
+Orders.belongsTo(User)
+User.hasMany(Orders)
+Location.belongsToMany(Orders)
+Orders.hasMany(Location)
+Location.belongsTo(User, {through: Orders})
+
+// Location.belongsToMany(User, {through: 'Favs'})
 
 module.exports = {
-	User,
-	Location,
-	Amenities
-};
+  User,
+  Location,
+  Amenities
+}
