@@ -4,7 +4,8 @@ const db = require('../db')
 const Orders = db.define('orders', {
   itemId: {
     type: Sequelize.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   orderId: {
     type: Sequelize.INTEGER,
@@ -37,9 +38,9 @@ Orders.addItem = async function(newOrder) {
   }
 }
 
-Orders.removeItem = async function(id) {
+Orders.removeItem = async function(itemId) {
   try {
-    const removed = await Orders.destroy({where: {id}})
+    const removed = await Orders.destroy({where: {itemId}})
     return removed
   } catch (error) {
     console.error(error)
@@ -87,7 +88,7 @@ Orders.prototype.updateStatus = async function(newStatus) {
 }
 
 // Hooks
-Orders.beforeCreate(async order => {
+Orders.beforeValidate(async order => {
   try {
     const cart = await Orders.getCart()
     if (cart.length) {
