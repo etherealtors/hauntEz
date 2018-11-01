@@ -92,7 +92,7 @@ Orders.beforeCreate(async order => {
     const cart = await Orders.getCart()
     if (cart.length) {
       // if the user has an existing order in their cart, add the item to that order
-      order.orderId = cart[1].orderId
+      order.orderId = cart[0].orderId
     } else {
       // if the user does not have an existing order create a new order number.
       const orderNumber = ((await Orders.max('orderId')) || 0) + 1 // to deal with the first order
