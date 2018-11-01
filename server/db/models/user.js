@@ -10,6 +10,7 @@ const User = db.define('user', {
 	email: {
 		type: Sequelize.STRING,
 		unique: true,
+		isEmail: true,
 		allowNull: false
 	},
 	password: {
@@ -42,7 +43,9 @@ const User = db.define('user', {
 		}
 	},
 	image: {
-		type: Sequelize.STRING
+		type: Sequelize.STRING,
+		defaultValue:
+			'https://cdn.vox-cdn.com/thumbor/gm4o5aqfVGJ11jM6JRugpXfOFgE=/0x0:3733x2100/1200x800/filters:focal(1042x347:1638x943)/cdn.vox-cdn.com/uploads/chorus_image/image/56282285/1508_promo_stills_12001692731.0.jpg'
 	}
 });
 
