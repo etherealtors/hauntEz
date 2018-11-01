@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import store, { logout, search } from '../store';
+import store, { logout } from '../store';
+import SearchBar from './SearchBar';
 
-const Navbar = ({ handleClick, isLoggedIn, handleSubmit }) => (
+const Navbar = ({ handleClick, isLoggedIn }) => (
 	<div>
 		<nav>
 			<span id="logo">
@@ -14,18 +15,7 @@ const Navbar = ({ handleClick, isLoggedIn, handleSubmit }) => (
 				{'     '}
 				<img src="http://rs353.pbsrc.com/albums/r376/swfan67/1967/ghost.gif~c200" />
 			</span>
-			<div>
-				{' '}
-				<form>
-					<input type="text" placeholder="Search.." />{' '}
-				</form>
-				<button type="submit" onSubmit={handleSubmit()}>
-					<img
-						src="https://image.freepik.com/free-icon/magnifying-glass_318-79044.jpg"
-						className="searchButton"
-					/>
-				</button>
-			</div>
+			<SearchBar />
 			{isLoggedIn ? (
 				<div>
 					{/* The navbar will show these links after you log in */}
@@ -71,9 +61,6 @@ const mapDispatch = (dispatch) => {
 	return {
 		handleClick() {
 			dispatch(logout());
-		},
-		handleSubmit(input) {
-			dispatch(search(input));
 		}
 	};
 };

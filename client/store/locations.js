@@ -11,10 +11,6 @@ const SEARCH = 'SEARCH';
 //INITIAL STATE
 const defaultLocations = [];
 
-// //ACTION CREATORS
-// const getLocations = (locations) => ({ type: GET_LOCATIONS, locations });
-// const addNewLocation = (location) => ({ type: ADD_NEW_LOCATION, location });
-const searchDB = (input) => ({ type: SEARCH, input });
 //INITIAL STATE
 const initialState = {
 	locations: [],
@@ -28,13 +24,6 @@ const addNewLocation = (location) => ({ type: ADD_NEW_LOCATION, location });
 const updateExistingLocation = (location) => ({ type: UPDATE_LOCATION, location });
 
 //THUNK CREATORS
-export const search = (thing) => {
-	return async (dispatch) => {
-		const res = await axios.get(`api/search/${thing}`);
-		console.log('found it', res.data);
-		dispatch(searchDB(res.data));
-	};
-};
 export const getAllLocations = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/locations');
@@ -60,6 +49,15 @@ export const getFilteredLocations = (category) => async (dispatch) => {
 		dispatch(getLocations(res.data || initialState.locations));
 	} catch (error) {
 		console.error(error);
+	}
+};
+export const getSearchResults = (question) => async (dispatch) => {
+	try {
+		const res = await axios.get(`api/search/${question}`);
+		console.log('dis!', res.data);
+		dispatch(getLocations(res.data[0]));
+	} catch (err) {
+		console.error(err);
 	}
 };
 
@@ -107,8 +105,6 @@ export default function(state = initialState, action) {
 			let updatedLocation = { ...locations[locationToUpdateIdx], ...action.location };
 			locations[locationToUpdateIdx] = updatedLocation;
 			return { ...state, locations };
-		case SEARCH:
-			return { ...state, location: action.input };
 		default:
 			return state;
 	}
