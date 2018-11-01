@@ -66,3 +66,18 @@ form div {
 	grid-auto-flow: column;
 	align-content: center;
 }
+.singleViewImage {
+	align-items: end;
+	width: 400px;
+	height: 250px;
+	padding: 1px;
+	grid-column: 2 / 3;
+}
+
+#singleLocation {
+	display: grid;
+}
+
+.red {
+	color: red;
+}
