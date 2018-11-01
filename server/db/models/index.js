@@ -34,5 +34,6 @@ Location.belongsToMany(User, {
 module.exports = {
   User,
   Location,
-  Amenities
+  Amenities,
+  Orders
 }
