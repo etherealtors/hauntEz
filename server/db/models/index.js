@@ -22,11 +22,12 @@ Amenities.hasOne(Location)
 Location.belongsTo(User)
 User.hasMany(Location)
 
-Orders.belongsTo(User)
-User.hasMany(Orders)
-Location.belongsToMany(Orders)
-Orders.hasMany(Location)
-Location.belongsTo(User, {through: Orders})
+User.belongsToMany(Location, {
+  through: Orders
+})
+Location.belongsToMany(User, {
+  through: Orders
+})
 
 // Location.belongsToMany(User, {through: 'Favs'})
 
