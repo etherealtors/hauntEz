@@ -59,17 +59,18 @@ describe('Orders', function() {
 
         beforeEach(() => { 
             return Bluebird.all([ 
-                Orders.create({status: 'Completed', quantity: 1000, price: 47}), 
-                Orders.create({status: 'Processing', quantity: 17, price: 3000}), 
+                Orders.create({status: 'Completed', quantity: 1000, price: 48}), 
+                Orders.create({status: 'Processing', quantity: 17, price: 3001}), 
             ])
         }); 
 
         describe('updatePrice', function () { 
             it ('updates the price of an item', async function (){ 
                 const order = await Orders.findById(2)
-                expect(order.price).to.equal(3000); 
+                expect(order.price).to.equal(3001); 
                 expect(order.status).to.equal('Processing'); 
                 expect(order.quantity).to.equal(17); 
+                expect(order.itemId).to.equal(2); 
                 
                 return order.updatePrice(83)
                     .then(updatedOrder => { 
@@ -82,9 +83,9 @@ describe('Orders', function() {
         })
 
         describe('updateQuantity', function() { 
-            it('git updates the quantity of the item', async function (){ 
+            it('updates the quantity of the item', async function (){ 
                 const order = await Orders.findById(1)
-                expect(order.price).to.equal(47); 
+                expect(order.price).to.equal(48); 
                 expect(order.status).to.equal('Completed'); 
                 expect(order.quantity).to.equal(1000); 
 
