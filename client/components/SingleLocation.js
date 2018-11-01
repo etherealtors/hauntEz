@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter, Link} from 'react-router-dom';
 import {getOneLocation} from '../store'; 
 import UpdateLocation from './UpdateLocation';
+import Reviews from './Reviews';
 
 class SingleLocation extends Component{ 
     // constructor(props){ 
@@ -16,7 +17,8 @@ class SingleLocation extends Component{
 
     render() { 
         let singleLocation = this.props.singleLocation
-        console.log('singleLocation props', this.props)
+        
+        let locationReviews = singleLocation.reviews;
 
         return(
             <div>
@@ -27,6 +29,9 @@ class SingleLocation extends Component{
                 <h3>Price: ${singleLocation.price}</h3>
                 <h3>Category: {singleLocation.category}</h3>
                 
+                <h2>Reviews</h2>
+                {locationReviews && <Reviews reviews={singleLocation.reviews}/>}
+
                 <Link to={{pathname:`/singleLocation/${singleLocation.id}/update`, state: {singleLocation}}}>
                 <button type="button">Update Listing</button>
                 </Link>

@@ -31,13 +31,7 @@ class Routes extends Component {
         <Route path="/updateLocation" component={UpdateLocation}/>
         <Route exact path="/singleLocation/:locationId" component={SingleLocation}/>
         <Route exact path="/singleLocation/:locationId/update" component={UpdateLocation}/>
-
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in*/}
-            <Route path="/home" component={UserHome} />
-          </Switch>
-        )}
+        
         {/* Displays our Login component as a fallback */}
         {/*<Route component={Login} />*/}
         <Route exact path="/" component={UserHome} />
@@ -76,3 +70,13 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
+
+//Code for logged in routes only
+/*
+
+        {isLoggedIn && (
+          <div>
+            <Route path="/home" component={UserHome} />
+          </div>
+        )}
+*/
