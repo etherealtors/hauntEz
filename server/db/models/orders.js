@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
+const Locations = require('./location')
 
 const Orders = db.define('orders', {
   itemId: {
@@ -49,7 +50,8 @@ Orders.removeItem = async function(itemId) {
 
 Orders.getCart = async function(userId) {
   try {
-    const cart = await Orders.findAll({where: {userId, status: 'Created'}})
+    console.log('userID IN CART', userId)
+    const cart = await Orders.findAll({where: {status: 'Created'}})
     return cart
   } catch (error) {
     console.error(error)
