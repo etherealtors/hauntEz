@@ -69,11 +69,10 @@ describe('Orders', function() {
                 const order = await Orders.findById(2)
                 expect(order.price).to.equal(3000); 
                 expect(order.status).to.equal('Processing'); 
-                expect(order.quantity).to.equal(17) 
+                expect(order.quantity).to.equal(17); 
                 
                 return order.updatePrice(83)
                     .then(updatedOrder => { 
-                        console.log('reached!')
                         expect(updatedOrder.price).to.equal(83); 
                         expect(updatedOrder.status).to.equal('Processing'); 
                         expect(updatedOrder.quantity).to.equal(17)
@@ -83,11 +82,12 @@ describe('Orders', function() {
         })
 
         describe('updateQuantity', function() { 
-            it('updates the quantity of the item', async function (){ 
+            it('git updates the quantity of the item', async function (){ 
                 const order = await Orders.findById(1)
                 expect(order.price).to.equal(47); 
                 expect(order.status).to.equal('Completed'); 
-                expect(order.quantity).to.equal(1000) 
+                expect(order.quantity).to.equal(1000); 
+
                 return order.updateQuantity(76)
                     .then(updatedOrder => { 
                         expect(updatedOrder.price).to.equal(47); 
