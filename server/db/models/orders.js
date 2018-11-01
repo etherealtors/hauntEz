@@ -59,4 +59,13 @@ Orders.prototype.updateQuantity = async function(newQuantity) {
   }
 }
 
+Orders.prototype.updateStatus = async function(newStatus) {
+  try {
+    const updated = await this.update({status: newStatus}, {fields: ['status']})
+    return updated
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 module.exports = Orders
