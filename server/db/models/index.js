@@ -1,6 +1,7 @@
 const User = require('./user');
 const Location = require('./location');
 const Amenities = require('./amenities');
+const Review = require('./review')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -22,8 +23,16 @@ Location.belongsTo(User);
 User.hasMany(Location);
 Location.belongsToMany(User, { through: 'Favs' });
 
+//Review associations
+User.hasMany(Review);
+Review.belongsTo(User);
+Location.hasMany(Review);
+Review.belongsTo(Location);
+
+
 module.exports = {
 	User,
 	Location,
-	Amenities
+	Amenities,
+	Review
 };
