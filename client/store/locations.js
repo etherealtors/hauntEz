@@ -53,6 +53,7 @@ export const getFilteredLocations = (category) => async (dispatch) => {
 export const getSearchResults = (question) => async (dispatch) => {
 	try {
 		const res = await axios.get(`api/search/${question}`);
+		console.log('Look HERE', res.data);
 		dispatch(getLocations(res.data[0]));
 	} catch (err) {
 		console.error(err);

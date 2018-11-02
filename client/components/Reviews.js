@@ -8,7 +8,8 @@ const Reviews = (props) => {
 			<div className="column">
 				<h5>Rating: {review.rating}</h5>
 				<div>
-					{props.singleLocation.reviews[i].user.name}: {review.content}
+					{props.singleLocation.reviews[i].user.name}: <div />
+					{review.content}
 				</div>
 			</div>
 		</div>
