@@ -50,8 +50,7 @@ Orders.removeItem = async function(itemId) {
 
 Orders.getCart = async function(userId) {
   try {
-    console.log('userID IN CART', userId)
-    const cart = await Orders.findAll({where: {status: 'Created'}})
+    const cart = await Orders.findAll({where: {status: 'Created', userId}})
     return cart
   } catch (error) {
     console.error(error)

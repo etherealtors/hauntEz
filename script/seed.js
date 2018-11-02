@@ -301,6 +301,14 @@ async function seed() {
       price: 69,
       userId: 1,
       locationId: 1
+    }),
+    Orders.create({
+      itemId: 2,
+      orderId: 2,
+      quantity: 69,
+      price: 420,
+      userId: 2,
+      locationId: 2
     })
   ])
   console.log(`seeded ${users.length} users`)
