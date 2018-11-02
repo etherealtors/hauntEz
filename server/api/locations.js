@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Location, Amenities, Review } = require('../db/models');
+const { Location, Amenities, Review, User } = require('../db/models');
 
 module.exports = router;
 
@@ -18,7 +18,7 @@ router.get('/filter/:category', async (req, res, next) => {
 router.get('/:locationId', async (req, res, next) => {
 	try {
 		const location = await Location.findById(req.params.locationId, {
-			include: [ { model: Amenities }, { model: Review } ]
+			include: [ { model: Amenities }, { model: Review, include: { model: User } }, { model: User } ]
 		});
 		res.json(location);
 	} catch (err) {

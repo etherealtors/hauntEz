@@ -26,7 +26,7 @@ class SingleLocation extends Component {
 				<h3 className="red">Category: {singleLocation.category}</h3>
 
 				<h2>Reviews</h2>
-				{locationReviews && <Reviews reviews={singleLocation.reviews} />}
+				{locationReviews && <Reviews singleLocation={singleLocation} />}
 
 				{isAdmin && (
 					<Link to={{ pathname: `/singleLocation/${singleLocation.id}/update`, state: { singleLocation } }}>
