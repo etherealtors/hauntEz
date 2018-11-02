@@ -146,7 +146,8 @@ async function seed() {
         'https://i.kinja-img.com/gawker-media/image/upload/s--v-rVz6NL--/c_scale,f_auto,fl_progressive,q_80,w_800/qmlxjxfvuccnfhqq8cdg.jpg',
       quantity: 5,
       price: 4000,
-      // description: null,
+      description:
+        'Willow trees undead wind, unknown ripped needles. Demons in fallen angel non terror decomposed rotten teeth. Witch ashes eyeball undead, in bury burn hell flames. Graves slice ominous is guns exorcism guts. Eerie needles edginess, graveyard on death rotten, disturbing non grave. chainsaw dread full moon, pushed at alley bruises, children is knife. Killer scourge scared, drowning helpless sheep at, terrifyin.',
       gallery: null,
       userId: 7,
       amenityId: 4
@@ -158,7 +159,8 @@ async function seed() {
         'https://vignette.wikia.nocookie.net/pirates/images/0/01/Flying_Dutchman_SideView.jpg/revision/latest?cb=20111117084649',
       quantity: 20,
       price: 780000,
-      // description: null,
+      description:
+        'And crazy gory. Suicide Slash demon at convulsing darkness a evil pain burn. chainsaw dread full moon, pushed at alley bruises, children is knife. Graves slice ominous is guns exorcism guts. screams exorcism oozed smashed. In the deranged Halloween slice. Blood ashes tearin.',
       gallery: null,
       userId: 3,
       amenityId: 5
@@ -169,7 +171,8 @@ async function seed() {
       imageUrl: 'https://media.giphy.com/media/1V17m8MgM0fEk/giphy.gif',
       quantity: 8,
       price: 299000,
-      // description: null,
+      description:
+        'Death bruises moon torture demons devil or vampire werewolf wind. Demons in fallen angel non terror decomposed rotten teeth. Suicide Slash demon at convulsing darkness a evil pain burn. Serial killer, heart pumping at eyeballs killer dolls, chains edginess slicing horror, mental hospital putrid psychopath an possession. Cat at decapitated guns. Trapped flesh grotesque squeal, bloodcurdling chilling hair-raising spooky hazardous daring. Death bruises moon torture demons devil o.',
       gallery: null,
       userId: 7,
       amenityId: 6
@@ -181,7 +184,8 @@ async function seed() {
         'http://www.lipstiq.com/wp-content/uploads/2014/03/Ghost-boat.jpg',
       quantity: 2,
       price: 2300,
-      // description: null,
+      description:
+        'Vampire werewolf wind. Shriek terror shadow, darkness in tense ac, Motionless drowning Full moon. Cat at decapitated guns. Blood guns bury scream, stab graveyard crazed dark crying. Falling a spooky screaming. Psycho crazy mental hospital moon. . Gore at chainsaw knife crazed choking helpless. Haunt tearing murder crying an mental corpse zombies evil, chainsaw motionless gory. Graves slic.',
       gallery: null,
       userId: 3,
       amenityId: 7
@@ -192,7 +196,8 @@ async function seed() {
       imageUrl: 'https://i.redd.it/5bo4l0xqozly.jpg',
       quantity: 4,
       price: 50000,
-      // description: null,
+      description:
+        'Flames at crazy slicing with murderer gore. Gore at chainsaw knife crazed choking helpless. Death bruises moon torture demons devil or vampire werewolf wind. Dungeon in a gruesome, a disembowel unknown. Virus witch demonic dripping, at werewolf psych.',
       gallery: null,
       userId: 3,
       amenityId: 4
@@ -203,7 +208,8 @@ async function seed() {
       imageUrl: 'https://i.ytimg.com/vi/GEzd1pNS0Ug/maxresdefault.jpg',
       quantity: 32,
       price: 1250,
-      // description: null,
+      description:
+        'Slice flames. Children creepy deranged, ashes a killer a, monster mental hospital. Anthrax putrid, disturbing and morbid convulsing, rotten menacing fatal bleak, monstrosity dread with demon scourge terrifying. Edginess anxiety tension, claw at deteriorated in, creep a tear. Mental hospital sliced drowning. Virus witch demonic dripping, at werewolf psycho slice flames. Serial killer, heart pumpin.',
       gallery: null,
       userId: 1,
       amenityId: 5
@@ -215,7 +221,8 @@ async function seed() {
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRR1qX81BIPjHvGWdfYgsEJpKiTGI8Ntj6y9tw6iYfHRbPI_m8h',
       quantity: 22,
       price: 1100,
-      // description: null,
+      description:
+        'At eyeballs killer dolls, chains edginess slicing horror, mental hospital putrid psychopath an possession. Graves slice ominous is guns exorcism guts. Occult at alley pushed. Worms with guts ect. Killer scourge scared, drowning helpless sheep at, terrifying and crazy gory. Screams creaking tension kettle our exorcist. Haunt suicide silent, gory as demonic alarming, buried in fallen angel. Haunt tearing murder cryin.',
       gallery: null,
       userId: 1,
       amenityId: 1
@@ -227,7 +234,8 @@ async function seed() {
         'https://horror.ambient-mixer.com/images_template/9/1/e/91e6277bff3b739d8ba87b6be867ed02_full.jpg',
       quantity: 1,
       price: 500000000,
-      // description: null,
+      description:
+        'An mental corpse zombies evil, chainsaw motionless gory. In the deranged Halloween slice. . Killer scourge scared, drowning helpless sheep at, terrifying and crazy gory. Horror bowel.',
       gallery: null,
       userId: 3,
       amenityId: 3
@@ -239,7 +247,8 @@ async function seed() {
         'https://you.stonybrook.edu/tylerfrigge/files/2015/10/DSC_0026-25xmruz.jpg',
       quantity: 2,
       price: 22000,
-      // description: null,
+      description:
+        'Exorcism grave cut, murderer creature ripped. Falling are graveyard graves est. Horror bowels exorcism grave cut, murderer creature ripped. Eerie needles edginess, graveyard on death rotten, disturbing non grave. Bloodcurdling decomposed zombie in virus scared cat Michael Myers worms. Disembowel stab, chains dungeon torment fiendish, gruesom.',
       gallery: null,
       userId: 7,
       amenityId: 5
@@ -251,7 +260,8 @@ async function seed() {
         'https://hgtvhome.sndimg.com/content/dam/images/hgtv/fullset/2010/2/22/0/front-yard-rms_cottage-style-garden-ebboy-05_s4x3.jpg.rend.hgtvcom.1280.960.suffix/1400947347526.jpeg',
       quantity: 1,
       price: 40000,
-      // description: null,
+      description:
+        'Crazy slicing with murderer gore. Edginess anxiety tension, claw at deteriorated in, creep a tear. Needles at bowels alarming. Death bruises moon torture demons devil or vampire werewolf wind. Dungeon in a gruesome, a disembowe.',
       gallery: null,
       userId: 7,
       amenityId: 3
@@ -263,7 +273,8 @@ async function seed() {
         'https://cdn-images-1.medium.com/max/1200/1*NLs6Fz77ZCqSZqjUmffhaQ.jpeg',
       quantity: 1,
       price: 800,
-      // description: null,
+      description:
+        'Unknown. Anthrax putrid, disturbing and morbid convulsing, rotten menacing fatal bleak, monstrosity dread with demon scourge terrifying. In horrifying, fear is gnarled murder, ominous eerie Serial killer sinister, with sick chilling agony shaking heart pumping. Gore at chainsaw knife crazed choking helpless. Creep cold graves, shadow no.',
       gallery: null,
       userId: 1,
       amenityId: 2
@@ -275,7 +286,8 @@ async function seed() {
         'http://www.bravotv.com/sites/nbcubravotv/files/styles/blog-post--mobile/public/field_blog_image/2017/03/jet-set-beauty-beast-castles-promote-02.jpg?itok=H5ltr4BV&timestamp=1488570367',
       quantity: 10,
       price: 30000,
-      // description: null,
+      description:
+        'Fear a, psychotic ashes ghost. Dungeon in a gruesome, a disembowel unknown. Tearing eyeballs zombie slash. Suicide Slash demon at convulsing darkness a evil pain burn. Anthrax putrid, disturbing and morbid convulsing, rotten menacing fatal bleak, monstrosity dread with demon scourge terrifying. Killer scourge scared, drowning helpless sheep at, terrifying and crazy gory. Captive Agony deteriorated, fatal or chilling is, grotesque Halloween exorcism. Horror bowels exorcism grave cut, murderer creature ripped. killer mental psychotic sliced. Breathing heavily damp, col.',
       gallery: null,
       userId: 7,
       amenityId: 1

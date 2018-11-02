@@ -9,7 +9,7 @@ class UpdateLocation extends Component {
     constructor(props) { 
         super(props); 
         this.state = {
-            id: this.props.location.state.singleLocation.id, //security issue? 
+            id: this.props.location.state.singleLocation.id, 
             address: this.props.location.state.singleLocation.address, 
             imageUrl: this.props.location.state.singleLocation.imageUrl, 
             quantity: this.props.location.state.singleLocation.quantity, 
@@ -21,44 +21,29 @@ class UpdateLocation extends Component {
         this.handleSubmit = this.handleSubmit.bind(this); 
     } 
 
-    // componentDidMount(){ 
-    //     let locationId = Number(this.props.match.params.locationId); 
-    //     this.props.getLocation(locationId); 
-    //     this.setState({ 
-    //         id: this.props.singleLocation.id, //security issue? 
-    //         address: this.props.singleLocation.address, 
-    //         imageUrl: this.props.singleLocation.imageUrl, 
-    //         quantity: this.props.singleLocation.quantity, 
-    //         description: this.props.singleLocation.description, 
-    //         price: this.props.singleLocation.price,
-    //         category: this.props.singleLocation.category
-    //     })
-    // }
-
-    handleChange(event){ 
+    handleChange(event) { 
         this.setState({[event.target.name]: event.target.value})
     }
-    handleSubmit(event){ 
+
+    handleSubmit(event) { 
         event.preventDefault(); 
-        console.log('reached handlesubmit', this.props.addLocation)
+       
         const updatedLocation = {...this.state}
         this.props.updateLocation(updatedLocation)
     }
 
-    render(){ 
+    render() { 
 
-        
-        console.log('update Location props', this.props); 
         return(
             <div className ="update-location">
                 <h2>Update a Location</h2> 
-                <form> 
+                <form id="update-location-form"> 
                     <label> 
                         Select Listing Type: 
                         <input type="radio" name="category" value="Shack" onChange={this.handleChange}/>Shack
                         <input type="radio" name="category" value="House" onChange={this.handleChange}/>House
                         <input type="radio" name="category" value="Apartment" onChange={this.handleChange}/>Apartment
-                        <input type="radio" name="category" value="Manse" onChange={this.handleChange}/>Manse
+                        <input type="radio" name="category" value="Manse" onChange={this.handleChange} />Manse
                         <input type="radio" name="category" value="Castle" onChange={this.handleChange}/>Castle
                         <input type="radio" name="category" value="Boat" onChange={this.handleChange}/>Boat
                     </label>
@@ -68,7 +53,7 @@ class UpdateLocation extends Component {
                     </label>
                     <label> 
                         Description: 
-                        <input type="text" name="descriptionInput" value={this.state.description} onChange={this.handleChange}/>
+                        <input type="text" name="description" value={this.state.description} onChange={this.handleChange}/>
                     </label>
                     <label> 
                         Number of Available Haunts: 
@@ -91,7 +76,6 @@ class UpdateLocation extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    console.log('reached map dispatch to props')
     return (
     { 
         updateLocation: (updatedLoc) => dispatch(updateLocation(updatedLoc)), 

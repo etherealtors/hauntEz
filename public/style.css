@@ -46,12 +46,9 @@ form div {
 	justify-content: center;
 }
 
-/* .homeDisplay {
-	display: flex;
-	flex-direction: row;
-	align-items: baseline;
-	flex-wrap: wrap;
-} */
+.searchButton {
+	width: 12px;
+}
 
 .formatListing {
 	display: grid;
@@ -68,4 +65,19 @@ form div {
 	grid-template-rows: 120px 120px 120px;
 	grid-auto-flow: column;
 	align-content: center;
+}
+.singleViewImage {
+	align-items: end;
+	width: 400px;
+	height: 250px;
+	padding: 1px;
+	grid-column: 2 / 3;
+}
+
+#singleLocation {
+	display: grid;
+}
+
+.red {
+	color: red;
 }

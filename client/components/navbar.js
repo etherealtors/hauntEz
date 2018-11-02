@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import store, {logout} from '../store'
+import SearchBar from './SearchBar'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
@@ -14,6 +15,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
         {'     '}
         <img src="http://rs353.pbsrc.com/albums/r376/swfan67/1967/ghost.gif~c200" />
       </span>
+      <SearchBar />
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}

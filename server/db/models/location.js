@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-
-const Location = db.define('location', {
+let SearchModel = require('pg-search-sequelize');
+const { QueryInterface } = require('pg-search-sequelize');
+let Location = db.define('location', {
 	address: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -44,5 +45,16 @@ const Location = db.define('location', {
     }*/
 	}
 });
+
+Location.findInSearch = (input) => {
+	return Location.findAll({
+		where: {
+			[Sequelize.Op.or]: [
+				{ address: { [Sequelize.Op.iLike]: `%${input}%` } },
+				{ category: { [Sequelize.Op.iLike]: `%${input}%` } }
+			]
+		}
+	});
+};
 
 module.exports = Location;

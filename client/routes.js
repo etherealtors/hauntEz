@@ -8,6 +8,7 @@ import {me} from './store'
 import UpdateLocation from './components/UpdateLocation'
 import SingleLocation from './components/SingleLocation'
 import ShoppingCart from './components/ShoppingCart'
+import NotFound from './components/NotFound'
 
 /**
  * COMPONENT
@@ -18,38 +19,37 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-
-        {/* route below needs to be added to an area that is only accessible as admin */}
-        <Route path="/addLocation" component={AddLocation} />
-        <Route path="/updateLocation" component={UpdateLocation} />
         <Route
           exact
           path="/singleLocation/:locationId"
           component={SingleLocation}
         />
-        <Route
-          exact
-          path="/singleLocation/:locationId/update"
-          component={UpdateLocation}
-        />
-        <Route path="/cart" component={ShoppingCart} />
-
-        {isLoggedIn && (
-          <Switch>
-            {/* Routes placed here are only available after logging in*/}
-            <Route path="/home" component={UserHome} />
-          </Switch>
-        )}
-        {/* Displays our Login component as a fallback */}
-        {/*<Route component={Login} />*/}
         <Route exact path="/" component={UserHome} />
+        <Route path="/cart" component={ShoppingCart} />
+        {/* route below needs to be added to an area that is only accessible as admin */}
+        {isAdmin && (
+          <div>
+            <Switch>
+              <Route path="/addLocation" component={AddLocation} />
+              <Route path="/updateLocation" component={UpdateLocation} />
+              <Route
+                exact
+                path="/singleLocation/:locationId/update"
+                component={UpdateLocation}
+              />
+            </Switch>
+          </div>
+        )}
+
+        {/* Displays our Not Found component as a fallback */}
+        {/*<Route component={NotFound} />*/}
       </Switch>
     )
   }
@@ -62,7 +62,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin
   }
 }
 
