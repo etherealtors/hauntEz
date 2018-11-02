@@ -286,7 +286,9 @@ async function seed() {
       itemId: 1,
       orderId: 1,
       quantity: 1,
-      price: 69
+      price: 69,
+      userId: 1,
+      locationId: 1
     })
   ])
   console.log(`seeded ${users.length} users`)
