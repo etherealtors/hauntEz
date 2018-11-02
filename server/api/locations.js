@@ -1,6 +1,5 @@
-const router = require('express').Router();
-const { Location } = require('../db/models');
-const { Amenities } = require('../db/models');
+const router = require('express').Router()
+const {Location, Amenities, Review} = require('../db/models')
 
 module.exports = router;
 
@@ -17,15 +16,18 @@ router.get('/filter/:category', async (req, res, next) => {
 });
 
 router.get('/:locationId', async (req, res, next) => {
-	try {
-		const location = await Location.findById(req.params.locationId, {
-			include: { model: Amenities }
-		});
-		res.json(location);
-	} catch (err) {
-		next(err);
-	}
-});
+  try {
+    const location = await Location.findById(req.params.locationId, {
+      include: [
+        {model: Amenities},
+        {model: Review}
+      ]
+    })
+    res.json(location)
+  } catch (err) {
+    next(err)
+  }
+})
 
 router.get('/', async (req, res, next) => {
 	try {

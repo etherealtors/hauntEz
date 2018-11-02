@@ -23,17 +23,24 @@ class AddLocation extends Component {
   handleChange(event) {
     this.setState({[event.target.name]: event.target.value})
   }
-  handleSubmit(event) {
+
+  async handleSubmit(event) {
     event.preventDefault()
-    console.log('reached handlesubmit', this.props.addLocation)
-    this.props.addLocation(
+    
+    //Sets the default image if the user does not specify an image
+    //Should probably set the default image url as an environment variable
+    let imageUrl = this.state.imageInput;
+    if(this.state.imageInput.length < 1) imageUrl = 'http://res.cloudinary.com/culturemap-com/image/upload/q_auto/c_limit,w_1200/v1506457734/photos/260993_original_landscape.png';
+
+    await this.props.addLocation(
       this.state.addressInput,
-      this.state.imageInput,
+      imageUrl,
       this.state.quantityInput,
       this.state.descriptionInput,
       this.state.category,
       this.state.priceInput
     )
+
     this.setState({
       addressInput: '',
       imageInput: '',
@@ -45,8 +52,7 @@ class AddLocation extends Component {
   }
 
   render() {
-    console.log('addLocation')
-    console.log('state', this.state)
+   
     return (
       <div className="add-location">
         <h2>Add a New Location</h2>
@@ -145,7 +151,6 @@ class AddLocation extends Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  console.log('reached map dispatch to props')
   return {
     addLocation: (address, imageUrl, quantity, description, category, price) =>
       dispatch(
