@@ -17,8 +17,10 @@ const getCart = orders => ({type: GET_CART, orders})
 
 export const fillCart = userId => async dispatch => {
   try {
-    const res = await axios.get('/api/orders/cart', userId)
-    console.log(res.data)
+    userId = Number(userId); 
+    console.log('userId', userId); 
+    const res = await axios.get(`/api/orders/cart/${userId}`, )
+    console.log('red.data', res.data)
     dispatch(getCart(res.data))
   } catch (error) {
     console.error(error)

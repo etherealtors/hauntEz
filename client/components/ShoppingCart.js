@@ -9,10 +9,11 @@ class ShoppingCart extends Component {
   }
 
   render() {
+    console.log('this.props.cart', this.props.cart); 
     return (
       <div className="shopping-cart">
-        {this.props.cart.map(item => {
-          return <h2>{item.address}</h2>
+        {this.props.cart.map((item) => {
+           return <h2>{item.itemId}</h2>
         })}
       </div>
     )
@@ -21,7 +22,7 @@ class ShoppingCart extends Component {
 
 const mapStateToProps = state => ({
   cart: state.orders.orders,
-  user: state.user
+  // user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
