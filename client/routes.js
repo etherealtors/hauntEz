@@ -7,6 +7,7 @@ import AddLocation from './components/AddLocation'
 import {me} from './store'
 import UpdateLocation from './components/UpdateLocation';
 import SingleLocation from './components/SingleLocation';
+import NotFound from './components/NotFound';
 
 
 /**
@@ -18,23 +19,30 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const {isLoggedIn, isAdmin} = this.props
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/singleLocation/:locationId" component={SingleLocation}/>
+        <Route exact path="/" component={UserHome} />
+        
 
         {/* route below needs to be added to an area that is only accessible as admin */}
-        <Route path="/addLocation" component={AddLocation}/>
-        <Route path="/updateLocation" component={UpdateLocation}/>
-        <Route exact path="/singleLocation/:locationId" component={SingleLocation}/>
-        <Route exact path="/singleLocation/:locationId/update" component={UpdateLocation}/>
+        {isAdmin && (
+          <div>
+            <Switch>
+              <Route path="/addLocation" component={AddLocation}/>
+              <Route path="/updateLocation" component={UpdateLocation}/>
+              <Route exact path="/singleLocation/:locationId/update" component={UpdateLocation}/>
+            </Switch>
+          </div>
+        )}
         
-        {/* Displays our Login component as a fallback */}
-        {/*<Route component={Login} />*/}
-        <Route exact path="/" component={UserHome} />
+        {/* Displays our Not Found component as a fallback */}
+        {/*<Route component={NotFound} />*/}
       </Switch>
     )
   }
@@ -47,7 +55,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin
   }
 }
 
@@ -70,13 +79,3 @@ Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }
-
-//Code for logged in routes only
-/*
-
-        {isLoggedIn && (
-          <div>
-            <Route path="/home" component={UserHome} />
-          </div>
-        )}
-*/

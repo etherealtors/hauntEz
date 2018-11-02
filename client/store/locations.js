@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 //ACTION TYPES
 const GET_LOCATIONS = 'GET_LOCATIONS';
@@ -54,6 +55,7 @@ export const addLocation = (address, imageUrl, quantity, description, category, 
     try { 
         const {data} = await axios.post('/api/locations', {category, address, description, quantity, price, imageUrl}); 
         dispatch(addNewLocation(data)); 
+        history.push(`/singleLocation/${data.id}`)
     } catch (error) { 
         console.error(error); 
     }
@@ -61,8 +63,9 @@ export const addLocation = (address, imageUrl, quantity, description, category, 
 
 export const updateLocation = (updatedLocation) => async (dispatch) => { 
     try { 
-        const data = await axios.put(`/api/locations/${updatedLocation.id}`, updatedLocation); 
+        const {data} = await axios.put(`/api/locations/${updatedLocation.id}`, updatedLocation); 
         dispatch(updateExistingLocation(data));
+        history.push(`/singleLocation/${data.id}`);
     } catch (error) { 
         console.error(error); 
     }

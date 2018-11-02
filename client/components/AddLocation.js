@@ -49,10 +49,6 @@ class AddLocation extends Component {
       priceInput: '',
       category: ''
     })
-
-    //return to the homepage
-    this.props.history.push(`/`);
-
   }
 
   render() {

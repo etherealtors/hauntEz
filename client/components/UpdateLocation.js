@@ -30,7 +30,6 @@ class UpdateLocation extends Component {
        
         const updatedLocation = {...this.state}
         this.props.updateLocation(updatedLocation)
-        this.props.history.push(`/singleLocation/${this.state.id}`);
     }
 
     render() { 

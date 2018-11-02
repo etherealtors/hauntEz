@@ -72,12 +72,15 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
+
       if(formName === 'signup') {
         const name = evt.target.fullname.value;
         dispatch(auth(email, password, formName, name))
       } else {
         dispatch(auth(email, password, formName))
       }
+
+      //this.history.push('/');
     }
   }
 }

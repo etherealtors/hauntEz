@@ -17,7 +17,7 @@ class SingleLocation extends Component{
 
     render() { 
         let singleLocation = this.props.singleLocation
-        
+        let isAdmin = this.props.isAdmin;
         let locationReviews = singleLocation.reviews;
 
         return(
@@ -32,9 +32,11 @@ class SingleLocation extends Component{
                 <h2>Reviews</h2>
                 {locationReviews && <Reviews reviews={singleLocation.reviews}/>}
 
-                <Link to={{pathname:`/singleLocation/${singleLocation.id}/update`, state: {singleLocation}}}>
-                <button type="button">Update Listing</button>
-                </Link>
+                {isAdmin && (
+                    <Link to={{pathname:`/singleLocation/${singleLocation.id}/update`, state: {singleLocation}}}>
+                    <button type="button">Update Listing</button>
+                    </Link>
+                )}
             </div>
         )
     }
@@ -42,7 +44,8 @@ class SingleLocation extends Component{
 
 const mapStateToProps = (state) => (
     { 
-        singleLocation: state.locations.selectedLocation
+        singleLocation: state.locations.selectedLocation,
+        isAdmin: state.user.isAdmin
     }
 )
 

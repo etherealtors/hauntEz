@@ -33,7 +33,6 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method, name) => async dispatch => {
   let res
   try {
-    console.log("NAME INSIDE AUTH THUNK ", name)
     res = await axios.post(`/auth/${method}`, {email, password, name})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
@@ -41,7 +40,7 @@ export const auth = (email, password, method, name) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    history.push('/home')
+    history.push('/')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }

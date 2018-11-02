@@ -2,22 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import AllLocations from './all-locations';
+import { Link } from 'react-router-dom';
 
 /**
  * COMPONENT
  */
 export const UserHome = (props) => {
-	const { email } = props;
+	const { email, isAdmin } = props;
 
 	return (
 		<div>
 			<h1 className="creepyFont" id="centered">
 				Welcome to HauntEz!
 			</h1>
-			{/*Admin: render + button top right of page to add products*/}
-			{/*render dropdown for categories*/}
-			{/*render all locations as an image grid*/}
-			{/*render edit button next to each image*/}
+			
+			{/*ADMIN ONLY: Render + button top right of page to add products*/}
+			{(isAdmin) ? <Link to='/addLocation'><h1>+</h1></Link> : <div />}
+				
 			<AllLocations />
 		</div>
 	);
@@ -28,8 +29,8 @@ export const UserHome = (props) => {
  */
 const mapState = (state) => {
 	return {
-		email: state.user.email
-		//get locations from state
+		email: state.user.email,
+		isAdmin: state.user.isAdmin
 	};
 };
 
