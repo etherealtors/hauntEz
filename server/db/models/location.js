@@ -1,8 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../db');
-let SearchModel = require('pg-search-sequelize');
-const { QueryInterface } = require('pg-search-sequelize');
-let Location = db.define('location', {
+
+const Location = db.define('location', {
 	address: {
 		type: Sequelize.STRING,
 		unique: true,
@@ -31,7 +30,6 @@ let Location = db.define('location', {
 	},
 	description: {
 		type: Sequelize.TEXT,
-		//allowNull: false,
 		defaultValue: 'PLACE HOLDER'
 	},
 	gallery: {

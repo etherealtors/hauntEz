@@ -37,7 +37,6 @@ export const getOneLocation = (id) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/locations/${id}`);
 		dispatch(getLocation(res.data || initialState.locations));
-		console.log('res.data', res.data);
 	} catch (error) {
 		console.error(error);
 	}
@@ -54,7 +53,6 @@ export const getFilteredLocations = (category) => async (dispatch) => {
 export const getSearchResults = (question) => async (dispatch) => {
 	try {
 		const res = await axios.get(`api/search/${question}`);
-		console.log('dis!', res.data);
 		dispatch(getLocations(res.data[0]));
 	} catch (err) {
 		console.error(err);
