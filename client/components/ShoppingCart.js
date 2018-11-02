@@ -5,7 +5,9 @@ import {fillCart} from '../store'
 
 class ShoppingCart extends Component {
   componentDidMount() {
+    console.log('this.props', this.props)
     this.props.fillCart(this.props.user.id)
+
   }
 
   render() {

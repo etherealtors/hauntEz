@@ -295,16 +295,12 @@ async function seed() {
   ])
   const carts = await Promise.all([
     Orders.create({
-      itemId: 1,
-      orderId: 1,
       quantity: 1,
       price: 69,
       userId: 1,
       locationId: 1
     }),
     Orders.create({
-      itemId: 2,
-      orderId: 2,
       quantity: 69,
       price: 420,
       userId: 2,

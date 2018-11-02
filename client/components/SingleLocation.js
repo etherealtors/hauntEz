@@ -4,11 +4,23 @@ import { withRouter, Link } from 'react-router-dom';
 import { getOneLocation } from '../store';
 import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
+import { addToOrders } from '../store'
 
 class SingleLocation extends Component {
+	constructor(props){ 
+		super(props); 
+
+		this.handleClick = this.handleClick.bind(this); 
+	}
+
 	componentDidMount() {
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
+	}
+
+	handleClick(){ 
+		this.props.addToOrders(this.props.singleLocation.price, this.props.singleLocation.id, 3)
+		console.log('added to cart!')
 	}
 
 	render() {
@@ -24,6 +36,7 @@ class SingleLocation extends Component {
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
 				<h3 className="red">Category: {singleLocation.category}</h3>
+				<button type="button" onClick={this.handleClick}>Add To Cart</button>
 
 				<h2>Reviews</h2>
 				{locationReviews && <Reviews reviews={singleLocation.reviews} />}
@@ -40,10 +53,12 @@ class SingleLocation extends Component {
 
 const mapStateToProps = (state) => ({
 	singleLocation: state.locations.selectedLocation,
+	user: state.user.user, 
 	isAdmin: state.user.isAdmin
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	getLocation: (id) => dispatch(getOneLocation(id))
+	getLocation: (id) => dispatch(getOneLocation(id)),
+	addToOrders: (price, locationId, userId) => dispatch(addToOrders({price, locationId, userId}))
 });
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleLocation));

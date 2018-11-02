@@ -3,11 +3,6 @@ const db = require('../db')
 const Locations = require('./location')
 
 const Orders = db.define('orders', {
-  itemId: {
-    type: Sequelize.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
   orderId: {
     type: Sequelize.INTEGER,
     allowNull: false
