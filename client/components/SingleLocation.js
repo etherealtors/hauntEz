@@ -4,6 +4,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { getOneLocation } from '../store';
 import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
+import AddReview from './addReview';
 
 class SingleLocation extends Component {
 	componentDidMount() {
@@ -27,7 +28,7 @@ class SingleLocation extends Component {
 
 				<h2>Reviews</h2>
 				{locationReviews && <Reviews singleLocation={singleLocation} />}
-
+				<AddReview />
 				{isAdmin && (
 					<Link to={{ pathname: `/singleLocation/${singleLocation.id}/update`, state: { singleLocation } }}>
 						<button type="button">Update Listing</button>

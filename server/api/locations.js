@@ -61,3 +61,13 @@ router.put('/:locationId', async (req, res, next) => {
 		next(err);
 	}
 });
+
+router.post('/:locationId', async (req, res, next) => {
+	try {
+		console.log('Body:', req.body);
+		const addedComment = await Review.create(req.body);
+		res.json(addedComment);
+	} catch (err) {
+		next(err);
+	}
+});

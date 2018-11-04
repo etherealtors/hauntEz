@@ -7,6 +7,7 @@ const GET_LOCATIONS = 'GET_LOCATIONS';
 const GET_LOCATION = 'GET_LOCATION';
 const ADD_NEW_LOCATION = 'ADD_NEW_LOCATION';
 const UPDATE_LOCATION = 'UPDATE_LOCATION';
+const ADD_REVIEW = 'ADD_REVIEW';
 
 //INITIAL STATE
 const defaultLocations = [];
@@ -14,7 +15,8 @@ const defaultLocations = [];
 //INITIAL STATE
 const initialState = {
 	locations: [],
-	selectedLocation: {}
+	selectedLocation: {},
+	content: ''
 };
 
 //ACTION CREATORS
@@ -22,6 +24,7 @@ const getLocations = (locations) => ({ type: GET_LOCATIONS, locations });
 const getLocation = (location) => ({ type: GET_LOCATION, location });
 const addNewLocation = (location) => ({ type: ADD_NEW_LOCATION, location });
 const updateExistingLocation = (location) => ({ type: UPDATE_LOCATION, location });
+const addNewReview = (content) => ({ type: ADD_REVIEW, content });
 
 //THUNK CREATORS
 export const getAllLocations = () => async (dispatch) => {
@@ -52,9 +55,24 @@ export const getFilteredLocations = (category) => async (dispatch) => {
 };
 export const getSearchResults = (question) => async (dispatch) => {
 	try {
-		const res = await axios.get(`api/search/${question}`);
-		console.log('Look HERE', res.data);
+		const res = await axios.get(`/api/search/${question}`);
 		dispatch(getLocations(res.data[0]));
+	} catch (err) {
+		console.error(err);
+	}
+};
+export const addReview = (content, id, userId, rating) => async (dispatch) => {
+	try {
+		console.log('ID', content);
+
+		const { data } = await axios.post(`/api/locations/${id}`, {
+			content: content,
+			locationId: id,
+			userId: userId,
+			rating: rating
+		});
+		console.log('DATA:', data);
+		dispatch(addNewReview(data));
 	} catch (err) {
 		console.error(err);
 	}
@@ -103,6 +121,8 @@ export default function(state = initialState, action) {
 			let updatedLocation = { ...locations[locationToUpdateIdx], ...action.location };
 			locations[locationToUpdateIdx] = updatedLocation;
 			return { ...state, locations };
+		case ADD_REVIEW:
+			return { ...state, content: [ ...state.content, action.content.content ] };
 		default:
 			return state;
 	}
