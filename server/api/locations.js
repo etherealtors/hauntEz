@@ -1,13 +1,16 @@
 const router = require('express').Router()
-const {Location, Amenities, Review} = require('../db/models')
+const {Location, Amenities, Review, Category} = require('../db/models')
 
 module.exports = router;
 
 router.get('/filter/:category', async (req, res, next) => {
 	try {
 		const locations = await Location.findAll({
-			where: { category: req.params.category },
+			/*where: { category: req.params.category },
 			include: { model: Amenities }
+			*/
+			include: [{model: Category, where: {name: req.params.category}, through: {attributes: []}},
+								{model: Amenities}]
 		});
 		res.json(locations);
 	} catch (error) {
