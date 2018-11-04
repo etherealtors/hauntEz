@@ -28,11 +28,16 @@ class SingleLocation extends Component {
 
 				<h2>Reviews</h2>
 				{locationReviews && <Reviews singleLocation={singleLocation} />}
-				<AddReview />
+
 				{isAdmin && (
-					<Link to={{ pathname: `/singleLocation/${singleLocation.id}/update`, state: { singleLocation } }}>
-						<button type="button">Update Listing</button>
-					</Link>
+					<div>
+						<Link
+							to={{ pathname: `/singleLocation/${singleLocation.id}/update`, state: { singleLocation } }}
+						>
+							<button type="button">Update Listing</button>
+						</Link>
+						<AddReview />
+					</div>
 				)}
 			</div>
 		);
