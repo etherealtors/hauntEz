@@ -25,6 +25,7 @@ router.get('/', async (req, res, next) => {
 });
 
 router.post('/', async (req, res, next) => {
+    console.log("New category?", req.body)
 	try {
 		const newCategory= {
 			name: req.body.name,

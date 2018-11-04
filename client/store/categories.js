@@ -3,6 +3,8 @@ import history from '../history';
 
 //ACTION TYPES
 const GET_CATEGORIES = 'GET_CATEGORIES';
+const ADD_NEW_CATEGORY = 'ADD_NEW_CATEGORY';
+const REMOVE_CATEGORY = 'REMOVE_CATEGORY';
 
 //INITIAL STATE
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
 
 //ACTION CREATORS
 const getCategories = (categories) => ({ type: GET_CATEGORIES, categories });
+const addNewCategory = (category) => ({type: ADD_NEW_CATEGORY, category});
+const removeCategory = (id) => ({type: REMOVE_CATEGORY, id});
 
 //THUNK CREATORS
 export const getAllCategories = () => async (dispatch) => {
@@ -21,6 +25,24 @@ export const getAllCategories = () => async (dispatch) => {
 		console.error(error);
 	}
 };
+
+export const addCategory = (category) => async (dispatch) => {
+    try {
+        const res = await axios.post('/api/categories', category);
+        dispatch(addNewCategory(res.data));
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+export const deleteCategory = (id) => async (dispatch) => {
+    try {
+        await axios.delete(`/api/categories/${id}`);
+        dispatch(removeCategory(id));
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 /*
 export const getOneLocation = (id) => async (dispatch) => {
@@ -84,13 +106,14 @@ export const updateLocation = (updatedLocation) => async (dispatch) => {
 // REDUCER
 export default function(state = initialState, action) {
 	switch (action.type) {
-		//case ADD_NEW_LOCATION:
-		//	return { ...state, locations: [ ...state.locations, action.location ] };
+		case ADD_NEW_CATEGORY:
+			return { ...state, categories: [ ...state.categories, action.category ] };
 		case GET_CATEGORIES:
 			return { ...state, categories: action.categories };
-		/*case GET_LOCATION:
-			return { ...state, selectedLocation: action.location };
-		case UPDATE_LOCATION:
+        case REMOVE_CATEGORY:
+            let newCategoryArr = [...state.categories].filter(category => (category.id !== action.id));
+            return {...state, categories: newCategoryArr};
+		/*case UPDATE_LOCATION:
 			let locations = [ ...state.locations ];
 			let locationToUpdateIdx = locations.findIndex((location) => location.id === action.location.id);
 			let updatedLocation = { ...locations[locationToUpdateIdx], ...action.location };
