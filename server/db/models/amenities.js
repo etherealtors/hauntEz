@@ -41,4 +41,20 @@ Amenities.findWithSearch = (input) => {
 	});
 };
 
+// Amenities.findWithSearch = (input) => {
+// 	return Location.findAll({
+// 		attributes: {
+// 			include: [
+// 				{
+// 					model: Amenities,
+// 					[Sequelize.Op.or]: [
+// 						{ nearestChurch: { [Sequelize.Op.iLike]: `%${input}%` } },
+// 						{ nearestGraveyard: { [Sequelize.Op.iLike]: `%${input}%` } }
+// 					]
+// 				}
+// 			]
+// 		}
+// 	});
+// };
+
 module.exports = Amenities;

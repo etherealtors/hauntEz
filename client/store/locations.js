@@ -56,22 +56,20 @@ export const getFilteredLocations = (category) => async (dispatch) => {
 export const getSearchResults = (question) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/search/${question}`);
-		dispatch(getLocations(res.data[0]));
+		console.log('LOOK HERE', res.data);
+		dispatch(getLocations(res.data[0] && res.data[2]));
 	} catch (err) {
 		console.error(err);
 	}
 };
 export const addReview = (content, id, userId, rating) => async (dispatch) => {
 	try {
-		console.log('ID', content);
-
 		const { data } = await axios.post(`/api/locations/${id}`, {
 			content: content,
 			locationId: id,
 			userId: userId,
 			rating: rating
 		});
-		console.log('DATA:', data);
 		dispatch(addNewReview(data));
 	} catch (err) {
 		console.error(err);

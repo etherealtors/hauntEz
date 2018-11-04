@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import store, { logout } from '../store';
 import SearchBar from './SearchBar';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, user }) => (
 	<div>
 		<nav>
 			<span id="logo">
@@ -20,7 +20,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 				<div>
 					{/* The navbar will show these links after you log in */}
 					<Link to="/">Home</Link>
-					<div>Hi, USER.NAME</div>
+					<div>Hi, {user.name} </div>
 					<a href="#" onClick={handleClick}>
 						Logout
 					</a>
@@ -52,8 +52,8 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
  */
 const mapState = (state) => {
 	return {
-		isLoggedIn: !!state.user.id
-		//add username to state
+		isLoggedIn: !!state.user.id,
+		user: state.user
 	};
 };
 
