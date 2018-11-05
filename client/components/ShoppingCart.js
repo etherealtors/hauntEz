@@ -13,9 +13,8 @@ class ShoppingCart extends Component {
   }
 
   submitOrder() {
-    // placeholder for future 'update status' method
     // this.placeOrder()
-    Window.alert(
+    alert(
       'Your order has been placed. Thanks for shopping with HauntEZ, where our UX is as spooky as our customers!'
     )
   }
@@ -26,10 +25,16 @@ class ShoppingCart extends Component {
       <div>
         <div className="shopping-cart">
           {this.props.cart.map(item => {
-            return <h2 key={item.id}>{item.itemId}</h2>
+            return (
+              <h2 key={item.location.id}>
+                {item.location.address} - ${item.location.price}
+              </h2>
+            )
           })}
         </div>
-        <button type="submit" onClick={this.submitOrder} />
+        <button type="submit" onClick={this.submitOrder}>
+          Submit order!
+        </button>
       </div>
     )
   }

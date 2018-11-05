@@ -3,6 +3,7 @@ import axios from 'axios'
 //ACTION TYPES
 const GET_CART = 'GET_CART'
 const ADD_TO_ORDER = 'ADD_TO_ORDER'
+const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 
 //INITAL STATE
 
@@ -14,6 +15,11 @@ const initialState = {
 
 const getCart = orders => ({type: GET_CART, orders})
 const addToOrder = order => ({type: ADD_TO_ORDER, order})
+// const updateOrderStatus = (order, status) => ({
+//   type: UPDATE_ORDER_STATUS,
+//   order,
+//   status
+// })
 
 //THUNK CREATORS
 
@@ -28,14 +34,20 @@ export const fillCart = () => async dispatch => {
 
 export const addToOrders = newOrder => async dispatch => {
   try {
-    console.log('new order', newOrder)
     const res = await axios.post('/api/orders/cart', newOrder)
-    console.log('add order res', res)
     dispatch(addToOrder(res.data))
   } catch (error) {
     console.error(error)
   }
 }
+
+// export const updateOrder = (order, status) => async dispatch => {
+//   try {
+//     const res = await axios.put(`/api/orders/cart/${order}`, {status})
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 //REDUCER
 
@@ -45,6 +57,8 @@ export default function(state = initialState, action) {
       return {...state, orders: action.orders}
     case ADD_TO_ORDER:
       return {...state, orders: [...state.orders, action.order]}
+    case UPDATE_ORDER_STATUS:
+      return initialState
     default:
       return state
   }

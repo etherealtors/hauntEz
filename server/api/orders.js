@@ -31,4 +31,13 @@ router.post('/cart', async (req, res, next) => {
   }
 })
 
+router.put('/cart', async (req, res, next) => {
+  try {
+    const order = await Orders.updateStatus('Processing')
+    res.json(order)
+  } catch (error) {
+    next(error)
+  }
+})
+
 module.exports = router
