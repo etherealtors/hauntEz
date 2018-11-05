@@ -37,13 +37,13 @@ class ShoppingCart extends Component {
              
             return (
               item.location ? (
-              <div>
-              <h2 key={item.id}>
+              <div key={item.id}>
+              <h2 >
                 {item.location.address} for ${item.location.price} x{item.quantity} = ${item.location.price*item.quantity}
               </h2> 
               <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
               </div>
-              ) : <h2></h2>
+              ) : null
               
             )
           })}

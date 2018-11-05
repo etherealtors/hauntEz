@@ -31,7 +31,20 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    const order = await Orders.create(req.body)
+    let order = await Orders.findOne({where: {
+      userId: req.session.passport.user, 
+      locationId: req.body.locationId, 
+      status: 'Created'
+    }})
+    if (order) { 
+      let newQuant = Number(order.quantity) + Number(req.body.quantity); 
+      await Orders.update({quantity: newQuant}, {fields:['quantity'], 
+      where: {userId: req.session.passport.user, 
+        locationId: req.body.locationId, 
+        status: 'Created'}})
+    } else { 
+      order = Orders.create(req.body)
+    }
     res.json(order)
   } catch (error) {
     next(error)
@@ -49,6 +62,8 @@ router.put('/cart', async (req, res, next) => {
     next(error)
   }
 })
+
+//THIS IS A DOUBLE OF A DB METHOD
 
 router.delete('/cart/:itemId', async (req, res, next) => { 
   try {
