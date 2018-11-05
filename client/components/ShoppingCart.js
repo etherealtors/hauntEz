@@ -34,8 +34,7 @@ class ShoppingCart extends Component {
 						);
 					})}
 				</div>
-				<button type="submit">Submit order!</button>
-				<Checkout />
+				<Checkout onSubmit={this.submitOrder} />
 			</div>
 		);
 	}

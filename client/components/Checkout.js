@@ -3,7 +3,7 @@ import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 
 const PAYMENT_SERVER_URL =
-	process.env.NODE_ENV === 'production' ? 'http://hauntEz.herokuapp.com' : 'http://localhost:8080/checkout';
+	process.env.NODE_ENV === 'production' ? 'http://hauntEz.herokuapp.com' : 'http://localhost:8080/payments';
 
 const CURRENCY = 'USD';
 const fromDollarToCent = (amount) => amount * 100;
@@ -16,7 +16,7 @@ const errorPayment = (data) => {
 };
 
 const onToken = (amount, description) => (token) =>
-	Axios.post(TBD, {
+	Axios.post('/api/payments', {
 		description,
 		source: token.id,
 		currency: CURRENCY,
@@ -33,7 +33,7 @@ const Checkout = ({ name, description, amount }) => {
 			amount={fromDollarToCent(amount)}
 			token={onToken(amount, description)}
 			currency={CURRENCY}
-			stripeKey={process.env.STRIPE_PUBLISHABLE_KEY}
+			stripeKey="pk_test_pewWwrgncbREyJzeNYGTAX5v"
 		/>
 	);
 };
