@@ -5,6 +5,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_ORDER = 'ADD_TO_ORDER'
 const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
 const GET_ALL_ORDERS = 'GET_ALL_ORDERS'
+const DELETE_FROM_ORDER = 'DELETE_FROM_ORDER'; 
 
 //INITAL STATE
 
@@ -21,6 +22,7 @@ const updateOrderStatus = status => ({
   status
 })
 const getAllOrders = orders => ({type: GET_ALL_ORDERS, orders})
+const deleteItemFromOrder = itemId => ({type: DELETE_FROM_ORDER, itemId})
 
 //THUNK CREATORS
 
@@ -60,6 +62,15 @@ export const getOrderHistory = () => async dispatch => {
   }
 }
 
+export const deleteFromOrder = (itemId) => async dispatch => { 
+  try { 
+    await axios.delete(`/api/orders/cart/${itemId}`)
+    dispatch(deleteItemFromOrder(itemId)); 
+  } catch (error) {
+    console.error(error); 
+  }
+}
+
 //REDUCER
 
 export default function(state = initialState, action) {
@@ -72,6 +83,8 @@ export default function(state = initialState, action) {
       return initialState
     case GET_ALL_ORDERS: 
       return {...state, orders: action.orders}
+    case DELETE_FROM_ORDER: 
+      return {...state, orders: state.orders.filter(order => (order.id !== action.itemId))}; 
     default:
       return state
   }

@@ -47,7 +47,6 @@ Orders.getCart = async function(userId) {
       where: {status: 'Created', userId},
       include: [{model: Location}]
     })
-    console.log('getCart cart', cart)
     return cart
   } catch (error) {
     console.error(error)

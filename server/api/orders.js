@@ -31,7 +31,6 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    console.log('req:', req.body)
     const order = await Orders.create(req.body)
     res.json(order)
   } catch (error) {
@@ -48,6 +47,15 @@ router.put('/cart', async (req, res, next) => {
     res.json('Processing')
   } catch (error) {
     next(error)
+  }
+})
+
+router.delete('/cart/:itemId', async (req, res, next) => { 
+  try {
+    Orders.destroy({where : {id: req.params.itemId}})
+    res.status(204).end(); 
+  } catch (error) {
+    next(error); 
   }
 })
 

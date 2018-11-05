@@ -18,7 +18,6 @@ class OrderHistory extends Component {
 
     render() {
         const orders = this.props.orders; 
-        console.log('orders', orders); 
         return (
             <div>
                 <h3>List of Orders</h3>
@@ -31,10 +30,9 @@ class OrderHistory extends Component {
                         <th>price</th>
                     </tr>
                     {orders.map((order, i) => {
-                        console.log('order', order)
                         return (
                             order ? (
-                            <tr key={i}>
+                            <tr key={order.id}>
                                 <td>{order.orderId}</td>
                                 <td>{order.status}</td>
                                 <td>{order.quantity}</td>
