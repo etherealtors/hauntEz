@@ -81,3 +81,8 @@ form div {
 .red {
 	color: red;
 }
+
+.reviewPic {
+	width: 90px;
+	height: 90px;
+}

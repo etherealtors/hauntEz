@@ -16,29 +16,44 @@ class SingleLocation extends Component {
 		let singleLocation = this.props.singleLocation;
 		let isAdmin = this.props.isAdmin;
 		let locationReviews = singleLocation.reviews;
-
+		let isUser = this.props.isUser;
+		console.log('singleLocation', singleLocation.name);
 		return (
 			<div id="singleLocation">
 				<img src={singleLocation.imageUrl} className="singleViewImage" />
 				<h2>{singleLocation.address}</h2>
 				<h2>{singleLocation.description}</h2>
+				{singleLocation.user && (
+					<div>
+						<h2 className="red">Sold By: </h2>
+						<h2>{singleLocation.user.name}</h2>{' '}
+						<img src={singleLocation.user.image} className="reviewPic" />
+					</div>
+				)}
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
 				<h3 className="red">Category: {singleLocation.category}</h3>
 
 				<h2>Reviews</h2>
 				{locationReviews && <Reviews singleLocation={singleLocation} />}
-
-				{isAdmin && (
-					<div>
-						<Link
-							to={{ pathname: `/singleLocation/${singleLocation.id}/update`, state: { singleLocation } }}
-						>
-							<button type="button">Update Listing</button>
-						</Link>
-						<AddReview />
-					</div>
-				)}
+				<div id="admin">
+					{isAdmin && (
+						<div>
+							<Link
+								to={{
+									pathname: `/singleLocation/${singleLocation.id}/update`,
+									state: { singleLocation }
+								}}
+							>
+								<button type="button">Update Listing</button>
+							</Link>
+							<div>
+								<AddReview />
+							</div>
+						</div>
+					)}
+					{isUser.name && <AddReview />}
+				</div>
 			</div>
 		);
 	}
@@ -46,7 +61,8 @@ class SingleLocation extends Component {
 
 const mapStateToProps = (state) => ({
 	singleLocation: state.locations.selectedLocation,
-	isAdmin: state.user.isAdmin
+	isAdmin: state.user.isAdmin,
+	isUser: state.user
 });
 
 const mapDispatchToProps = (dispatch) => ({

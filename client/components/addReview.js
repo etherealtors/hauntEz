@@ -16,11 +16,11 @@ class AddReview extends React.Component {
 	handleChange(event) {
 		this.setState({ [event.target.name]: event.target.value });
 	}
-	async handleSubmit(event) {
-		event.preventDefault();
+	async handleSubmit() {
 		const user = this.props.location.user.id;
 		const id = this.props.location.id;
 		await this.props.addReview(this.state.content, id, user, this.state.rating);
+		window.history.back();
 	}
 
 	render() {
