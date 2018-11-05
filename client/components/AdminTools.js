@@ -3,48 +3,14 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {auth} from '../store'
 import AddLocation from './AddLocation'
-import { getAllCategories, addCategory, deleteCategory } from '../store/categories'
+import UpdateCategory from './UpdateCategory'
 
 /**
  * COMPONENT
  */
 class AdminTools extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      categoryInput: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleDelete = this.handleDelete.bind(this);
-  }
-
-  componentDidMount() {
-		this.props.getAllCategories();
-  }
-  
-  handleChange(event) {
-    this.setState({[event.target.name]: event.target.value});
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-
-    console.log("THIS STATE CAT INPUT", this.state)
-
-    await this.props.addCategory({name: this.state.categoryInput})
-  }
-
-  handleDelete(categoryId) {
-    console.log("DELETEING NOW")
-    this.props.deleteCategory(categoryId);
-  }
-
   render() {
-    const { categories } = this.props
-
-    console.log("CATEGORIES ", categories)
 
     return (
       <div>
@@ -53,31 +19,8 @@ class AdminTools extends React.Component {
           {/*Add Product*/}
           <AddLocation />
 
-          {/*Create/Remove categories/amenities*/}
-          <h3>List of Categories</h3>
-          {categories.map(category => {
-            return (
-              <div key={category.id}>
-                <div>{category.name}</div>
-                <button type="button" onClick={() => this.handleDelete(category.id)}>X</button>
-              </div>
-            )
-          })}
-
-          <form>
-            <label>
-              Add a New Category: 
-              <input
-                type="text"
-                name="categoryInput"
-                value={this.state.categoryInput}
-                onChange={this.handleChange}
-              />
-            </label>
-            <button type="button" onClick={this.handleSubmit}>
-              Submit
-          </button>
-          </form>
+          {/*Create/remove categories/amenities*/}
+          <UpdateCategory />
           {/*Manage availability of product:
               -Users should not be able to see product on homepage any more if not available
               -Single product page should say not available*/}
@@ -99,22 +42,7 @@ class AdminTools extends React.Component {
   }
 };
 
-const mapStateToProps = (state) => {
-  console.log("STATE ". state)
-  return {
-    categories: state.categories.categories
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-    getAllCategories: () => dispatch(getAllCategories()),
-    addCategory: (category) => dispatch(addCategory(category)),
-    deleteCategory: (id) => dispatch(deleteCategory(id))
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(AdminTools)
+export default AdminTools;
 
 
 /**
