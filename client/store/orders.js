@@ -26,14 +26,14 @@ export const fillCart = () => async dispatch => {
   }
 }
 
-export const addToOrders = (newOrder) => async dispatch => { 
-  try { 
+export const addToOrders = newOrder => async dispatch => {
+  try {
     console.log('new order', newOrder)
-    const res = await axios.post('/api/orders/cart', newOrder); 
-    console.log('add order res', res); 
+    const res = await axios.post('/api/orders/cart', newOrder)
+    console.log('add order res', res)
     dispatch(addToOrder(res.data))
-  } catch (error) { 
-    console.error(error); 
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -43,7 +43,7 @@ export default function(state = initialState, action) {
   switch (action.type) {
     case GET_CART:
       return {...state, orders: action.orders}
-    case ADD_TO_ORDER: 
+    case ADD_TO_ORDER:
       return {...state, orders: [...state.orders, action.order]}
     default:
       return state

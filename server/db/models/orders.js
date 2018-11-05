@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const Locations = require('./location')
 
 const Orders = db.define('orders', {
   orderId: {
@@ -43,14 +42,7 @@ Orders.removeItem = async function(itemId) {
   }
 }
 
-Orders.getCart = async function(userId) {
-  try {
-    const cart = await Orders.findAll({where: {status: 'Created', userId}})
-    return cart
-  } catch (error) {
-    console.error(error)
-  }
-}
+// getCart() method has been moved to index.js, because it requires associations to be defined to work.
 
 // Instance Methods
 Orders.prototype.updatePrice = async function(newPrice) {

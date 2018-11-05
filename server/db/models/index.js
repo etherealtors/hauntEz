@@ -23,20 +23,30 @@ Amenities.hasOne(Location)
 Location.belongsTo(User)
 User.hasMany(Location)
 
+Location.hasMany(Orders)
+Orders.belongsTo(Location)
+User.hasMany(Orders)
+Orders.belongsTo(User)
 
-Orders.belongsTo(Location); 
-Location.hasMany(Orders);
-Orders.belongsTo(User); 
-User.hasMany(Orders); 
-
-// User.belongsToMany(Location, {
-//   through: Orders
-// })
-// Location.belongsToMany(User, {
-//   through: Orders
-// })
+// Location.belongsTo(Orders)
+// Orders.hasMany(Location)
+// Orders.hasMany(User)
+// User.belongsTo(Orders)
 
 // Location.belongsToMany(User, {through: 'Favs'})
+
+//This has to go here because it requires associations to be made before it can work.
+Orders.getCart = async function(userId) {
+  try {
+    const cart = await Orders.findAll({
+      where: {status: 'Created', userId},
+      include: [{model: Location}]
+    })
+    return cart
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 //Review associations
 User.hasMany(Review)
