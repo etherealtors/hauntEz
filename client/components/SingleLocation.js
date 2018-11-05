@@ -5,12 +5,29 @@ import { getOneLocation } from '../store';
 import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
 import AddReview from './addReview';
+import {addToOrders} from '../store'
 
 class SingleLocation extends Component {
+    constructor(props) {
+    super(props)
+
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  
 	componentDidMount() {
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
+  
+  
+  handleClick() {
+    this.props.addToOrders(
+      this.props.singleLocation.price,
+      this.props.singleLocation.id,
+      this.props.user.id
+    )
+  }
 
 	render() {
 		let singleLocation = this.props.singleLocation;
@@ -32,6 +49,10 @@ class SingleLocation extends Component {
 				)}
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
+        <h3 className="red">Category: {singleLocation.category}</h3>
+        <button type="button" onClick={this.handleClick}>
+          Add To Cart
+        </button>
 				<h3 className="red">Category: {singleLocation.category}</h3>
 
 				<h2>Reviews</h2>
@@ -60,12 +81,18 @@ class SingleLocation extends Component {
 }
 
 const mapStateToProps = (state) => ({
-	singleLocation: state.locations.selectedLocation,
 	isAdmin: state.user.isAdmin,
-	isUser: state.user
+	isUser: state.user,
+  singleLocation: state.locations.selectedLocation,
+  user: state.user,
 });
-
-const mapDispatchToProps = (dispatch) => ({
-	getLocation: (id) => dispatch(getOneLocation(id))
-});
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleLocation));
+const mapDispatchToProps = dispatch => ({
+  getLocation: id => dispatch(getOneLocation(id)),
+  addToOrders: (price, locationId, userId) =>
+    dispatch(
+      addToOrders({price: price, locationId: locationId, userId: userId})
+    )
+})
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(SingleLocation)
+)

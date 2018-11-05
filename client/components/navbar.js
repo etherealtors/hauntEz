@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import store, { logout } from '../store';
-import SearchBar from './SearchBar';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import store, {logout} from '../store'
+import SearchBar from './SearchBar'
 
 const Navbar = ({ handleClick, isLoggedIn, user }) => (
 	<div>
@@ -40,6 +40,9 @@ const Navbar = ({ handleClick, isLoggedIn, user }) => (
 					<Link to="/addLocation" className="links">
 						AddLocation
 					</Link>
+            <Link to="/cart" className="links">
+            Cart
+          </Link>
 				</div>
 			)}
 		</nav>
@@ -57,20 +60,20 @@ const mapState = (state) => {
 	};
 };
 
-const mapDispatch = (dispatch) => {
-	return {
-		handleClick() {
-			dispatch(logout());
-		}
-	};
-};
+const mapDispatch = dispatch => {
+  return {
+    handleClick() {
+      dispatch(logout())
+    }
+  }
+}
 
-export default connect(mapState, mapDispatch)(Navbar);
+export default connect(mapState, mapDispatch)(Navbar)
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
-	handleClick: PropTypes.func.isRequired,
-	isLoggedIn: PropTypes.bool.isRequired
-};
+  handleClick: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired
+}

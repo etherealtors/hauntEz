@@ -1,10 +1,10 @@
-'use strict';
-/* global describe beforeEach it */
+// 'use strict';
+// /* global describe beforeEach it */
 
-const seed = require('./seed');
-const { expect } = require('chai');
-//const db = require('../index');
+// const seed = require('./seed');
+// const { expect } = require('chai');
+// //const db = require('../index');
 
-describe('seed script', () => {
-	it('completes successfully', seed);
-});
+// describe('seed script', () => {
+// 	it('completes successfully', seed);
+// });
