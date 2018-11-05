@@ -21,6 +21,7 @@ class AdminTools extends React.Component {
 
           {/*Create/remove categories/amenities*/}
           <UpdateCategory />
+          
           {/*Manage availability of product:
               -Users should not be able to see product on homepage any more if not available
               -Single product page should say not available*/}
