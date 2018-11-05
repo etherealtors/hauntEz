@@ -1,12 +1,11 @@
-'use strict';
+'use strict'
 
-const db = require('../server/db');
-const { User, Location, Amenities } = require('../server/db/models');
+const db = require('../server/db')
+const {User, Location, Amenities, Orders, Review} = require('../server/db/models')
 
 async function seed() {
-	await db.sync({ force: true });
-	console.log('db synced!');
-
+  await db.sync({force: true})
+  console.log('db synced!')
 	const users = await Promise.all([
 		User.create({
 			name: 'Elizabeth Faucet',
@@ -288,9 +287,176 @@ async function seed() {
 			amenityId: 1
 		})
 	]);
+	const reviews = await Promise.all([
+		Review.create({
+			content: 'In horrifying, fear is gnarled murder, ominous eerie Serial killer sinister',
+			rating: 5,
+			userId: 1,
+			locationId: 1
+		}),
+		Review.create({
+			content:
+				'Sinister at creepy anxiety bite monster electrocution smashed in death. Blood ashes tearing in drowning spooky at fanatic with murderer',
+			rating: 3,
+			userId: 2,
+			locationId: 1
+		}),
+		Review.create({
+			content: 'Rotten menacing fatal bleak, monstrosity dread with demon scourge terrifying.',
+			rating: 5,
+			userId: 3,
+			locationId: 2
+		}),
+		Review.create({
+			content:
+				' Stalking wind, drenched chilling sick mental, with mutilation zombies blood, or shaking with willow trees shriek. Stalking wind, drenched chilling sic.',
+			rating: 3,
+			userId: 4,
+			locationId: 2
+		}),
+		Review.create({
+			content:
+				'Mental, with mutilation zombies blood, or shaking with willow trees shriek. Evil Michael Myers decomposed corpse.',
+			rating: 5,
+			userId: 5,
+			locationId: 3
+		}),
+		Review.create({
+			content:
+				'Shriek terror shadow, darkness in tense ac, Motionless drowning Full moon. Gnarled hazardous, gore Michael Myers grave ripped.',
+			rating: 4,
+			userId: 6,
+			locationId: 3
+		}),
+		Review.create({
+			content:
+				'Virus witch demonic dripping, at werewolf psycho slice flames. Suicide Slash demon at convulsing darkness a evil pain burn',
+			rating: 2,
+			userId: 7,
+			locationId: 4
+		}),
+		Review.create({
+			content: 'Trapped daring rotten worms, vampire monstrosity bleak are at flesh. Needles at bowels alarming.',
+			rating: 5,
+			userId: 1,
+			locationId: 4
+		}),
+		Review.create({
+			content: 'Virus witch demonic dripping, at werewolf psycho slice flames',
+			rating: 5,
+			userId: 2,
+			locationId: 5
+		}),
+		Review.create({
+			content: 'Virus witch demonic dripping, at werewolf psycho slice flames',
+			rating: 4,
+			userId: 3,
+			locationId: 5
+		}),
+		Review.create({
+			content: 'Occult at alley pushed. Haunt tearing murder crying an mental corpse zombies evil,',
+			rating: 3,
+			userId: 4,
+			locationId: 6
+		}),
+		Review.create({
+			content: 'chainsaw motionless gory. Anthrax putrid',
+			rating: 5,
+			userId: 5,
+			locationId: 6
+		}),
+		Review.create({
+			content: 'Bloodcurdling decompose.',
+			rating: 5,
+			userId: 6,
+			locationId: 7
+		}),
+		Review.create({
+			content: 'Zombie in virus scared cat Michael Myers worms. Cat at decapitated guns.',
+			rating: 3,
+			userId: 7,
+			locationId: 7
+		}),
+		Review.create({
+			content: 'Breathing heavily damp, cold and crying running, stalking slicing stabbing dripping (blood)',
+			rating: 1,
+			userId: 1,
+			locationId: 8
+		}),
+		Review.create({
+			content: '666 at kettle. Evil Michael Myers decompose.',
+			rating: 1,
+			userId: 2,
+			locationId: 8
+		}),
+		Review.create({
+			content: 'Corpse. Dungeon in a gruesome, a disembowel unknown.',
+			rating: 3,
+			userId: 3,
+			locationId: 9
+		}),
+		Review.create({
+			content: 'Falling are graveyard graves est. Tearing eyeballs zombie slash.',
+			rating: 2,
+			userId: 4,
+			locationId: 9
+		}),
+		Review.create({
+			content: 'Needles at bowels alarming. Horror bowels exorcism grave ',
+			rating: 5,
+			userId: 5,
+			locationId: 10
+		}),
+		Review.create({
+			content: ' Killer scourge scared, drowning helpless sheep at, terrifying and crazy gory.',
+			rating: 5,
+			userId: 6,
+			locationId: 10
+		}),
+		Review.create({
+			content: 'Eerie needles edginess, graveyard on death rotten',
+			rating: 2,
+			userId: 7,
+			locationId: 11
+		}),
+		Review.create({
+			content: 'Horror bowels exorcism grave cut, murdere.',
+			rating: 5,
+			userId: 1,
+			locationId: 11
+		}),
+		Review.create({
+			content: 'Gore at chainsaw knife crazed choking helpless.',
+			rating: 5,
+			userId: 2,
+			locationId: 12
+		}),
+		Review.create({
+			content: 'Creep cold graves, shadow non fear a, psychotic ashes ghost.',
+			rating: 3,
+			userId: 3,
+			locationId: 12
+		})
+	])
+const carts = await Promise.all([
+    Orders.create({
+      quantity: 1,
+      price: 69,
+      userId: 1,
+      locationId: 1
+    }),
+    Orders.create({
+      quantity: 69,
+      price: 420,
+      userId: 2,
+      locationId: 2
+    })
+  ])
 	console.log(`seeded ${users.length} users`);
 	console.log(`seeded ${locations.length} locations`);
-	console.log(`seeded ${amenities.length} locations`);
+	console.log(`seeded ${amenities.length} amenities`);
+      console.log(`seeded ${carts.length} carts`)
+	console.log(`seeded ${reviews.length} reviews`);
 	console.log(`seeded successfully`);
 }
 
@@ -298,25 +464,25 @@ async function seed() {
 // This way we can isolate the error handling and exit trapping.
 // The `seed` function is concerned only with modifying the database.
 async function runSeed() {
-	console.log('seeding...');
-	try {
-		await seed();
-	} catch (err) {
-		console.error(err);
-		process.exitCode = 1;
-	} finally {
-		console.log('closing db connection');
-		await db.close();
-		console.log('db connection closed');
-	}
+  console.log('seeding...')
+  try {
+    await seed()
+  } catch (err) {
+    console.error(err)
+    process.exitCode = 1
+  } finally {
+    console.log('closing db connection')
+    await db.close()
+    console.log('db connection closed')
+  }
 }
 
 // Execute the `seed` function, IF we ran this module directly (`node seed`).
 // `Async` functions always return a promise, so we can use `catch` to handle
 // any errors that might occur inside of `seed`.
 if (module === require.main) {
-	runSeed();
+  runSeed()
 }
 
 // we export the seed function for testing purposes (see `./seed.spec.js`)
-module.exports = seed;
+module.exports = seed
