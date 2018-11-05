@@ -3,6 +3,7 @@ const Location = require('./location')
 const Amenities = require('./amenities')
 const Orders = require('./orders')
 const Review = require('./review')
+const Category = require('./category');
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -13,7 +14,7 @@ const Review = require('./review')
 
 /**
  * We'll export all of our models here, so that any time a module needs a model,
- * we can just require it from 'db/models'
+ * we can just require it from 'db/models'dbe
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
@@ -35,6 +36,10 @@ Orders.belongsTo(User)
 
 // Location.belongsToMany(User, {through: 'Favs'})
 
+//Category associations
+Location.belongsToMany(Category, {through: 'location_category'})
+Category.belongsToMany(Location, {through: 'location_category'})
+  
 //This has to go here because it requires associations to be made before it can work.
 Orders.getCart = async function(userId) {
   try {
@@ -59,5 +64,6 @@ module.exports = {
   Location,
   Amenities,
   Orders,
-  Review
+  Review,
+  Category
 }
