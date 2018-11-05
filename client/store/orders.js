@@ -15,11 +15,10 @@ const initialState = {
 
 const getCart = orders => ({type: GET_CART, orders})
 const addToOrder = order => ({type: ADD_TO_ORDER, order})
-// const updateOrderStatus = (order, status) => ({
-//   type: UPDATE_ORDER_STATUS,
-//   order,
-//   status
-// })
+const updateOrderStatus = status => ({
+  type: UPDATE_ORDER_STATUS,
+  status
+})
 
 //THUNK CREATORS
 
@@ -41,13 +40,14 @@ export const addToOrders = newOrder => async dispatch => {
   }
 }
 
-// export const updateOrder = (order, status) => async dispatch => {
-//   try {
-//     const res = await axios.put(`/api/orders/cart/${order}`, {status})
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
+export const buyStuff = status => async dispatch => {
+  try {
+    const res = await axios.put(`/api/orders/cart`, status)
+    dispatch(updateOrderStatus(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 //REDUCER
 

@@ -42,6 +42,19 @@ Orders.removeItem = async function(itemId) {
   }
 }
 
+// probably update this for other statuses
+Orders.processOrder = async function(userId, newStatus) {
+  try {
+    const processOrder = await Orders.update(
+      {status: newStatus},
+      {fields: ['status'], where: {userId, status: 'Created'}}
+    )
+    return processOrder
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 // getCart() method has been moved to index.js, because it requires associations to be defined to work.
 
 // Instance Methods
@@ -66,14 +79,14 @@ Orders.prototype.updateQuantity = async function(newQuantity) {
   }
 }
 
-Orders.prototype.updateStatus = async function(newStatus) {
-  try {
-    const updated = await this.update({status: newStatus}, {fields: ['status']})
-    return updated
-  } catch (error) {
-    console.error(error)
-  }
-}
+// Orders.prototype.updateStatus = async function(newStatus) {
+//   try {
+//     const updated = await this.update({status: newStatus}, {fields: ['status']})
+//     return updated
+//   } catch (error) {
+//     console.error(error)
+//   }
+// }
 
 // Hooks
 Orders.beforeValidate(async order => {

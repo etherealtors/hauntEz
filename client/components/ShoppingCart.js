@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {fillCart} from '../store'
+import {fillCart, buyStuff} from '../store'
 
 class ShoppingCart extends Component {
   constructor() {
@@ -13,7 +13,7 @@ class ShoppingCart extends Component {
   }
 
   submitOrder() {
-    // this.placeOrder()
+    this.props.buyStuff('Processing')
     alert(
       'Your order has been placed. Thanks for shopping with HauntEZ, where our UX is as spooky as our customers!'
     )
@@ -45,7 +45,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fillCart: () => dispatch(fillCart())
+  fillCart: () => dispatch(fillCart()),
+  buyStuff: status => dispatch(buyStuff(status))
 })
 
 export default withRouter(
