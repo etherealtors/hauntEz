@@ -14,27 +14,42 @@ class ShoppingCart extends Component {
 
   submitOrder() {
     this.props.buyStuff('Processing')
-    alert(
-      'Your order has been placed. Thanks for shopping with HauntEZ, where our UX is as spooky as our customers!'
-    )
+    // alert(
+    //   'Your order has been placed. Thanks for shopping with HauntEZ, where our UX is as spooky as our customers!'
+    // )
   }
 
   render() {
     console.log('this.props.cart', this.props.cart)
     return (
       <div>
-        <div className="shopping-cart">
-          {this.props.cart.map(item => {
-            return (
-              <h2 key={item.location.id}>
-                {item.location.address} - ${item.location.price}
-              </h2>
-            )
-          })}
-        </div>
-        <button type="submit" onClick={this.submitOrder}>
-          Submit order!
-        </button>
+        <form
+          action={this.submitORder}
+          onSubmit={this.submitOrder}
+          method="POST"
+        >
+          <script
+            src="https://checkout.stripe.com/checkout.js"
+            className="stripe-button"
+            data-key={process.env.STRIPE_PUBLISHABLE_KEY}
+            data-amount="420"
+            data-name="Stripe.com"
+            data-description="Blaze it"
+            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+            data-locale="auto"
+            data-zip-code="true"
+          />
+          <div className="shopping-cart">
+            {this.props.cart.map(item => {
+              return (
+                <h2 key={item.location.id}>
+                  {item.location.address} - ${item.location.price}
+                </h2>
+              )
+            })}
+          </div>
+          <button type="submit">Submit order!</button>
+        </form>
       </div>
     )
   }
