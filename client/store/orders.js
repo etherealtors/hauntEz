@@ -4,6 +4,7 @@ import axios from 'axios'
 const GET_CART = 'GET_CART'
 const ADD_TO_ORDER = 'ADD_TO_ORDER'
 const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
+const GET_ALL_ORDERS = 'GET_ALL_ORDERS'
 
 //INITAL STATE
 
@@ -19,6 +20,7 @@ const updateOrderStatus = status => ({
   type: UPDATE_ORDER_STATUS,
   status
 })
+const getAllOrders = orders => ({type: GET_ALL_ORDERS, orders})
 
 //THUNK CREATORS
 
@@ -49,6 +51,15 @@ export const buyStuff = status => async dispatch => {
   }
 }
 
+export const getOrderHistory = () => async dispatch => { 
+  try {
+    const res = await axios.get('/api/orders')
+    dispatch(getAllOrders(res.data))
+  } catch (error) {
+    console.error(error); 
+  }
+}
+
 //REDUCER
 
 export default function(state = initialState, action) {
@@ -59,6 +70,8 @@ export default function(state = initialState, action) {
       return {...state, orders: [...state.orders, action.order]}
     case UPDATE_ORDER_STATUS:
       return initialState
+    case GET_ALL_ORDERS: 
+      return {...state, orders: action.orders}
     default:
       return state
   }

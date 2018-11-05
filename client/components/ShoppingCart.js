@@ -20,17 +20,18 @@ class ShoppingCart extends Component {
   }
 
   render() {
-    console.log('this.props.cart', this.props.cart)
     return (
       <div>
         <div className="shopping-cart">
           {this.props.cart.map(item => {
             return (
-              <h2 key={item.location.id}>
+              item.location ? (<h2 key={item.location.id}>
                 {item.location.address} - ${item.location.price}
-              </h2>
+              </h2>) : <h2></h2>
+              
             )
           })}
+          
         </div>
         <button type="submit" onClick={this.submitOrder}>
           Submit order!

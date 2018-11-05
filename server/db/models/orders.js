@@ -91,7 +91,7 @@ Orders.prototype.updateQuantity = async function(newQuantity) {
 // Hooks
 Orders.beforeValidate(async order => {
   try {
-    const cart = await Orders.getCart()
+    const cart = await Orders.getCart(order.userId)
     if (cart.length) {
       // if the user has an existing order in their cart, add the item to that order
       order.orderId = cart[0].orderId

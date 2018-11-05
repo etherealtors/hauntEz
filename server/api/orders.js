@@ -1,5 +1,22 @@
 const router = require('express').Router()
 const {Orders} = require('../db/models')
+const {User} = require('../db/models'); 
+
+router.get('/', async (req, res, next) => { 
+  try {
+    let orderHistory; 
+    if (await User.isAdmin(req.session.passport.user)){ 
+      orderHistory = await Orders.findAll(); 
+    }
+    else { 
+      orderHistory = await Orders.findAll({where: {userId: req.session.passport.user}})
+    }
+    
+    res.json(orderHistory); 
+  } catch (error) {
+    next(error); 
+  }
+})
 
 router.get('/cart', async (req, res, next) => {
   try {
