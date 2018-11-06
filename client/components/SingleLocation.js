@@ -6,6 +6,9 @@ import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
 import AddReview from './addReview';
 import {addToOrders} from '../store'
+import { timingSafeEqual } from 'crypto';
+
+let isLoggedIn = false; 
 
 class SingleLocation extends Component {
     constructor(props) {
@@ -39,12 +42,53 @@ class SingleLocation extends Component {
 	}
   
   handleClick() {
-    this.props.addToOrders(
-      this.props.singleLocation.price,
-      this.props.singleLocation.id,
-			this.props.user.id, 
-			this.state.quantity
-    )
+		if (isLoggedIn){ 
+			this.props.addToOrders(
+				this.props.singleLocation.price,
+				this.props.singleLocation.id,
+				this.props.user.id, 
+				this.state.quantity
+			)
+		} 
+	
+
+		else { 
+			// localStorage.clear(); 
+			let cart = JSON.parse(localStorage.getItem('cart')); 
+			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id } 
+
+			if (cart) { 
+				if(cart[orderToStore.id]){ 
+					cart[orderToStore.id].quantity = cart[orderToStore.id].quantity + orderToStore.quantity; 
+					localStorage.setItem('cart', JSON.stringify(cart)); 
+				} else { 
+					cart[orderToStore.id] = orderToStore; 
+					localStorage.setItem('cart', JSON.stringify(cart))
+				}
+			}
+
+			else { 
+				const locationId = orderToStore.id
+				const cartObj = {}; 
+				cartObj[orderToStore.id] = orderToStore; 
+				localStorage.setItem('cart', JSON.stringify(cartObj)); 
+				
+			}
+			console.log(JSON.parse(localStorage.getItem('cart'))); 
+
+
+			// let instance = JSON.parse(localStorage.getItem(this.props.singleLocation.id)); 
+			// if (!instance){ 
+			// 	localStorage.setItem(this.props.singleLocation.id, JSON.stringify(objToStore))
+			// }
+			// else { 
+			// 	let sum = instance.quantity + this.state.quantity; 
+			// 	let newInst = {...instance, quantity:sum}
+			// 	localStorage.setItem(this.props.singleLocation.id, JSON.stringify(newInst)); 
+			// }
+		}
+
+    
   }
 
 	render() {
@@ -52,7 +96,6 @@ class SingleLocation extends Component {
 		let isAdmin = this.props.isAdmin;
 		let locationReviews = singleLocation.reviews;
 		let isUser = this.props.isUser;
-		console.log('singleLocation', singleLocation.name);
 		return (
 			<div id="singleLocation">
 				<img src={singleLocation.imageUrl} className="singleViewImage" />

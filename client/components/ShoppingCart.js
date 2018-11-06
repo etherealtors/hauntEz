@@ -4,14 +4,25 @@ import {withRouter} from 'react-router-dom'
 import {fillCart, buyStuff, deleteFromOrder} from '../store'
 import Checkout from './Checkout';
 
+const isLoggedIn = false; 
+
 class ShoppingCart extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
+    this.state = { 
+      userCart: {}
+      //prob have to update to more
+    }
     this.submitOrder = this.submitOrder.bind(this)
     this.handleDelete = this.handleDelete.bind(this); 
   }
   componentDidMount() {
-    this.props.fillCart()
+    if (isLoggedIn){ 
+      this.props.fillCart()
+    }
+    // else { 
+      
+    // }
   }
 
   handleDelete(itemId){ 

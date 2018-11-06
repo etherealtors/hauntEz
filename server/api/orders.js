@@ -32,21 +32,26 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    let order = await Orders.findOne({where: {
-      userId: req.session.passport.user, 
-      locationId: req.body.locationId, 
-      status: 'Created'
-    }})
-    if (order) { 
-      let newQuant = Number(order.quantity) + Number(req.body.quantity); 
-      await Orders.update({quantity: newQuant}, {fields:['quantity'], 
-      where: {userId: req.session.passport.user, 
+    if (req.session.passport.user){ 
+      let order = await Orders.findOne({where: {
+        userId: req.session.passport.user, 
         locationId: req.body.locationId, 
-        status: 'Created'}})
+        status: 'Created'
+      }})
+      if (order) { 
+        let newQuant = Number(order.quantity) + Number(req.body.quantity); 
+        await Orders.update({quantity: newQuant}, {fields:['quantity'], 
+        where: {userId: req.session.passport.user, 
+          locationId: req.body.locationId, 
+          status: 'Created'}})
+      } else { 
+        order = Orders.create(req.body)
+      }
+      res.json(order)
     } else { 
-      order = Orders.create(req.body)
+      //localStorage 
     }
-    res.json(order)
+    
   } catch (error) {
     next(error)
   }
