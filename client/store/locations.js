@@ -16,7 +16,8 @@ const defaultLocations = [];
 const initialState = {
 	locations: [],
 	selectedLocation: {},
-	content: ''
+	content: '',
+	reviews: []
 };
 
 //ACTION CREATORS
@@ -25,6 +26,7 @@ const getLocation = (location) => ({ type: GET_LOCATION, location });
 const addNewLocation = (location) => ({ type: ADD_NEW_LOCATION, location });
 const updateExistingLocation = (location) => ({ type: UPDATE_LOCATION, location });
 const addNewReview = (content) => ({ type: ADD_REVIEW, content });
+const getReviews = () => ({ type: GET_REVIEWS });
 
 //THUNK CREATORS
 export const getAllLocations = () => async (dispatch) => {
@@ -69,9 +71,10 @@ export const addReview = (content, id, userId, rating) => async (dispatch) => {
 			userId: userId,
 			rating: rating
 		});
+
 		dispatch(addNewReview(data));
 	} catch (err) {
-		console.error(err);
+		alert('type more words man!');
 	}
 };
 

@@ -9,23 +9,41 @@ import {addToOrders} from '../store'
 
 class SingleLocation extends Component {
     constructor(props) {
-    super(props)
+			super(props)
+			this.state = { 
+				quantity: 1
+			}
 
-    this.handleClick = this.handleClick.bind(this)
-  }
+			this.handleClick = this.handleClick.bind(this)
+			this.createDropDown = this.createDropDown.bind(this); 
+			this.handleChange = this.handleChange.bind(this); 
+	}
+	
+	createDropDown(){ 
+		let optionNum = []
+		for (let i = 1; i <= this.props.singleLocation.quantity; i++){ 
+			optionNum.push(<option value={`${i}`}>{i}</option>); 
+		}
+		return optionNum; 
+
+	}
 
   
 	componentDidMount() {
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
-  
+	
+	handleChange(event){
+		this.setState({quantity: event.target.value})
+	}
   
   handleClick() {
     this.props.addToOrders(
       this.props.singleLocation.price,
       this.props.singleLocation.id,
-      this.props.user.id
+			this.props.user.id, 
+			this.state.quantity
     )
   }
 
@@ -50,6 +68,10 @@ class SingleLocation extends Component {
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
         <h3 className="red">Category: {singleLocation.category}</h3>
+				<select onChange={this.handleChange}>
+					<label>Item Quantity: </label>
+					{this.createDropDown()}
+				</select>
         <button type="button" onClick={this.handleClick}>
           Add To Cart
         </button>
@@ -88,9 +110,9 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = dispatch => ({
   getLocation: id => dispatch(getOneLocation(id)),
-  addToOrders: (price, locationId, userId) =>
+  addToOrders: (price, locationId, userId, quantity) =>
     dispatch(
-      addToOrders({price: price, locationId: locationId, userId: userId})
+      addToOrders({price: price, locationId: locationId, userId: userId, quantity: quantity})
     )
 })
 export default withRouter(

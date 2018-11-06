@@ -61,6 +61,13 @@ User.prototype.correctPassword = function(candidatePwd) {
 /**
  * classMethods
  */
+User.isAdmin = async function (id) { 
+	const user = await User.findOne({where: {id, isAdmin: true }})
+	if (user) return true; 
+	else return false; 
+
+}
+
 User.generateSalt = function() {
 	return crypto.randomBytes(16).toString('base64');
 };

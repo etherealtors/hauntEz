@@ -33,6 +33,7 @@ Orders.addItem = async function(newOrder) {
   }
 }
 
+//THIS IS A DOUBLE OF A ROUTE ACTION 
 Orders.removeItem = async function(itemId) {
   try {
     const removed = await Orders.destroy({where: {itemId}})
@@ -91,7 +92,7 @@ Orders.prototype.updateQuantity = async function(newQuantity) {
 // Hooks
 Orders.beforeValidate(async order => {
   try {
-    const cart = await Orders.getCart()
+    const cart = await Orders.getCart(order.userId)
     if (cart.length) {
       // if the user has an existing order in their cart, add the item to that order
       order.orderId = cart[0].orderId
