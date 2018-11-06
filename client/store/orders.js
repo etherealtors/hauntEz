@@ -40,6 +40,7 @@ export const fillCart = () => async (dispatch) => {
 
 export const addToOrders = (newOrder) => async (dispatch) => {
 	try {
+    console.log('addddd', newOrder)
 		const res = await axios.post('/api/orders/cart', newOrder);
 		dispatch(addToOrder(res.data));
 	} catch (error) {
@@ -50,7 +51,7 @@ export const addToOrders = (newOrder) => async (dispatch) => {
 export const buyStuff = (status) => async (dispatch) => {
 	try {
 		const res = await axios.put(`/api/orders/cart`, status);
-		dispatch(updateOrderStatus(res.data));
+    dispatch(updateOrderStatus(res.data));
 	} catch (error) {
 		console.error(error);
 	}

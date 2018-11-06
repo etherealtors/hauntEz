@@ -7,6 +7,15 @@ body {
 
 a {
 	text-decoration: none;
+	
+}
+
+a:active { 
+	color: hotpink; 
+}
+
+.location-links { 
+	background-color: none;
 }
 
 label {
@@ -32,7 +41,7 @@ form div {
 	width: 250px;
 	height: 250px;
 	padding: 1px;
-	border: 5px solid goldenrod;
+	border: 5px solid darkcyan;
 }
 
 .creepyFont {
@@ -58,7 +67,13 @@ form div {
 }
 .links {
 	color: white;
+	background-color: darkcyan; 
+	color: white; 
+	padding: 14px 25px; 
+	text-align: center; 
+	display: inline-block; 
 }
+
 .toDisplay {
 	display: inline-grid;
 	grid-template-columns: 100px 100px 100px;
@@ -86,6 +101,7 @@ form div {
 	width: 90px;
 	height: 90px;
 }
+
 
 .Toastify__toast-container {
 	z-index: 9999;
@@ -121,3 +137,35 @@ form div {
 	bottom: 1em;
 	right: 1em;
 }
+
+.nav-container { 
+	display: flex; 
+	flex-direction: row; 
+}
+
+.search-bar { 
+	margin-top: 27px; 
+}
+
+.location-text { 
+	font-size: 24px; 
+	text-align: center;
+	width: 250px; 
+	margin-bottom:50px; 
+	text-decoration: none; 
+	color: white; 
+	background-color: darkcyan; 
+}
+
+.location-links { 
+	text-decoration: none; 
+}
+
+p { 
+	margin: 0px;  
+}
+
+.display-all-container{ 
+	padding-left: 20px; 
+}
+

@@ -31,7 +31,7 @@ class AllLocations extends React.Component {
 		});
 
 		return (
-			<div>
+			<div className="display-all-container">
 				<div className="dropdown">
 					<select onChange={this.changeFilter}>
 						<option value="All">All</option>
@@ -46,15 +46,15 @@ class AllLocations extends React.Component {
 				</div>
 				<div className="displayAll">
 					{this.props.locations.map((location) => (
-						<div key={location.id} className="toDisplay">
+						<div key={location.id} className="toDisplay" >
 							<Link
 								to={{ pathname: `/singleLocation/${location.id}`, state: location }}
-								className="links"
+								className="location-links" 
 							>
 								<img src={location.imageUrl} className="homepageImg" />
 								<div className="formatListing">
 									{' '}
-									{location.address} - ${location.price}
+									<div className="location-text"><p>{location.address}</p> <p>${location.price}</p></div>
 								</div>
 							</Link>
 						</div>

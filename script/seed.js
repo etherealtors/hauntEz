@@ -63,6 +63,13 @@ async function seed() {
 			isAdmin: true,
 			image:
 				'https://static01.nyt.com/images/2017/01/11/blogs/11-lens-maurice-slide-XQMQ/11-lens-maurice-slide-XQMQ-superJumbo.jpg'
+		}), 
+		User.create({ 
+			name: 'Guest', 
+			email: 'null@email.com', 
+			password: 'null', 
+			role: 'buyer', 
+			id: 999
 		})
 	]);
 	const amenities = await Promise.all([
@@ -147,7 +154,7 @@ async function seed() {
 				'Willow trees undead wind, unknown ripped needles. Demons in fallen angel non terror decomposed rotten teeth. Witch ashes eyeball undead, in bury burn hell flames. Graves slice ominous is guns exorcism guts. Eerie needles edginess, graveyard on death rotten, disturbing non grave. chainsaw dread full moon, pushed at alley bruises, children is knife. Killer scourge scared, drowning helpless sheep at, terrifyin.',
 			gallery: null,
 			userId: 7,
-			amenityId: 4
+			amenityId: 4,
 		}),
 		Location.create({
 			address: '6346 Locker Way',
@@ -456,14 +463,20 @@ const carts = await Promise.all([
 	Category.create({
 		name: 'Shack',
 		categoryType: 'houseType',
+	}).then(function (category) {
+		category.addLocation([11]);
 	}),
 	Category.create({
 		name: 'Manse',
 		categoryType: 'houseType',
+	}).then(function (category) {
+		category.addLocation([3]);
 	}),
 	Category.create({
 		name: 'Boat',
 		categoryType: 'houseType',
+	}).then(function (category) {
+		category.addLocation([2, 4]);
 	}),
 	Category.create({
 		name: 'House',
