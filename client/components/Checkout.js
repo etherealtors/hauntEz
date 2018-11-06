@@ -15,23 +15,28 @@ const errorPayment = (data) => {
 	alert('Payment Error');
 };
 
-const onToken = (amount, description) => (token) =>
-	Axios.post('/api/payments', {
-		description,
-		source: token.id,
-		currency: CURRENCY,
-		amount: fromDollarToCent(amount)
-	})
-		.then(successPayment)
-		.catch(errorPayment);
+const onToken = (amount, description, handleSubmit) => async (token) => {
+	try {
+		await Axios.post('/api/payments', {
+			description,
+			source: token.id,
+			currency: CURRENCY,
+			amount: fromDollarToCent(amount)
+		})
+		handleSubmit("success")
+	}
+	catch (err) {
+		errorPayment();
+	}
+}
 
-const Checkout = ({ name, description, amount }) => {
+const Checkout = (props) => {
 	return (
 		<StripeCheckout
 			name="Demo Site"
 			description="Widget"
-			amount={fromDollarToCent(9999)}
-			token={onToken(9999, description)}
+			amount={fromDollarToCent(props.amount)}
+			token={onToken(props.amount, "Payment EZ", props.onSubmit)}
 			currency={CURRENCY}
 			stripeKey="pk_test_pewWwrgncbREyJzeNYGTAX5v"
 		/>
