@@ -9,6 +9,8 @@ import UpdateLocation from './components/UpdateLocation';
 import SingleLocation from './components/SingleLocation';
 import NotFound from './components/NotFound';
 import AdminTools from './components/AdminTools';
+import ShoppingCart from './components/ShoppingCart'
+import OrderHistory from './components/OrderHistory';
 
 /**
  * COMPONENT
@@ -33,6 +35,7 @@ class Routes extends Component {
         />
         <Route exact path="/" component={UserHome} />        
         <Route path="/cart" component={ShoppingCart} />
+        <Route path ='/orderHistory' component={OrderHistory}/>
         {/* route below needs to be added to an area that is only accessible as admin */}
         {isAdmin && (
           <div>
@@ -43,6 +46,7 @@ class Routes extends Component {
               <Route path="/updateLocation" component={UpdateLocation} />
               <Route exact path="/singleLocation/:locationId/update" component={UpdateLocation}/>
               <Route exact path="/admin" component={AdminTools} />
+              
               
             </Switch>
           </div>
