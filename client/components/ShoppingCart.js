@@ -14,11 +14,13 @@ class ShoppingCart extends Component {
       totalAmount: 0,
       totalQuantity: 0,
       itemsAllAvailable: true,
-      userCart: null
+      userCart: null,
+      processed: false
     }
     this.submitOrder = this.submitOrder.bind(this)
     this.handleDelete = this.handleDelete.bind(this); 
     this.setInitialState = this.setInitialState.bind(this);
+    this.updateDatabase = this.updateDatabase.bind(this); 
   }
 
   setInitialState() {
@@ -46,7 +48,7 @@ class ShoppingCart extends Component {
  }
 
   async componentDidMount() {
-    if (isLoggedIn){ 
+    if (this.props.isUser.name){ 
       await this.props.fillCart(); 
       this.setInitialState();
     }
@@ -59,7 +61,7 @@ class ShoppingCart extends Component {
   }
 
   async handleDelete(itemId){ 
-    if (isLoggedIn){ 
+    if (this.props.isUser.name){ 
       await this.props.deleteFromOrder(itemId); 
       this.setInitialState();
     }
@@ -74,36 +76,40 @@ class ShoppingCart extends Component {
 
   async updateDatabase(){ 
     let cartObj = this.state.userCart; 
+    let totalAmount = 0; 
+    let totalQuantity = 0; 
 
       for (let key in cartObj) { 
         if (cartObj.hasOwnProperty(key)){ 
           const itemObj = cartObj[key]
-          const newObj = { 
-            price: itemObj.price, 
-            locationId: itemObj.id, 
-            quantity: itemObj.quantity, 
-            userId: 999
-          }
           await this.props.addToOrders(itemObj.price, itemObj.id, 999, itemObj.quantity); 
+          totalAmount += itemObj.price; 
+          totalQuantity += itemObj.quantity; 
           //then need to update the status on this
         }
       }
-      localStorage.clear(); 
-      this.setState({userCart: null})
-      console.log('state', this.state)
+      console.log(totalAmount); 
+      this.setState({totalAmount, totalQuantity})
+      this.setState({processed: true})
+      // localStorage.clear(); 
+      // this.setState({userCart: null})
+      // console.log('state', this.state)
   }
 
   async submitOrder() {
-    if (isLoggedIn) { 
+    // if (isLoggedIn) { 
       await this.props.buyStuff('Processing')
       this.setInitialState();
-    }
+      this.setState({userCart:null})
+      localStorage.clear(); 
+    // }
+
     
   }
 
   render() {
     let cart = null; 
-    if (isLoggedIn) { 
+    if (this.props.isUser.name) { 
       cart = this.props.cart
     } else {
       //map through object keys and push into array 
@@ -123,25 +129,26 @@ class ShoppingCart extends Component {
             cart.map(item => {
        
             return (
-                          item.location ? (
-                          <div key={item.id}>
-                          <h2 >
-                            {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
-                            {(item.quantity > item.location.quantity) ?
-                            <p>*Low on stock. Please reduce the number of items and try again</p> :
-                            null}
-                          </h2> 
-                          <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
-                          </div>
+              item.location ? (
+              <div key={item.id}>
+              <h2 >
+                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
+                {(item.quantity > item.location.quantity) ?
+                <p>*Low on stock. Please reduce the number of items and try again</p> :
+                null}
+              </h2> 
+              <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
+              </div>
 
-                          ) : null
+              ) : null
               
             )})
             ) : null}
           <h3>Total: ${this.state.totalAmount}</h3>
         </div>
-        <button type="button" onClick={this.updateDatabase}>CLICKKK</button>
-
+        {this.props.isUser.name|| this.state.processed  ? null : (<button type="button" onClick={this.updateDatabase}>Click to Process Your Order</button>)}
+       
+        {/* {(true) ?           */}
       {(this.state.totalQuantity > 0 ) ?
       // && this.state.itemsAllAvailable
 				<Checkout
@@ -156,6 +163,7 @@ class ShoppingCart extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  isUser: state.user,
 	cart: state.orders.orders
 });
 
