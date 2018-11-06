@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fillCart, buyStuff } from '../store';
 import Checkout from './Checkout';
-import StripeCheckout from 'react-stripe-checkout';
+//import StripeCheckout from 'react-stripe-checkout';
 
 class ShoppingCart extends Component {
 	constructor() {
@@ -28,13 +28,21 @@ class ShoppingCart extends Component {
 				<div className="shopping-cart">
 					{this.props.cart.map((item) => {
 						return (
-							<h2 key={item.location.id}>
-								{item.location.address} - ${item.location.price}
-							</h2>
+							<div key={item.location.id}>
+								<h2>
+									{item.location.address} - ${item.location.price}
+								</h2>
+							</div>
 						);
 					})}
 				</div>
-				<Checkout onSubmit={this.submitOrder} />
+
+				<Checkout
+					// name={this.props.cart.location.address}
+					// description={this.props.cart.location.description}
+					// amount={this.props.cart.location.price}
+					onSubmit={this.submitOrder}
+				/>
 			</div>
 		);
 	}
@@ -50,19 +58,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShoppingCart));
-
-{
-	/* <form action="Processing" onSubmit={this.submitOrder} method="POST">
-<script
-  src="https://checkout.stripe.com/checkout.js"
-  className="stripe-button"
-  data-key={process.env.STRIPE_PUBLISHABLE_KEY}
-  data-amount="420"
-  data-name="Stripe.com"
-  data-description="Blaze it"
-  data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-  data-locale="auto"
-  data-zip-code="true"
-/>
-</form> */
-}

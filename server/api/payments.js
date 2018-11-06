@@ -3,10 +3,11 @@ const stripe = configureStripe(process.env.STRIPE_SECRET_KEY);
 const router = require('express').Router();
 
 const postStripeCharge = (res) => (stripeErr, stripeRes) => {
-	if (stripeErr) {
-		res.status(500).send({ error: stripeErr });
-	} else {
+	if (stripeRes) {
 		res.status(200).send({ success: stripeRes });
+	} else {
+		console.log('what is Res', stripeRes, 'error', stripeErr);
+		res.status(500).send({ error: stripeErr });
 	}
 };
 
