@@ -5,40 +5,38 @@ import { getOneLocation } from '../store';
 import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
 import AddReview from './addReview';
-import {addToOrders} from '../store'
+import { addToOrders } from '../store';
 
 let isLoggedIn = true; 
 
 class SingleLocation extends Component {
-    constructor(props) {
-			super(props)
-			this.state = { 
-				quantity: 1
-			}
+	constructor(props) {
+		super(props);
+		this.state = {
+			quantity: 1
+		};
 
-			this.handleClick = this.handleClick.bind(this)
-			this.createDropDown = this.createDropDown.bind(this); 
-			this.handleChange = this.handleChange.bind(this); 
+		this.handleClick = this.handleClick.bind(this);
+		this.createDropDown = this.createDropDown.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
-	
-	createDropDown(){ 
-		let optionNum = []
-		for (let i = 1; i <= this.props.singleLocation.quantity; i++){ 
-			optionNum.push(<option value={`${i}`}>{i}</option>); 
+
+	createDropDown() {
+		let optionNum = [];
+		for (let i = 1; i <= this.props.singleLocation.quantity; i++) {
+			optionNum.push(<option value={`${i}`}>{i}</option>);
 		}
-		return optionNum; 
-
+		return optionNum;
 	}
 
-  
 	componentDidMount() {
 		console.log('isUser?', this.props.isUser.name); 
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
-	
-	handleChange(event){
-		this.setState({quantity: event.target.value})
+
+	handleChange(event) {
+		this.setState({ quantity: event.target.value });
 	}
   
   handleClick() {
@@ -49,12 +47,9 @@ class SingleLocation extends Component {
 				this.props.user.id, 
 				this.state.quantity
 			)
-		}
-
-	
+		}	
 
 		else { 
-			// localStorage.clear(); 
 			let cart = JSON.parse(localStorage.getItem('cart')); 
 			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id, location: this.props.singleLocation } 
 
@@ -100,14 +95,14 @@ class SingleLocation extends Component {
 				)}
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
-        <h3 className="red">Category: {singleLocation.category}</h3>
+				<h3 className="red">Category: {singleLocation.category}</h3>
 				<select onChange={this.handleChange}>
 					<label>Item Quantity: </label>
 					{this.createDropDown()}
 				</select>
-        <button type="button" onClick={this.handleClick}>
-          Add To Cart
-        </button>
+				<button type="button" onClick={this.handleClick}>
+					Add To Cart
+				</button>
 				<h3 className="red">Category: {singleLocation.category}</h3>
 
 				<h2>Reviews</h2>
@@ -138,16 +133,12 @@ class SingleLocation extends Component {
 const mapStateToProps = (state) => ({
 	isAdmin: state.user.isAdmin,
 	isUser: state.user,
-  singleLocation: state.locations.selectedLocation,
-  user: state.user,
+	singleLocation: state.locations.selectedLocation,
+	user: state.user
 });
-const mapDispatchToProps = dispatch => ({
-  getLocation: id => dispatch(getOneLocation(id)),
-  addToOrders: (price, locationId, userId, quantity) =>
-    dispatch(
-      addToOrders({price: price, locationId: locationId, userId: userId, quantity: quantity})
-    )
-})
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleLocation)
-)
+const mapDispatchToProps = (dispatch) => ({
+	getLocation: (id) => dispatch(getOneLocation(id)),
+	addToOrders: (price, locationId, userId, quantity) =>
+		dispatch(addToOrders({ price: price, locationId: locationId, userId: userId, quantity: quantity }))
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleLocation));

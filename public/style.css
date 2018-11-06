@@ -102,6 +102,42 @@ form div {
 	height: 90px;
 }
 
+
+.Toastify__toast-container {
+	z-index: 9999;
+	position: fixed;
+	padding: 4px;
+	width: 320px;
+	box-sizing: border-box;
+	color: #fff;
+}
+.Toastify__toast-container--top-left {
+	top: 1em;
+	left: 1em;
+}
+.Toastify__toast-container--top-center {
+	top: 1em;
+	left: 50%;
+	margin-left: -160px;
+}
+.Toastify__toast-container--top-right {
+	top: 1em;
+	right: 1em;
+}
+.Toastify__toast-container--bottom-left {
+	bottom: 1em;
+	left: 1em;
+}
+.Toastify__toast-container--bottom-center {
+	bottom: 1em;
+	left: 50%;
+	margin-left: -160px;
+}
+.Toastify__toast-container--bottom-right {
+	bottom: 1em;
+	right: 1em;
+}
+
 .nav-container { 
 	display: flex; 
 	flex-direction: row; 
@@ -124,16 +160,12 @@ form div {
 .location-links { 
 	text-decoration: none; 
 }
-/* .single-location-container{ 
-	display: flex; 
-	flex-direction: column; 
-} */
 
 p { 
 	margin: 0px;  
-	
 }
 
 .display-all-container{ 
 	padding-left: 20px; 
 }
+
