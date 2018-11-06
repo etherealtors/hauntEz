@@ -2,14 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addReview } from '../store';
 import axios from 'axios';
+import { withRouter } from 'react-router-dom';
+import Reviews from './Reviews';
 
 class AddReview extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			content: '',
-			rating: '',
-			reviews: []
+			rating: ''
 		};
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,7 +23,13 @@ class AddReview extends React.Component {
 		event.preventDefault();
 		const user = this.props.location.user.id;
 		const id = this.props.location.id;
+		console.log('PROPS', this.props);
 		await this.props.addReview(this.state.content, id, user, this.state.rating);
+		this.setState({
+			content: '',
+			rating: ''
+		});
+		React.Component.forceUpdate(Reviews);
 	}
 
 	render() {
@@ -55,7 +62,8 @@ class AddReview extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		location: state.locations.selectedLocation
+		location: state.locations.selectedLocation,
+		reviews: state.reviews
 	};
 };
 
@@ -65,4 +73,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddReview));

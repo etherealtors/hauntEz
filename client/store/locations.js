@@ -114,7 +114,7 @@ export default function(state = initialState, action) {
 		case GET_LOCATIONS:
 			return { ...state, locations: action.locations };
 		case GET_LOCATION:
-			return { ...state, selectedLocation: action.location };
+			return { ...state, selectedLocation: action.location, reviews: action.location.reviews };
 		case UPDATE_LOCATION:
 			let locations = [ ...state.locations ];
 			let locationToUpdateIdx = locations.findIndex((location) => location.id === action.location.id);
@@ -122,7 +122,11 @@ export default function(state = initialState, action) {
 			locations[locationToUpdateIdx] = updatedLocation;
 			return { ...state, locations };
 		case ADD_REVIEW:
-			return { ...state, content: [ ...state.content, action.content.content ] };
+			return {
+				...state,
+				content: [ ...state.content, action.content.content ],
+				reviews: [ ...state.reviews, action.content ]
+			};
 		default:
 			return state;
 	}
