@@ -9,6 +9,7 @@ import UpdateLocation from './components/UpdateLocation';
 import SingleLocation from './components/SingleLocation';
 import NotFound from './components/NotFound';
 import AdminTools from './components/AdminTools';
+import ShoppingCart from './components/ShoppingCart';
 
 /**
  * COMPONENT
