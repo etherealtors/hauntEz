@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Orders, Discount} = require('../db/models')
+const {Orders, Discount, Location} = require('../db/models')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 router.get('/cart', async (req, res, next) => {
@@ -15,7 +15,6 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    console.log('req:', req.body)
     const order = await Orders.create(req.body)
     res.json(order)
   } catch (error) {
@@ -42,15 +41,19 @@ router.put('/cart', async (req, res, next) => {
   }
 })
 
-router.put('/:orderId/promocode/:code', async (req, res, next) => {
+router.put('/:orderId/promocode', async (req, res, next) => {
   try {
-    const isValid = await Discount.isValid(req.params.code)
+    const isValid = await Discount.isValid(req.body.code)
     if (isValid) {
       const applyDiscount = await Discount.applyDiscountToOrder(
         req.params.orderId,
-        req.params.code
+        req.body.code
       )
-      res.json(applyDiscount)
+      const getDiscountedOrder = await Orders.findAll({
+        where: {orderId: req.params.orderId},
+        include: {model: Location}
+      })
+      res.json(getDiscountedOrder)
     } else {
       res.json(isValid)
     }

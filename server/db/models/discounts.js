@@ -19,11 +19,14 @@ const Discount = db.define('discount', {
 
 // Class Method
 Discount.isValid = async function(code) {
-  const dbCode = await Discount.findAll({where: {code}})
+  const dbCode = await Discount.findOne({where: {code}})
   if (dbCode) {
-    if (dbCode.startDate <= Date.now() && dbCode.endDate >= Date.now()) {
-      return true
-    }
+    // if (
+    //   dbCode.startDate >= Date.now() &&
+    //   dbCode.endDate <= Date.now()
+    // ) {
+    return true
+    // }
   }
   return false
 }

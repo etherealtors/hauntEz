@@ -56,13 +56,19 @@ Orders.getCart = async function(userId) {
 
 Discount.applyDiscountToOrder = async function(orderId, discountCode) {
   try {
-    const order = await Orders.findById({
-      where: {orderId}
+    const order = await Orders.findAll({
+      where: {orderId: orderId}
     })
     const discount = await Discount.findOne({where: {code: discountCode}})
+    if (order[0].discountCode === discount.code) {
+      return true
+    }
+
     const orderWithDiscount = order.map(item => {
-      item.price = item.price * discount.pctOff / 100
-      item.discountCode = discount.code
+      const newItem = Object.assign(item)
+      newItem.price = item.price * discount.pctOff / 100
+      newItem.discountCode = discount.code
+      return newItem
     })
     const updateDb = await Promise.all(
       orderWithDiscount.map(newOrder => {
@@ -71,11 +77,14 @@ Discount.applyDiscountToOrder = async function(orderId, discountCode) {
             price: newOrder.price,
             discountCode: newOrder.discountCode
           },
-          {fields: ['price', 'discountCode']}
+          {
+            where: {orderId}
+          }
         )
       })
     )
-    return updateDb
+    const newOrders = await Orders.findAll({where: {orderId}})
+    return newOrders
   } catch (error) {
     console.error(error)
   }
@@ -94,5 +103,5 @@ module.exports = {
   Orders,
   Review,
   Category,
-  Discounts
+  Discount
 }
