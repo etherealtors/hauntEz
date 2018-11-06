@@ -65,6 +65,7 @@ router.post('/cart', async (req, res, next) => {
   }
 })
 
+//should delete some stuff
 router.put('/cart', async (req, res, next) => {
   try {
     console.log('reached route'); 

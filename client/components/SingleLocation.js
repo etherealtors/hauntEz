@@ -32,6 +32,7 @@ class SingleLocation extends Component {
 
   
 	componentDidMount() {
+		console.log('isUser?', this.props.isUser.name); 
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
@@ -41,7 +42,7 @@ class SingleLocation extends Component {
 	}
   
   handleClick() {
-		if (isLoggedIn){ 
+		if (this.props.isUser.name){ 
 			this.props.addToOrders(
 				this.props.singleLocation.price,
 				this.props.singleLocation.id,
