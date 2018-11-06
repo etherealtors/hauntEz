@@ -8,43 +8,53 @@ class ShoppingCart extends Component {
   constructor() {
     super()
     this.state = {
-      totalAmount: 0
+      totalAmount: 0,
+      totalQuantity: 0,
+      itemsAllAvailable: true
     }
     this.submitOrder = this.submitOrder.bind(this)
     this.handleDelete = this.handleDelete.bind(this); 
-  }
-  async componentDidMount() {
-    await this.props.fillCart();
-    this.calculateTotal();
+    this.setInitialState = this.setInitialState.bind(this);
   }
 
-  handleDelete(itemId){ 
-    this.props.deleteFromOrder(itemId)
-  }
-
-  submitOrder(success) {
-    console.log("SUCCESS? ", success)
-    console.log("cart ", this.props.cart)
-    console.log("TOTAL AMOUNT ", this.state.totalAmount)
-    this.props.buyStuff('Processing')
-
+  setInitialState() {
+    let totalAmount = 0;
+    let totalQuantity = 0;
+    let itemsAllAvailable = true;
+  
+    for(let i = 0; i < this.props.cart.length; i++) {
+      let currItem = this.props.cart[i];
+     
+      totalAmount += (currItem.location.price * currItem.quantity);
+      totalQuantity += currItem.quantity;
+      if(currItem.quantity > currItem.location.quantity) {
+        itemsAllAvailable = false;
+      }
+    }
+   
     this.setState({
-      totalAmount: 0
-    })
-    // put something here
-  }
-
-  calculateTotal() {
-    let total = this.props.cart.reduce((prevVal, currItem) => {
-      return prevVal + (currItem.location.price * currItem.quantity);
-    }, 0);
-    this.setState({
-      totalAmount: total
+      totalAmount,
+      totalQuantity,
+      itemsAllAvailable
     });
   }
 
+  async componentDidMount() {
+    await this.props.fillCart();
+    this.setInitialState();
+  }
+
+  async handleDelete(itemId){ 
+    await this.props.deleteFromOrder(itemId)
+    this.setInitialState();
+  }
+
+  async submitOrder() {
+    await this.props.buyStuff('Processing')
+    this.setInitialState();
+  }
+
   render() {
-    console.log("TOTAL ", this.state.totalAmount)
     return (
       <div>
         <div className="shopping-cart">
@@ -53,7 +63,11 @@ class ShoppingCart extends Component {
               item.location ? (
               <div key={item.id}>
               <h2 >
-                {item.location.address} for ${item.location.price} x{item.quantity} = ${item.location.price*item.quantity}
+                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
+
+                {(item.quantity > item.location.quantity) ?
+                <p>*Low on stock. Please reduce the number of items and try again</p> :
+                null}
               </h2> 
               <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
               </div>
@@ -62,10 +76,15 @@ class ShoppingCart extends Component {
           })}
           <h3>Total: ${this.state.totalAmount}</h3>
         </div>
+
+        {(this.state.totalQuantity > 0 && this.state.itemsAllAvailable) ?
 				<Checkout
           amount={this.state.totalAmount}
 					onSubmit={this.submitOrder}
-				/>
+        /> :
+        <h1>Cart is empty or needs modifying</h1>
+        }
+
       </div>
     )
   }

@@ -7,9 +7,6 @@ const PAYMENT_SERVER_URL =
 
 const CURRENCY = 'USD';
 const fromDollarToCent = (amount) => Math.round(amount * 100);
-const successPayment = (data) => {
-	alert('Payment Successful');
-};
 
 const errorPayment = (data) => {
 	alert('Payment Error');
@@ -17,13 +14,13 @@ const errorPayment = (data) => {
 
 const onToken = (amount, description, handleSubmit) => async (token) => {
 	try {
-		await Axios.post('/api/payments', {
+		let response = await Axios.post('/api/payments', {
 			description,
 			source: token.id,
 			currency: CURRENCY,
 			amount: fromDollarToCent(amount)
-		})
-		handleSubmit("success")
+		});
+		handleSubmit();
 	}
 	catch (err) {
 		errorPayment();

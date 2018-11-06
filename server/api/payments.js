@@ -4,7 +4,7 @@ const router = require('express').Router();
 
 const postStripeCharge = (res) => (stripeErr, stripeRes) => {
 	if (stripeRes) {
-		res.status(200).send({ success: stripeRes });
+		res.status(200).send({ success: stripeRes, response: res.body });
 	} else {
 		console.log('what is Res', stripeRes, 'error', stripeErr);
 		res.status(500).send({ error: stripeErr });
@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-	console.log("REQ BODY ", req.body)
 	stripe.charges.create(req.body, postStripeCharge(res));
 });
 
