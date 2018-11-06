@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addReview } from '../store';
+import store, { addReview } from '../store';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import Reviews from './Reviews';
@@ -27,9 +27,9 @@ class AddReview extends React.Component {
 		await this.props.addReview(this.state.content, id, user, this.state.rating);
 		this.setState({
 			content: '',
-			rating: ''
+			rating: '',
+			reviews: store.getState()
 		});
-		React.Component.forceUpdate(Reviews);
 	}
 
 	render() {

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import history from '../history';
+import { toast } from 'react-toastify';
+import '!style-loader!css-loader!react-toastify/dist/ReactToastify.css';
 
 //ACTION TYPES
 const GET_LOCATIONS = 'GET_LOCATIONS';
@@ -71,7 +73,7 @@ export const addReview = (content, id, userId, rating) => async (dispatch) => {
 			userId: userId,
 			rating: rating
 		});
-
+		console.log('DATA', data);
 		dispatch(addNewReview(data));
 	} catch (err) {
 		alert('type more words man!');
@@ -110,6 +112,9 @@ export const updateLocation = (updatedLocation) => async (dispatch) => {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case ADD_NEW_LOCATION:
+			{
+				toast.success('Successfully Added Property');
+			}
 			return { ...state, locations: [ ...state.locations, action.location ] };
 		case GET_LOCATIONS:
 			return { ...state, locations: action.locations };
@@ -120,8 +125,15 @@ export default function(state = initialState, action) {
 			let locationToUpdateIdx = locations.findIndex((location) => location.id === action.location.id);
 			let updatedLocation = { ...locations[locationToUpdateIdx], ...action.location };
 			locations[locationToUpdateIdx] = updatedLocation;
+			{
+				toast.success('Successfully Updated Property');
+			}
 			return { ...state, locations };
 		case ADD_REVIEW:
+			{
+				toast.success('Successfully Added Review');
+			}
+
 			return {
 				...state,
 				content: [ ...state.content, action.content.content ],
