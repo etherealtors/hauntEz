@@ -4,7 +4,7 @@ import {withRouter} from 'react-router-dom'
 import {fillCart, buyStuff, deleteFromOrder, addToOrders} from '../store'
 import Checkout from './Checkout';
 
-const isLoggedIn = false; 
+const isLoggedIn = true; 
 
 class ShoppingCart extends Component {
 
@@ -25,8 +25,10 @@ class ShoppingCart extends Component {
     let totalAmount = 0;
     let totalQuantity = 0;
     let itemsAllAvailable = true;
-  
+    
+    console.log('props cart', this.props.cart)
     for(let i = 0; i < this.props.cart.length; i++) {
+      
       let currItem = this.props.cart[i];
      
       totalAmount += (currItem.location.price * currItem.quantity);
@@ -45,19 +47,21 @@ class ShoppingCart extends Component {
 
   async componentDidMount() {
     if (isLoggedIn){ 
-      await this.props.fillCart()
+      await this.props.fillCart(); 
+      this.setInitialState();
     }
     else { 
       this.setState({userCart: JSON.parse(localStorage.getItem('cart'))}); 
       console.log('state', this.state); 
       console.log('state cart', this.state.userCart); 
     }
-    this.setInitialState();
+    
   }
 
   async handleDelete(itemId){ 
     if (isLoggedIn){ 
-      await this.props.deleteFromOrder(itemId)
+      await this.props.deleteFromOrder(itemId); 
+      this.setInitialState();
     }
     else { 
       let cart = JSON.parse(localStorage.getItem('cart'))
@@ -65,7 +69,7 @@ class ShoppingCart extends Component {
       localStorage.setItem('cart', JSON.stringify(cart)); 
       this.setState({userCart: cart})
     }
-    this.setInitialState();
+    
   }
 
   async updateDatabase(){ 
@@ -92,8 +96,9 @@ class ShoppingCart extends Component {
   async submitOrder() {
     if (isLoggedIn) { 
       await this.props.buyStuff('Processing')
+      this.setInitialState();
     }
-    this.setInitialState();
+    
   }
 
   render() {
@@ -118,26 +123,27 @@ class ShoppingCart extends Component {
             cart.map(item => {
        
             return (
-              item.location ? (
-              <div key={item.id}>
-              <h2 >
-                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
-                {(item.quantity > item.location.quantity) ?
-                <p>*Low on stock. Please reduce the number of items and try again</p> :
-                null}
-              </h2> 
-              <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
-              </div>
+                          item.location ? (
+                          <div key={item.id}>
+                          <h2 >
+                            {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
+                            {(item.quantity > item.location.quantity) ?
+                            <p>*Low on stock. Please reduce the number of items and try again</p> :
+                            null}
+                          </h2> 
+                          <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
+                          </div>
 
-              ) : null
+                          ) : null
               
-            )
-          })) : null
+            )})
+            ) : null}
           <h3>Total: ${this.state.totalAmount}</h3>
         </div>
         <button type="button" onClick={this.updateDatabase}>CLICKKK</button>
 
-      {(this.state.totalQuantity > 0 && this.state.itemsAllAvailable) ?
+      {(this.state.totalQuantity > 0 ) ?
+      // && this.state.itemsAllAvailable
 				<Checkout
           amount={this.state.totalAmount}
 					onSubmit={this.submitOrder}

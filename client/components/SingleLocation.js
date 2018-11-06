@@ -7,7 +7,7 @@ import Reviews from './Reviews';
 import AddReview from './addReview';
 import {addToOrders} from '../store'
 
-let isLoggedIn = false; 
+let isLoggedIn = true; 
 
 class SingleLocation extends Component {
     constructor(props) {
