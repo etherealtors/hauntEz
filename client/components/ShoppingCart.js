@@ -7,29 +7,57 @@ import Checkout from './Checkout';
 const isLoggedIn = false; 
 
 class ShoppingCart extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { 
+
+  constructor() {
+    super()
+    this.state = {
+      totalAmount: 0,
+      totalQuantity: 0,
+      itemsAllAvailable: true,
       userCart: null
-      //prob have to update to more
     }
     this.submitOrder = this.submitOrder.bind(this)
     this.handleDelete = this.handleDelete.bind(this); 
+    this.setInitialState = this.setInitialState.bind(this);
   }
-  componentDidMount() {
+
+  setInitialState() {
+    let totalAmount = 0;
+    let totalQuantity = 0;
+    let itemsAllAvailable = true;
+  
+    for(let i = 0; i < this.props.cart.length; i++) {
+      let currItem = this.props.cart[i];
+     
+      totalAmount += (currItem.location.price * currItem.quantity);
+      totalQuantity += currItem.quantity;
+      if(currItem.quantity > currItem.location.quantity) {
+        itemsAllAvailable = false;
+      }
+    }
+   
+    this.setState({
+      totalAmount,
+      totalQuantity,
+      itemsAllAvailable
+    });
+ }
+
+  async componentDidMount() {
     if (isLoggedIn){ 
-      this.props.fillCart()
+      await this.props.fillCart()
     }
     else { 
       this.setState({userCart: JSON.parse(localStorage.getItem('cart'))}); 
       console.log('state', this.state); 
       console.log('state cart', this.state.userCart); 
     }
+    this.setInitialState();
   }
 
-  handleDelete(itemId){ 
+  async handleDelete(itemId){ 
     if (isLoggedIn){ 
-      this.props.deleteFromOrder(itemId)
+      await this.props.deleteFromOrder(itemId)
     }
     else { 
       let cart = JSON.parse(localStorage.getItem('cart'))
@@ -37,7 +65,7 @@ class ShoppingCart extends Component {
       localStorage.setItem('cart', JSON.stringify(cart)); 
       this.setState({userCart: cart})
     }
-    
+    this.setInitialState();
   }
 
   async updateDatabase(){ 
@@ -61,15 +89,14 @@ class ShoppingCart extends Component {
       console.log('state', this.state)
   }
 
-  submitOrder() {
+  async submitOrder() {
     if (isLoggedIn) { 
-      this.props.buyStuff('Processing')
+      await this.props.buyStuff('Processing')
     }
+    this.setInitialState();
   }
 
   render() {
-
-    let total = 0; 
     let cart = null; 
     if (isLoggedIn) { 
       cart = this.props.cart
@@ -83,38 +110,40 @@ class ShoppingCart extends Component {
         }
       }
     }
+
     return (
-      
       <div>
         <div className="shopping-cart">         
           {cart ? ( 
             cart.map(item => {
-            if (item.location){ 
-              total+= item.location.price*item.quantity
-            }
+       
             return (
               item.location ? (
               <div key={item.id}>
               <h2 >
-                {item.location.address} for ${item.location.price} x{item.quantity} = ${item.location.price*item.quantity}
+                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
+                {(item.quantity > item.location.quantity) ?
+                <p>*Low on stock. Please reduce the number of items and try again</p> :
+                null}
               </h2> 
               <button type="button" onClick={() => this.handleDelete(item.id)}>Remove From Cart</button>
               </div>
-              ) : <div></div>
+
+              ) : null
               
             )
-          })) : <div></div>}
-          <h3>Total: ${total}</h3>
+          })) : null
+          <h3>Total: ${this.state.totalAmount}</h3>
         </div>
         <button type="button" onClick={this.updateDatabase}>CLICKKK</button>
-        <div onClick={this.addGuestOrder}>
+
+      {(this.state.totalQuantity > 0 && this.state.itemsAllAvailable) ?
 				<Checkout
-					// name={this.props.cart.location.address}
-					// description={this.props.cart.location.description}
-					// amount={this.props.cart.location.price}
+          amount={this.state.totalAmount}
 					onSubmit={this.submitOrder}
-				/>
-        </div>
+			  /> :
+          <h1>Cart is empty or needs modifying</h1>
+      }
       </div>
     )
   }
