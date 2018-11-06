@@ -15,13 +15,16 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
         {'     '}
         <img src="http://rs353.pbsrc.com/albums/r376/swfan67/1967/ghost.gif~c200" />
       </span>
-      <SearchBar />
+      
+      
       {isLoggedIn ? (
-        <div>
+        <div className ="nav-container">
+          
           {/* The navbar will show these links after you log in */}
-          <Link to="/">Home</Link>
           <div>Hi, {user.name} </div>
-          <a href="#" onClick={handleClick}>
+          <Link to="/" className="links">Home</Link>
+          
+          <a className="links" href="#" onClick={handleClick}>
             Logout
           </a>
           <Link to="/cart" className="links">
@@ -30,9 +33,11 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
           <Link to='/orderHistory' className="links"> 
             Order History 
           </Link>
+          <SearchBar />
         </div>
       ) : (
-        <div>
+        <div className="nav-container">
+          
           {/* The navbar will show these links before you log in */}
           <Link to="/" className="links">
             Home
@@ -43,9 +48,8 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
           <Link to="/signup" className="links">
             Sign Up
           </Link>
-          <Link to="/addLocation" className="links">
-            AddLocation
-          </Link>
+          <Link to='/cart' className="links">Cart</Link>
+          <SearchBar />
         </div>
       )}
     </nav>
