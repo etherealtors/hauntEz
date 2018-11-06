@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 import { getAllLocations, getFilteredLocations } from '../store';
+import { getAllCategories } from '../store/categories'
 import { Link } from 'react-router-dom';
 
 class AllLocations extends React.Component {
@@ -12,6 +13,7 @@ class AllLocations extends React.Component {
 
 	componentDidMount() {
 		this.props.getAllLocations();
+		this.props.getAllCategories();
 	}
 
 	changeFilter(event) {
@@ -23,14 +25,22 @@ class AllLocations extends React.Component {
 	}
 
 	render() {
+		let orderedCategories = this.props.categories.sort((a, b) => {
+			if(a.name <= b.name) {return -1}
+			else {return 1}
+		});
+
 		return (
 			<div>
 				<div className="dropdown">
 					<select onChange={this.changeFilter}>
-						{[ 'All', 'Shack', 'House', 'Apartment', 'Manse', 'Castle', 'Boat' ].map((type) => (
-							<option key={type} value={type}>
-								{type}
-							</option>
+						<option value="All">All</option>
+						{orderedCategories.map((type) => (
+							(type.categoryType === 'houseType') ?
+							<option key={type.id} value={type.name}>
+								{type.name}
+							</option> :
+							null
 						))}
 					</select>
 				</div>
@@ -56,12 +66,14 @@ class AllLocations extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-	locations: state.locations.locations
+	locations: state.locations.locations,
+	categories: state.categories.categories
 });
 
 const mapDispatchToProps = (dispatch) => ({
 	getAllLocations: () => dispatch(getAllLocations()),
-	getFilteredLocations: (category) => dispatch(getFilteredLocations(category))
+	getFilteredLocations: (category) => dispatch(getFilteredLocations(category)),
+	getAllCategories: () => dispatch(getAllCategories())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AllLocations);

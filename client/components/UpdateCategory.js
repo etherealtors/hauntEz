@@ -12,7 +12,8 @@ class UpdateCategory extends React.Component {
   constructor() {
     super();
     this.state = {
-      categoryInput: ''
+      categoryInput: '',
+      typeInput: 'houseType'
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,12 +25,13 @@ class UpdateCategory extends React.Component {
   }
   
   handleChange(event) {
+    console.log(event)
     this.setState({[event.target.name]: event.target.value});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addCategory({name: this.state.categoryInput})
+    this.props.addCategory({name: this.state.categoryInput, categoryType: this.state.typeInput})
   }
 
   handleDelete(categoryId) {
@@ -52,7 +54,7 @@ class UpdateCategory extends React.Component {
             )
           })}
 
-          <form>
+          <form onSubmit={this.handleSubmit}>
             <label>
               Add a New Category: 
               <input
@@ -63,7 +65,12 @@ class UpdateCategory extends React.Component {
               />
             </label>
 
-            <button type="button" onClick={this.handleSubmit}>Submit</button>
+            <select name="typeInput" onChange={this.handleChange}>
+              <option value="houseType">House Type</option>
+              <option value="amenity">Amenity</option>
+            </select>
+
+            <button type="submit">Submit</button>
           </form>
       </div>
     );

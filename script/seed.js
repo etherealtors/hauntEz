@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Amenities, Orders, Review} = require('../server/db/models')
+const {User, Location, Amenities, Orders, Review, Category} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -452,6 +452,40 @@ const carts = await Promise.all([
       locationId: 2
     })
   ])
+  const categories = await Promise.all([
+	Category.create({
+		name: 'Shack',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'Manse',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'Boat',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'House',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'Apartment',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'Castle',
+		categoryType: 'houseType',
+	}),
+	Category.create({
+		name: 'Has Skeletons in Closet',
+		categoryType: 'amenity',
+	}),
+	Category.create({
+		name: 'Has Nearby Graveyard',
+		categoryType: 'amenity',
+	})
+])
 	console.log(`seeded ${users.length} users`);
 	console.log(`seeded ${locations.length} locations`);
 	console.log(`seeded ${amenities.length} amenities`);

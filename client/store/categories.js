@@ -28,6 +28,7 @@ export const getAllCategories = () => async (dispatch) => {
 
 export const addCategory = (category) => async (dispatch) => {
     try {
+		console.log("CATEGPRY ", category)
         const res = await axios.post('/api/categories', category);
         dispatch(addNewCategory(res.data));
     } catch (error) {
