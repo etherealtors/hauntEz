@@ -20,6 +20,9 @@ const Orders = db.define('orders', {
   price: {
     type: Sequelize.INTEGER,
     allowNull: false
+  },
+  discountCode: {
+    type: Sequelize.STRING
   }
 })
 

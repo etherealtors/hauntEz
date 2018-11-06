@@ -3,7 +3,8 @@ const Location = require('./location')
 const Amenities = require('./amenities')
 const Orders = require('./orders')
 const Review = require('./review')
-const Category = require('./category');
+const Category = require('./category')
+const Discount = require('./discounts')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -39,7 +40,7 @@ Orders.belongsTo(User)
 //Category associations
 Location.belongsToMany(Category, {through: 'location_category'})
 Category.belongsToMany(Location, {through: 'location_category'})
-  
+
 //This has to go here because it requires associations to be made before it can work.
 Orders.getCart = async function(userId) {
   try {
@@ -48,6 +49,33 @@ Orders.getCart = async function(userId) {
       include: [{model: Location}]
     })
     return cart
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+Discount.applyDiscountToOrder = async function(orderId, discountCode) {
+  try {
+    const order = await Orders.findById({
+      where: {orderId}
+    })
+    const discount = await Discount.findOne({where: {code: discountCode}})
+    const orderWithDiscount = order.map(item => {
+      item.price = item.price * discount.pctOff / 100
+      item.discountCode = discount.code
+    })
+    const updateDb = await Promise.all(
+      orderWithDiscount.map(newOrder => {
+        Orders.update(
+          {
+            price: newOrder.price,
+            discountCode: newOrder.discountCode
+          },
+          {fields: ['price', 'discountCode']}
+        )
+      })
+    )
+    return updateDb
   } catch (error) {
     console.error(error)
   }
@@ -65,5 +93,6 @@ module.exports = {
   Amenities,
   Orders,
   Review,
-  Category
+  Category,
+  Discounts
 }
