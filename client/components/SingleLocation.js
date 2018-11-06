@@ -6,7 +6,6 @@ import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
 import AddReview from './addReview';
 import {addToOrders} from '../store'
-import { timingSafeEqual } from 'crypto';
 
 let isLoggedIn = false; 
 
@@ -49,13 +48,14 @@ class SingleLocation extends Component {
 				this.props.user.id, 
 				this.state.quantity
 			)
-		} 
+		}
+
 	
 
 		else { 
 			// localStorage.clear(); 
 			let cart = JSON.parse(localStorage.getItem('cart')); 
-			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id } 
+			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id, location: this.props.singleLocation } 
 
 			if (cart) { 
 				if(cart[orderToStore.id]){ 
@@ -68,7 +68,6 @@ class SingleLocation extends Component {
 			}
 
 			else { 
-				const locationId = orderToStore.id
 				const cartObj = {}; 
 				cartObj[orderToStore.id] = orderToStore; 
 				localStorage.setItem('cart', JSON.stringify(cartObj)); 
@@ -76,16 +75,6 @@ class SingleLocation extends Component {
 			}
 			console.log(JSON.parse(localStorage.getItem('cart'))); 
 
-
-			// let instance = JSON.parse(localStorage.getItem(this.props.singleLocation.id)); 
-			// if (!instance){ 
-			// 	localStorage.setItem(this.props.singleLocation.id, JSON.stringify(objToStore))
-			// }
-			// else { 
-			// 	let sum = instance.quantity + this.state.quantity; 
-			// 	let newInst = {...instance, quantity:sum}
-			// 	localStorage.setItem(this.props.singleLocation.id, JSON.stringify(newInst)); 
-			// }
 		}
 
     

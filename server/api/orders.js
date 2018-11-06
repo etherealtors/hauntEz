@@ -32,7 +32,8 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    if (req.session.passport.user){ 
+    console.log('hellocart'); 
+    if (req.session.passport){ 
       let order = await Orders.findOne({where: {
         userId: req.session.passport.user, 
         locationId: req.body.locationId, 
@@ -45,11 +46,18 @@ router.post('/cart', async (req, res, next) => {
           locationId: req.body.locationId, 
           status: 'Created'}})
       } else { 
-        order = Orders.create(req.body)
+        order = await Orders.create(req.body)
       }
       res.json(order)
     } else { 
-      //localStorage 
+      console.log('hello no user'); 
+      let order = await Orders.create({
+        userId: req.body.userId, 
+        locationId: req.body.id, 
+        price: req.body.price, 
+        quantity: req.body.quantity
+      }); 
+      res.json(order); 
     }
     
   } catch (error) {
@@ -59,8 +67,12 @@ router.post('/cart', async (req, res, next) => {
 
 router.put('/cart', async (req, res, next) => {
   try {
+    console.log('reached route'); 
+    let userId; 
+    if (req.session.passport) {userId = req.session.passport.user;}
+    else {userId = 999}
     const order = await Orders.processOrder(
-      req.session.passport.user,
+      userId,
       'Processing'
     )
     const token = req.body.stripeToken
@@ -70,6 +82,7 @@ router.put('/cart', async (req, res, next) => {
       description: 'blaze it',
       source: token
     })
+    // localStorage.clear(); 
     res.json('Processing')
   } catch (error) {
     next(error)
