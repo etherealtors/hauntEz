@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import store, {logout} from '../store'
-import SearchBar from './SearchBar'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import store, { logout } from '../store';
+import SearchBar from './SearchBar';
 
-const Navbar = ({handleClick, isLoggedIn, user}) => (
+const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
   <div>
     <nav>
       <span id="logo">
@@ -25,7 +25,7 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
             Logout
           </a>
           <Link to="/cart" className="links">
-            Cart
+            Cart ({orders.orders.length})
           </Link>
           <Link to='/orderHistory' className="links"> 
             Order History 
@@ -56,27 +56,28 @@ const Navbar = ({handleClick, isLoggedIn, user}) => (
 /**
  * CONTAINER
  */
-const mapState = state => {
-  return {
-    isLoggedIn: !!state.user.id,
-    user: state.user
-  }
-}
+const mapState = (state) => {
+	return {
+		isLoggedIn: !!state.user.id,
+		user: state.user,
+		orders: state.orders
+	};
+};
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+const mapDispatch = (dispatch) => {
+	return {
+		handleClick() {
+			dispatch(logout());
+		}
+	};
+};
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(Navbar);
 
 /**
  * PROP TYPES
  */
 Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+	handleClick: PropTypes.func.isRequired,
+	isLoggedIn: PropTypes.bool.isRequired
+};

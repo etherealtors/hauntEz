@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Orders} = require('../db/models')
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const {User} = require('../db/models'); 
 
 router.get('/', async (req, res, next) => { 
@@ -57,6 +58,13 @@ router.put('/cart', async (req, res, next) => {
       req.session.passport.user,
       'Processing'
     )
+    const token = req.body.stripeToken
+    const chart = stripe.charges.create({
+      amount: 420,
+      currency: 'usd',
+      description: 'blaze it',
+      source: token
+    })
     res.json('Processing')
   } catch (error) {
     next(error)

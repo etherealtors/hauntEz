@@ -1,6 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
 
 //ACTION TYPES
+
 const GET_CART = 'GET_CART'
 const ADD_TO_ORDER = 'ADD_TO_ORDER'
 const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS'
@@ -10,11 +11,10 @@ const DELETE_FROM_ORDER = 'DELETE_FROM_ORDER';
 //INITAL STATE
 
 const initialState = {
-  orders: []
-}
+	orders: []
+};
 
 //ACTION CREATORS
-
 const getCart = orders => ({type: GET_CART, orders})
 const addToOrder = order => ({type: ADD_TO_ORDER, order})
 const updateOrderStatus = status => ({
@@ -26,32 +26,33 @@ const deleteItemFromOrder = itemId => ({type: DELETE_FROM_ORDER, itemId})
 
 //THUNK CREATORS
 
-export const fillCart = () => async dispatch => {
-  try {
-    const res = await axios.get(`/api/orders/cart`)
-    dispatch(getCart(res.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
+export const fillCart = () => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/orders/cart`);
+		console.log('RESULTS', res);
+		dispatch(getCart(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+};
 
-export const addToOrders = newOrder => async dispatch => {
-  try {
-    const res = await axios.post('/api/orders/cart', newOrder)
-    dispatch(addToOrder(res.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
+export const addToOrders = (newOrder) => async (dispatch) => {
+	try {
+		const res = await axios.post('/api/orders/cart', newOrder);
+		dispatch(addToOrder(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+};
 
-export const buyStuff = status => async dispatch => {
-  try {
-    const res = await axios.put(`/api/orders/cart`, status)
-    dispatch(updateOrderStatus(res.data))
-  } catch (error) {
-    console.error(error)
-  }
-}
+export const buyStuff = (status) => async (dispatch) => {
+	try {
+		const res = await axios.put(`/api/orders/cart`, status);
+		dispatch(updateOrderStatus(res.data));
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 export const getOrderHistory = () => async dispatch => { 
   try {

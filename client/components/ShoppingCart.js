@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {fillCart, buyStuff, deleteFromOrder} from '../store'
-
+import Checkout from './Checkout';
 
 class ShoppingCart extends Component {
   constructor() {
@@ -20,9 +20,7 @@ class ShoppingCart extends Component {
 
   submitOrder() {
     this.props.buyStuff('Processing')
-    alert(
-      'Your order has been placed. Thanks for shopping with HauntEZ, where our UX is as spooky as our customers!'
-    )
+    // put something here
   }
 
   render() {
@@ -49,17 +47,20 @@ class ShoppingCart extends Component {
           })}
           <h3>Total: ${total}</h3>
         </div>
-        <button type="submit" onClick={this.submitOrder}>
-          Submit order!
-        </button>
+				<Checkout
+					// name={this.props.cart.location.address}
+					// description={this.props.cart.location.description}
+					// amount={this.props.cart.location.price}
+					onSubmit={this.submitOrder}
+				/>
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({
-  cart: state.orders.orders
-})
+const mapStateToProps = (state) => ({
+	cart: state.orders.orders
+});
 
 const mapDispatchToProps = dispatch => ({
   fillCart: () => dispatch(fillCart()),
@@ -67,6 +68,4 @@ const mapDispatchToProps = dispatch => ({
   deleteFromOrder: itemId => dispatch(deleteFromOrder(itemId))
 })
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
-)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShoppingCart));
