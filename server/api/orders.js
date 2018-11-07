@@ -7,10 +7,12 @@ router.get('/', async (req, res, next) => {
   try {
     let orderHistory; 
     if (await User.isAdmin(req.session.passport.user)){ 
-      orderHistory = await Orders.findAll(); 
+      orderHistory = await Orders.findAll({ 
+        include: [{model: Location}]
+      }); 
     }
     else { 
-      orderHistory = await Orders.findAll({where: {userId: req.session.passport.user}})
+      orderHistory = await Orders.findAll({where: {userId: req.session.passport.user}, include: [{model:Location}]})
     }
     
     res.json(orderHistory); 

@@ -137,3 +137,16 @@ p {
 .display-all-container{ 
 	padding-left: 20px; 
 }
+
+th { 
+	color: darkcyan; 
+	border-bottom: 5px solid slateblue; 
+}
+
+td { 
+	text-align: center; 
+	margin-left: 5px; 
+	margin-right: 5px; 
+	border-right:5px solid slateblue;
+	border-bottom: 5px solid slateblue; 
+}
