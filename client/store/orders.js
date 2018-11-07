@@ -9,14 +9,22 @@ const ADD_TO_ORDER = 'ADD_TO_ORDER';
 const UPDATE_ORDER_STATUS = 'UPDATE_ORDER_STATUS';
 const GET_ALL_ORDERS = 'GET_ALL_ORDERS';
 const DELETE_FROM_ORDER = 'DELETE_FROM_ORDER';
+const APPLY_DISCOUNT = 'APPLY_DISCOUNT'
 
 //INITAL STATE
 
 const initialState = {
-	orders: []
-};
+  orders: []
+}
 
 //ACTION CREATORS
+
+const getCart = orders => ({type: GET_CART, orders})
+const addToOrder = order => ({type: ADD_TO_ORDER, order})
+const updateOrderStatus = status => ({
+  type: UPDATE_ORDER_STATUS,
+  status
+})
 const getCart = (orders) => ({ type: GET_CART, orders });
 const addToOrder = (order) => ({ type: ADD_TO_ORDER, order });
 const updateOrderStatus = (status) => ({
@@ -25,18 +33,27 @@ const updateOrderStatus = (status) => ({
 });
 const getAllOrders = (orders) => ({ type: GET_ALL_ORDERS, orders });
 const deleteItemFromOrder = (itemId) => ({ type: DELETE_FROM_ORDER, itemId });
+const applyDiscount = orders => ({type: APPLY_DISCOUNT, orders})
 
 //THUNK CREATORS
 
-export const fillCart = () => async (dispatch) => {
-	try {
-		const res = await axios.get(`/api/orders/cart`);
-		console.log('RESULTS', res);
-		dispatch(getCart(res.data));
-	} catch (error) {
-		console.error(error);
-	}
-};
+export const fillCart = () => async dispatch => {
+  try {
+    const res = await axios.get(`/api/orders/cart`)
+    dispatch(getCart(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const addToOrders = newOrder => async dispatch => {
+  try {
+    const res = await axios.post('/api/orders/cart', newOrder)
+    dispatch(addToOrder(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export const addToOrders = (newOrder) => async (dispatch) => {
 	try {
@@ -56,6 +73,15 @@ export const buyStuff = (status) => async (dispatch) => {
 		console.error(error);
 	}
 };
+
+export const applyDiscountToOrder = (orderId, code) => async dispatch => {
+  try {
+    const res = await axios.put(`/api/orders/${orderId}/promocode`, {code})
+    dispatch(applyDiscount(res.data))
+  } catch (error) {
+    console.error(error)
+  }
+}
 
 export const getOrderHistory = () => async (dispatch) => {
 	try {
@@ -95,6 +121,8 @@ export default function(state = initialState, action) {
 				toast.success('Removed from Cart');
 			}
 			return { ...state, orders: state.orders.filter((order) => order.id !== action.itemId) };
+    case APPLY_DISCOUNT:
+      return {...state, orders: action.orders}
 		default:
 			return state;
 	}

@@ -1,38 +1,37 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {fillCart, buyStuff, deleteFromOrder, addToOrders} from '../store'
-import Checkout from './Checkout';
-
+import {fillCart, buyStuff, applyDiscountToOrder, addToOrders, deleteFromOrder} from '../store'
+import Checkout from './Checkout'
+//import StripeCheckout from 'react-stripe-checkout';
 const isLoggedIn = true; 
 
 class ShoppingCart extends Component {
-
-  constructor() {
+    constructor() {
     super()
     this.state = {
       totalAmount: 0,
       totalQuantity: 0,
       itemsAllAvailable: true,
       userCart: null,
-      processed: false
+      processed: false,
+      couponCode: ''
     }
     this.submitOrder = this.submitOrder.bind(this)
     this.handleDelete = this.handleDelete.bind(this); 
     this.setInitialState = this.setInitialState.bind(this);
     this.updateDatabase = this.updateDatabase.bind(this); 
+    this.applyDiscount = this.applyDiscount.bind(this)
+    this.updateCouponField = this.updateCouponField.bind(this)
   }
-
+  
   setInitialState() {
     let totalAmount = 0;
     let totalQuantity = 0;
     let itemsAllAvailable = true;
     
-    console.log('props cart', this.props.cart)
-    for(let i = 0; i < this.props.cart.length; i++) {
-      
+    for(let i = 0; i < this.props.cart.length; i++) {      
       let currItem = this.props.cart[i];
-     
       totalAmount += (currItem.location.price * currItem.quantity);
       totalQuantity += currItem.quantity;
       if(currItem.quantity > currItem.location.quantity) {
@@ -47,7 +46,7 @@ class ShoppingCart extends Component {
     });
  }
 
-  async componentDidMount() {
+   async componentDidMount() {
     if (this.props.isUser.name){ 
       await this.props.fillCart(); 
       this.setInitialState();
@@ -59,8 +58,8 @@ class ShoppingCart extends Component {
     }
     
   }
-
-  async handleDelete(itemId){ 
+  
+   async handleDelete(itemId){ 
     if (this.props.isUser.name){ 
       await this.props.deleteFromOrder(itemId); 
       this.setInitialState();
@@ -73,7 +72,7 @@ class ShoppingCart extends Component {
     }
     
   }
-
+  
   async updateDatabase(){ 
     let cartObj = this.state.userCart; 
     let totalAmount = 0; 
@@ -96,15 +95,25 @@ class ShoppingCart extends Component {
       // console.log('state', this.state)
   }
 
-  async submitOrder() {
+
+  async applyDiscount(event) {
+    event.preventDefault()
+    await this.props.applyDiscount(this.props.cart[0].orderId, this.state.couponCode)
+  }
+  
+   async submitOrder() {
     // if (isLoggedIn) { 
       await this.props.buyStuff('Processing')
       this.setInitialState();
       this.setState({userCart:null})
       localStorage.clear(); 
     // }
+  }
 
-    
+  updateCouponField(event) {
+    this.setState({
+      couponCode: event.target.value
+    })
   }
 
   render() {
@@ -124,6 +133,20 @@ class ShoppingCart extends Component {
 
     return (
       <div>
+        <div className="shopping-cart">
+          {this.props.cart.map(item => {
+            return (
+              <div key={item.location.id}>
+                <h2>
+                  {item.location.address} - ${item.price}
+                </h2>
+              </div>
+            )
+          })}
+        </div>
+            
+                return (
+      <div>
         <div className="shopping-cart">         
           {cart ? ( 
             cart.map(item => {
@@ -132,7 +155,7 @@ class ShoppingCart extends Component {
               item.location ? (
               <div key={item.id}>
               <h2 >
-                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.location.price*item.quantity}
+                {item.location.address} for ${item.location.price} x {item.quantity} = ${item.price*item.quantity}
                 {(item.quantity > item.location.quantity) ?
                 <p>*Low on stock. Please reduce the number of items and try again</p> :
                 null}
@@ -144,6 +167,15 @@ class ShoppingCart extends Component {
               
             )})
             ) : null}
+            <form onSubmit={this.applyDiscount}>
+            <input
+              type="text"
+              name="couponCode"
+              onChange={this.updateCouponField}
+              value={this.state.couponCode}
+            />
+            <button type="submit">Apply Discount Code</button>
+          </form>
           <h3>Total: ${this.state.totalAmount}</h3>
         </div>
         {this.props.isUser.name|| this.state.processed  ? null : (<button type="button" onClick={this.updateDatabase}>Click to Process Your Order</button>)}
@@ -170,8 +202,11 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   fillCart: () => dispatch(fillCart()),
   buyStuff: status => dispatch(buyStuff(status)), 
+  applyDiscount: (id, code) => dispatch(applyDiscountToOrder(id, code)),
   deleteFromOrder: itemId => dispatch(deleteFromOrder(itemId)), 
   addToOrders: (price, locationId, userId, quantity) =>dispatch(addToOrders({price: price, locationId: locationId, userId: userId, quantity: quantity}))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ShoppingCart));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
+)
