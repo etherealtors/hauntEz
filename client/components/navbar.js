@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import store, { logout } from '../store';
 import SearchBar from './SearchBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
   <div>
@@ -34,6 +36,7 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
             Order History 
           </Link>
           <SearchBar />
+          <ToastContainer />
         </div>
       ) : (
         <div className="nav-container">

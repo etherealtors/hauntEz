@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Orders} = require('../db/models')
+const {Orders, Discount, Location} = require('../db/models')
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 const {User} = require('../db/models'); 
 
@@ -32,7 +32,6 @@ router.get('/cart', async (req, res, next) => {
 
 router.post('/cart', async (req, res, next) => {
   try {
-    console.log('hellocart'); 
     if (req.session.passport){ 
       let order = await Orders.findOne({where: {
         userId: req.session.passport.user, 
@@ -50,7 +49,6 @@ router.post('/cart', async (req, res, next) => {
       }
       res.json(order)
     } else { 
-      console.log('hello no user'); 
       let order = await Orders.create({
         userId: req.body.userId, 
         locationId: req.body.id, 
@@ -59,7 +57,6 @@ router.post('/cart', async (req, res, next) => {
       }); 
       res.json(order); 
     }
-    
   } catch (error) {
     next(error)
   }
@@ -89,6 +86,25 @@ router.put('/cart', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:orderId/promocode', async (req, res, next) => {
+  try {
+    const isValid = await Discount.isValid(req.body.code)
+    if (isValid) {
+      const applyDiscount = await Discount.applyDiscountToOrder(
+        req.params.orderId,
+        req.body.code
+      )
+      const getDiscountedOrder = await Orders.findAll({
+        where: {orderId: req.params.orderId},
+        include: {model: Location}
+      })
+      res.json(getDiscountedOrder)
+    } else {
+      res.json(isValid)
+    }
+  } catch (error) {
+    next(error)
 
 //THIS IS A DOUBLE OF A DB METHOD
 

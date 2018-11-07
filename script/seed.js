@@ -499,11 +499,21 @@ const carts = await Promise.all([
 		categoryType: 'amenity',
 	})
 ])
+  const discounts = await Promise.all([
+    Discount.create({
+      code: 'LUIGISMANSION',
+      startDate: new Date(2001, 9, 14),
+      endDate: new Date(2099, 1, 1),
+      pctOff: 50
+    })
+  ])
 	console.log(`seeded ${users.length} users`);
 	console.log(`seeded ${locations.length} locations`);
 	console.log(`seeded ${amenities.length} amenities`);
-      console.log(`seeded ${carts.length} carts`)
+  console.log(`seeded ${carts.length} carts`)
 	console.log(`seeded ${reviews.length} reviews`);
+  console.log(`seeded ${discounts.length} coupons`)
+
 	console.log(`seeded successfully`);
 }
 
