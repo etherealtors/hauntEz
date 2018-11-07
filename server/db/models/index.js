@@ -1,8 +1,8 @@
-const User = require('./user')
-const Location = require('./location')
-const Amenities = require('./amenities')
-const Orders = require('./orders')
-const Review = require('./review')
+const User = require('./user');
+const Location = require('./location');
+const Amenities = require('./amenities');
+const Orders = require('./orders');
+const Review = require('./review');
 const Category = require('./category');
 
 /**
@@ -19,51 +19,44 @@ const Category = require('./category');
  * instead of: const User = require('../db/models/user')
  */
 
-Location.belongsTo(Amenities)
-Amenities.hasOne(Location)
-Location.belongsTo(User)
-User.hasMany(Location)
+Location.belongsTo(Amenities);
+Amenities.hasOne(Location);
+Location.belongsTo(User);
+User.hasMany(Location);
 
-Location.hasMany(Orders)
-Orders.belongsTo(Location)
-User.hasMany(Orders)
-Orders.belongsTo(User)
-
-// Location.belongsTo(Orders)
-// Orders.hasMany(Location)
-// Orders.hasMany(User)
-// User.belongsTo(Orders)
-
-// Location.belongsToMany(User, {through: 'Favs'})
+Location.hasMany(Orders);
+Orders.belongsTo(Location);
+User.hasMany(Orders);
+Orders.belongsTo(User);
 
 //Category associations
-Location.belongsToMany(Category, {through: 'location_category'})
-Category.belongsToMany(Location, {through: 'location_category'})
-  
+Location.belongsToMany(Category, { through: 'location_category' });
+Category.belongsToMany(Location, { through: 'location_category' });
+
 //This has to go here because it requires associations to be made before it can work.
 Orders.getCart = async function(userId) {
-  try {
-    const cart = await Orders.findAll({
-      where: {status: 'Created', userId},
-      include: [{model: Location}]
-    })
-    return cart
-  } catch (error) {
-    console.error(error)
-  }
-}
+	try {
+		const cart = await Orders.findAll({
+			where: { status: 'Created', userId },
+			include: [ { model: Location } ]
+		});
+		return cart;
+	} catch (error) {
+		console.error(error);
+	}
+};
 
 //Review associations
-User.hasMany(Review)
-Review.belongsTo(User)
-Location.hasMany(Review)
-Review.belongsTo(Location)
+User.hasMany(Review);
+Review.belongsTo(User);
+Location.hasMany(Review);
+Review.belongsTo(Location);
 
 module.exports = {
-  User,
-  Location,
-  Amenities,
-  Orders,
-  Review,
-  Category
-}
+	User,
+	Location,
+	Amenities,
+	Orders,
+	Review,
+	Category
+};

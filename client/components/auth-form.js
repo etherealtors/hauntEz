@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { auth } from '../store';
 
-/**
- * COMPONENT
- */
 const AuthForm = (props) => {
 	const { name, displayName, handleSubmit, error } = props;
 
@@ -81,8 +78,6 @@ const mapDispatch = (dispatch) => {
 			} else {
 				dispatch(auth(email, password, formName));
 			}
-
-			//this.history.push('/');
 		}
 	};
 };

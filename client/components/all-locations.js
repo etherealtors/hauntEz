@@ -1,8 +1,7 @@
 import { connect } from 'react-redux';
 import React from 'react';
-
 import { getAllLocations, getFilteredLocations } from '../store';
-import { getAllCategories } from '../store/categories'
+import { getAllCategories } from '../store/categories';
 import { Link } from 'react-router-dom';
 
 class AllLocations extends React.Component {
@@ -26,8 +25,11 @@ class AllLocations extends React.Component {
 
 	render() {
 		let orderedCategories = this.props.categories.sort((a, b) => {
-			if(a.name <= b.name) {return -1}
-			else {return 1}
+			if (a.name <= b.name) {
+				return -1;
+			} else {
+				return 1;
+			}
 		});
 
 		return (
@@ -35,26 +37,29 @@ class AllLocations extends React.Component {
 				<div className="dropdown">
 					<select onChange={this.changeFilter}>
 						<option value="All">All</option>
-						{orderedCategories.map((type) => (
-							(type.categoryType === 'houseType') ?
-							<option key={type.id} value={type.name}>
-								{type.name}
-							</option> :
-							null
-						))}
+						{orderedCategories.map(
+							(type) =>
+								type.categoryType === 'houseType' ? (
+									<option key={type.id} value={type.name}>
+										{type.name}
+									</option>
+								) : null
+						)}
 					</select>
 				</div>
 				<div className="displayAll">
 					{this.props.locations.map((location) => (
-						<div key={location.id} className="toDisplay" >
+						<div key={location.id} className="toDisplay">
 							<Link
 								to={{ pathname: `/singleLocation/${location.id}`, state: location }}
-								className="location-links" 
+								className="location-links"
 							>
 								<img src={location.imageUrl} className="homepageImg" />
 								<div className="formatListing">
 									{' '}
-									<div className="location-text"><p>{location.address}</p> <p>${location.price}</p></div>
+									<div className="location-text">
+										<p>{location.address}</p> <p>${location.price}</p>
+									</div>
 								</div>
 							</Link>
 						</div>

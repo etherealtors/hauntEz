@@ -2,9 +2,6 @@ import Axios from 'axios';
 import React from 'react';
 import StripeCheckout from 'react-stripe-checkout';
 
-const PAYMENT_SERVER_URL =
-	process.env.NODE_ENV === 'production' ? 'http://hauntEz.herokuapp.com' : 'http://localhost:8080/payments';
-
 const CURRENCY = 'USD';
 const fromDollarToCent = (amount) => Math.round(amount * 100);
 
@@ -21,11 +18,10 @@ const onToken = (amount, description, handleSubmit) => async (token) => {
 			amount: fromDollarToCent(amount)
 		});
 		handleSubmit();
-	}
-	catch (err) {
+	} catch (err) {
 		errorPayment();
 	}
-}
+};
 
 const Checkout = (props) => {
 	return (
@@ -33,7 +29,7 @@ const Checkout = (props) => {
 			name="Demo Site"
 			description="Widget"
 			amount={fromDollarToCent(props.amount)}
-			token={onToken(props.amount, "Payment EZ", props.onSubmit)}
+			token={onToken(props.amount, 'Payment EZ', props.onSubmit)}
 			currency={CURRENCY}
 			stripeKey="pk_test_pewWwrgncbREyJzeNYGTAX5v"
 		/>

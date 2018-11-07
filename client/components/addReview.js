@@ -1,9 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import store, { addReview } from '../store';
-import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import Reviews from './Reviews';
 
 class AddReview extends React.Component {
 	constructor(props) {
@@ -23,17 +21,14 @@ class AddReview extends React.Component {
 		event.preventDefault();
 		const user = this.props.location.user.id;
 		const id = this.props.location.id;
-		console.log('PROPS', this.props);
 		await this.props.addReview(this.state.content, id, user, this.state.rating);
 		this.setState({
 			content: '',
-			rating: '',
-			reviews: store.getState()
+			rating: ''
 		});
 	}
 
 	render() {
-		console.log('MY PROPS', this.props.location.id);
 		return (
 			<div>
 				<h2>Add Review</h2>
@@ -62,8 +57,7 @@ class AddReview extends React.Component {
 
 const mapStateToProps = (state) => {
 	return {
-		location: state.locations.selectedLocation,
-		reviews: state.reviews
+		location: state.locations.selectedLocation
 	};
 };
 

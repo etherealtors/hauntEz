@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import store, { getSearchResults } from '../store';
 
 export default class SearchBar extends React.Component {

@@ -6,10 +6,13 @@ module.exports = router;
 router.get('/filter/:category', async (req, res, next) => {
 	try {
 		const locations = await Location.findAll({
-			/*where: { category: req.params.category },
-			include: { model: Amenities }*/
-			
-			include: [{model: Category, where: {name: req.params.category, categoryType: "houseType"}, through: {attributes: []}}]
+			include: [
+				{
+					model: Category,
+					where: { name: req.params.category, categoryType: 'houseType' },
+					through: { attributes: [] }
+				}
+			]
 		});
 		res.json(locations);
 	} catch (error) {

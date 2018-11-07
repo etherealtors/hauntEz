@@ -1,12 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 class Reviews extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
 	render() {
 		return this.props.reviews.map((review, i) => (
 			<div key={review.id} className="review row">

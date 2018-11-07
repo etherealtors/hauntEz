@@ -7,7 +7,7 @@ import Reviews from './Reviews';
 import AddReview from './addReview';
 import { addToOrders } from '../store';
 
-let isLoggedIn = true; 
+let isLoggedIn = true;
 
 class SingleLocation extends Component {
 	constructor(props) {
@@ -30,7 +30,6 @@ class SingleLocation extends Component {
 	}
 
 	componentDidMount() {
-		console.log('isUser?', this.props.isUser.name); 
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
@@ -38,43 +37,40 @@ class SingleLocation extends Component {
 	handleChange(event) {
 		this.setState({ quantity: event.target.value });
 	}
-  
-  handleClick() {
-		if (this.props.isUser.name){ 
+
+	handleClick() {
+		if (this.props.isUser.name) {
 			this.props.addToOrders(
 				this.props.singleLocation.price,
 				this.props.singleLocation.id,
-				this.props.user.id, 
+				this.props.user.id,
 				this.state.quantity
-			)
-		}	
+			);
+		} else {
+			let cart = JSON.parse(localStorage.getItem('cart'));
+			let orderToStore = {
+				price: this.props.singleLocation.price,
+				quantity: Number(this.state.quantity),
+				id: this.props.singleLocation.id,
+				location: this.props.singleLocation
+			};
 
-		else { 
-			let cart = JSON.parse(localStorage.getItem('cart')); 
-			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id, location: this.props.singleLocation } 
-
-			if (cart) { 
-				if(cart[orderToStore.id]){ 
-					cart[orderToStore.id].quantity = cart[orderToStore.id].quantity + orderToStore.quantity; 
-					localStorage.setItem('cart', JSON.stringify(cart)); 
-				} else { 
-					cart[orderToStore.id] = orderToStore; 
-					localStorage.setItem('cart', JSON.stringify(cart))
+			if (cart) {
+				if (cart[orderToStore.id]) {
+					cart[orderToStore.id].quantity = cart[orderToStore.id].quantity + orderToStore.quantity;
+					localStorage.setItem('cart', JSON.stringify(cart));
+				} else {
+					cart[orderToStore.id] = orderToStore;
+					localStorage.setItem('cart', JSON.stringify(cart));
 				}
+			} else {
+				const cartObj = {};
+				cartObj[orderToStore.id] = orderToStore;
+				localStorage.setItem('cart', JSON.stringify(cartObj));
 			}
-
-			else { 
-				const cartObj = {}; 
-				cartObj[orderToStore.id] = orderToStore; 
-				localStorage.setItem('cart', JSON.stringify(cartObj)); 
-				
-			}
-			console.log(JSON.parse(localStorage.getItem('cart'))); 
-
+			console.log(JSON.parse(localStorage.getItem('cart')));
 		}
-
-    
-  }
+	}
 
 	render() {
 		let singleLocation = this.props.singleLocation;
