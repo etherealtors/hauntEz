@@ -11,6 +11,7 @@ const AuthForm = (props) => {
 
 	return (
 		<div>
+			<div className="login-container">
 			<form onSubmit={handleSubmit} name={name}>
 				{name === 'signup' ? (
 					<div>
@@ -22,6 +23,7 @@ const AuthForm = (props) => {
 				) : (
 					<div />
 				)}
+				
 				<div>
 					<label htmlFor="email">
 						<small>Email</small>
@@ -39,7 +41,8 @@ const AuthForm = (props) => {
 				</div>
 				{error && error.response && <div> {error.response.data} </div>}
 			</form>
-			<a href="/auth/google">{displayName} with Google</a>
+			<a className="signup-text" href="/auth/google">{displayName} with  <i class="fab fa-google"></i></a>
+			</div>
 		</div>
 	);
 };

@@ -83,30 +83,43 @@ class SingleLocation extends Component {
 		let isUser = this.props.isUser;
 		return (
 			<div id="singleLocation">
+				<div id="s-loc-1">
 				<img src={singleLocation.imageUrl} className="singleViewImage" />
-				<h2>{singleLocation.address}</h2>
-				<h2>{singleLocation.description}</h2>
+				<p id="s-loc-text-1">{singleLocation.address}</p>
+				<p id="s-loc-text-2">{singleLocation.description}</p>
+				</div>
+				<div className="s-loc-2">
 				{singleLocation.user && (
 					<div>
-						<h2 className="red">Sold By: </h2>
-						<h2>{singleLocation.user.name}</h2>{' '}
+						<h2>Sold By: {singleLocation.user.name} </h2>
+						{' '}
 						<img src={singleLocation.user.image} className="reviewPic" />
 					</div>
 				)}
+				<div>
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
-				<h3 className="red">Category: {singleLocation.category}</h3>
+
+        <h3 className="red">Category: {singleLocation.category}</h3>
+				</div>
+				
+				<div>
+
 				<select onChange={this.handleChange}>
 					<label>Item Quantity: </label>
 					{this.createDropDown()}
 				</select>
-				<button type="button" onClick={this.handleClick}>
-					Add To Cart
-				</button>
-				<h3 className="red">Category: {singleLocation.category}</h3>
 
-				<h2>Reviews</h2>
+				</div>
+        <button type="button" onClick={this.handleClick}>
+          Add To Cart
+        </button>
+				</div>
+
+					<div className="reviews-box">
+				<h2 className="review-label">Reviews</h2>
 				{locationReviews && <Reviews singleLocation={singleLocation} />}
+				</div>
 				<div id="admin">
 					{isAdmin && (
 						<div>

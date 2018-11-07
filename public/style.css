@@ -1,8 +1,22 @@
+/* p { 
+	padding-left:30px; 
+	text-align: justify; 
+	width:400px; 
+	color: #0e8c75; 
+	padding-right: 30px;
+	
+
+} */
+
 body {
-	font-family: spirax, sans-serif;
+	font-family: creepster, sans-serif;
+	/* font-family: spirax, sans-serif; */
 	background-image: url('https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/ggZAv9L/dark-and-stormy-night-animation_4jjt88ivg__F0000.png');
-	color: white;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+	color: rgb(194, 190, 206);
 	font-size: 22px;
+	text-shadow: 2px 4px #413f5e;
 }
 
 a {
@@ -45,9 +59,11 @@ form div {
 }
 
 .creepyFont {
-	font-family: unifrakturcook, blackletter;
+	font-family: creepster, sans-serif;
+	/* font-family: unifrakturcook, blackletter; */
 	font-size: 55px;
-	color: white;
+	color: rgb(194, 190, 206);
+	text-shadow: 2px 4px #413f5e;
 }
 
 #centered {
@@ -66,9 +82,8 @@ form div {
 	grid-template-rows: 120px 120px 120px;
 }
 .links {
-	color: white;
+	color: rgb(194, 190, 206);
 	background-color: darkcyan; 
-	color: white; 
 	padding: 14px 25px; 
 	text-align: center; 
 	display: inline-block; 
@@ -87,19 +102,24 @@ form div {
 	height: 250px;
 	padding: 1px;
 	grid-column: 2 / 3;
+	padding-left: 30px; 
+	padding-right: 30px; 
 }
 
 #singleLocation {
-	display: grid;
+	display: flex;
+	flex-wrap: wrap; 
+	justify-content: space-evenly; 
 }
 
 .red {
-	color: red;
+	color: rgb(14, 7, 18); 
 }
 
 .reviewPic {
 	width: 90px;
 	height: 90px;
+	border:10px solid rgb(24, 11, 62); 
 }
 
 
@@ -141,6 +161,7 @@ form div {
 .nav-container { 
 	display: flex; 
 	flex-direction: row; 
+	justify-content: space-evenly; 
 }
 
 .search-bar { 
@@ -153,7 +174,7 @@ form div {
 	width: 250px; 
 	margin-bottom:50px; 
 	text-decoration: none; 
-	color: white; 
+	color: rgb(194, 190, 206);
 	background-color: darkcyan; 
 }
 
@@ -167,5 +188,111 @@ p {
 
 .display-all-container{ 
 	padding-left: 20px; 
+}
+
+
+.s-loc-1{ 
+	flex-direction: column; 
+	text-align: center; 
+	background-color: darkcyan; 
+	flex-grow: 3; 
+}
+
+.s-loc-2{ 
+	flex-direction: column; 
+	background-image: linear-gradient(to bottom right,  #0e8c75, rgb(24, 11, 62));
+	padding: 10px; 
+	align-items: center; 
+	text-align: center; 
+}
+.s-loc-3{ 
+	flex-direction: column; 
+}
+
+.singlelocation{ 
+	flex-direction: row; 
+	flex-wrap: wrap;  
+
+}
+
+.singleViewImage{ 
+	margin-left: 0px; 
+	padding-left:30px; 
+	padding-right:30px; 
+	align-items: center; 
+	border:5px solid slateblue; 
+}
+
+#s-loc-text-1{ 
+	margin-top: 20px;
+	align-items: center;
+	margin-left:90px; 
+	margin-right:10px;  
+	padding-left:30px; 
+	text-align: center;  
+	width:200px; 
+	background-color: #0e8c75; 
+	color: rgb(186, 183, 227); 
+	padding-right: 30px;
+	font-size: 24px; 
+	border:5px solid slateblue; 
+
+}
+#s-loc-text-2 { 
+	margin-top:10px; 
+	padding-top: 20px; 
+	padding-left:30px; 
+	padding-bottom: 20px;
+	text-align: justify; 
+	width:400px; 
+	color: #0e8c75; 
+	padding-right: 30px;
+	background-color: black; 
+	border:5px solid slateblue; 
+	
+	
+}
+
+.reviews-box{ 
+	display: flex; 
+	flex-direction: column; 
+	flex-grow: 2; 
+	background-color: rgb(162, 152, 152, .30); 
+	padding-left: 25px; 
+	padding-right: 25px; 
+}
+.signup-text { 
+	margin-top: 40px; 
+	padding-top: 10px; 
+	margin-bottom: 10px; 
+	/* margin-left: 185px;  */
+	padding-left:10px; 
+	padding-right: 10px; 
+	text-decoration: none; 
+	background-color: darkcyan; 
+	color: rgb(194, 190, 206);
+	
+}
+
+.login-container { 
+	display: flex; 
+	flex-direction: row; 
+}
+
+.review-row{ 
+	padding-bottom: 10px; 
+	border-bottom: 5px solid black; 
+	margin-bottom: 20px; 
+	color: darkcyan; 
+	text-shadow: 2px 4px #000000;
+
+}
+
+.review-label{ 
+	text-align: center; 
+	color: darkcyan; 
+	text-shadow: 2px 4px #000000;
+	border:5px solid slateblue;
+	margin-right: 1000px; 
 }
 
