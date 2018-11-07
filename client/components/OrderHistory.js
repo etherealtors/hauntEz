@@ -5,13 +5,7 @@ import { getOrderHistory } from '../store'
 
 
 class OrderHistory extends Component { 
-    // constructor(props){ 
-    //     super(props)
-    //     // this.state ={
-    //     //     orders: []
-    //     // }
-    // }
-
+  
     componentDidMount(){ 
         this.props.getOrderHistory(); 
     }
@@ -24,19 +18,23 @@ class OrderHistory extends Component {
                 <table>
                 <tbody>
                     <tr>
-                        <th>ID</th>
-                        <th>status</th>
+                        <th>Order ID</th>
+                        <th>Address</th>
                         <th>quantity</th>
                         <th>price</th>
+                        <th>total</th>
+                        <th>status</th>
                     </tr>
                     {orders.map((order, i) => {
                         return (
                             order ? (
                             <tr key={order.id}>
                                 <td>{order.orderId}</td>
-                                <td>{order.status}</td>
+                                <td>{order.location.address}</td>
                                 <td>{order.quantity}</td>
                                 <td>{order.price}</td>
+                                <td>{order.price*order.quantity}</td>
+                                <td>{order.status}</td>
                             </tr> ) : null 
                         )
                     })}
