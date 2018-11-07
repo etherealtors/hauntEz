@@ -1,7 +1,7 @@
 'use strict'
 
 const db = require('../server/db')
-const {User, Location, Amenities, Orders, Review, Category} = require('../server/db/models')
+const {User, Location, Amenities, Orders, Review, Category, Discount} = require('../server/db/models')
 
 async function seed() {
   await db.sync({force: true})
@@ -63,12 +63,12 @@ async function seed() {
 			isAdmin: true,
 			image:
 				'https://static01.nyt.com/images/2017/01/11/blogs/11-lens-maurice-slide-XQMQ/11-lens-maurice-slide-XQMQ-superJumbo.jpg'
-		}), 
-		User.create({ 
-			name: 'Guest', 
-			email: 'null@email.com', 
-			password: 'null', 
-			role: 'buyer', 
+		}),
+		User.create({
+			name: 'Guest',
+			email: 'null@email.com',
+			password: 'null',
+			role: 'buyer',
 			id: 999
 		})
 	]);
