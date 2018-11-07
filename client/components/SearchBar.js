@@ -33,6 +33,7 @@ export default class SearchBar extends React.Component {
 						name="query"
 						value={this.state.query}
 						onChange={this.handleChange}
+						className="search-bar"
 					/>{' '}
 					<button type="submit">
 						<img

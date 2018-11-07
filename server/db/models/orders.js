@@ -36,6 +36,7 @@ Orders.addItem = async function(newOrder) {
   }
 }
 
+//THIS IS A DOUBLE OF A ROUTE ACTION 
 Orders.removeItem = async function(itemId) {
   try {
     const removed = await Orders.destroy({where: {itemId}})
