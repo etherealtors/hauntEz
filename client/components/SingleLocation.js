@@ -5,55 +5,51 @@ import { getOneLocation } from '../store';
 import UpdateLocation from './UpdateLocation';
 import Reviews from './Reviews';
 import AddReview from './addReview';
-import {addToOrders} from '../store'
+import { addToOrders } from '../store';
 
-let isLoggedIn = false; 
+let isLoggedIn = true; 
 
 class SingleLocation extends Component {
-    constructor(props) {
-			super(props)
-			this.state = { 
-				quantity: 1
-			}
+	constructor(props) {
+		super(props);
+		this.state = {
+			quantity: 1
+		};
 
-			this.handleClick = this.handleClick.bind(this)
-			this.createDropDown = this.createDropDown.bind(this); 
-			this.handleChange = this.handleChange.bind(this); 
+		this.handleClick = this.handleClick.bind(this);
+		this.createDropDown = this.createDropDown.bind(this);
+		this.handleChange = this.handleChange.bind(this);
 	}
-	
-	createDropDown(){ 
-		let optionNum = []
-		for (let i = 1; i <= this.props.singleLocation.quantity; i++){ 
-			optionNum.push(<option value={`${i}`}>{i}</option>); 
+
+	createDropDown() {
+		let optionNum = [];
+		for (let i = 1; i <= this.props.singleLocation.quantity; i++) {
+			optionNum.push(<option value={`${i}`}>{i}</option>);
 		}
-		return optionNum; 
-
+		return optionNum;
 	}
 
-  
 	componentDidMount() {
+		console.log('isUser?', this.props.isUser.name); 
 		let locationId = Number(this.props.match.params.locationId);
 		this.props.getLocation(locationId);
 	}
-	
-	handleChange(event){
-		this.setState({quantity: event.target.value})
+
+	handleChange(event) {
+		this.setState({ quantity: event.target.value });
 	}
   
   handleClick() {
-		if (isLoggedIn){ 
+		if (this.props.isUser.name){ 
 			this.props.addToOrders(
 				this.props.singleLocation.price,
 				this.props.singleLocation.id,
 				this.props.user.id, 
 				this.state.quantity
 			)
-		}
-
-	
+		}	
 
 		else { 
-			// localStorage.clear(); 
 			let cart = JSON.parse(localStorage.getItem('cart')); 
 			let orderToStore = {price: this.props.singleLocation.price, quantity: Number(this.state.quantity), id: this.props.singleLocation.id, location: this.props.singleLocation } 
 
@@ -87,30 +83,43 @@ class SingleLocation extends Component {
 		let isUser = this.props.isUser;
 		return (
 			<div id="singleLocation">
+				<div id="s-loc-1">
 				<img src={singleLocation.imageUrl} className="singleViewImage" />
-				<h2>{singleLocation.address}</h2>
-				<h2>{singleLocation.description}</h2>
+				<p id="s-loc-text-1">{singleLocation.address}</p>
+				<p id="s-loc-text-2">{singleLocation.description}</p>
+				</div>
+				<div className="s-loc-2">
 				{singleLocation.user && (
 					<div>
-						<h2 className="red">Sold By: </h2>
-						<h2>{singleLocation.user.name}</h2>{' '}
+						<h2>Sold By: {singleLocation.user.name} </h2>
+						{' '}
 						<img src={singleLocation.user.image} className="reviewPic" />
 					</div>
 				)}
+				<div>
 				<h3 className="red">Number of haunts available: {singleLocation.quantity}</h3>
 				<h3>Price: ${singleLocation.price}</h3>
+
         <h3 className="red">Category: {singleLocation.category}</h3>
+				</div>
+				
+				<div>
+
 				<select onChange={this.handleChange}>
 					<label>Item Quantity: </label>
 					{this.createDropDown()}
 				</select>
+
+				</div>
         <button type="button" onClick={this.handleClick}>
           Add To Cart
         </button>
-				<h3 className="red">Category: {singleLocation.category}</h3>
+				</div>
 
-				<h2>Reviews</h2>
+					<div className="reviews-box">
+				<h2 className="review-label">Reviews</h2>
 				{locationReviews && <Reviews singleLocation={singleLocation} />}
+				</div>
 				<div id="admin">
 					{isAdmin && (
 						<div>
@@ -137,16 +146,12 @@ class SingleLocation extends Component {
 const mapStateToProps = (state) => ({
 	isAdmin: state.user.isAdmin,
 	isUser: state.user,
-  singleLocation: state.locations.selectedLocation,
-  user: state.user,
+	singleLocation: state.locations.selectedLocation,
+	user: state.user
 });
-const mapDispatchToProps = dispatch => ({
-  getLocation: id => dispatch(getOneLocation(id)),
-  addToOrders: (price, locationId, userId, quantity) =>
-    dispatch(
-      addToOrders({price: price, locationId: locationId, userId: userId, quantity: quantity})
-    )
-})
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleLocation)
-)
+const mapDispatchToProps = (dispatch) => ({
+	getLocation: (id) => dispatch(getOneLocation(id)),
+	addToOrders: (price, locationId, userId, quantity) =>
+		dispatch(addToOrders({ price: price, locationId: locationId, userId: userId, quantity: quantity }))
+});
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SingleLocation));

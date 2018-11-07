@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import store, { logout } from '../store';
 import SearchBar from './SearchBar';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
   <div>
@@ -22,25 +24,26 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
           
           {/* The navbar will show these links after you log in */}
           <div>Hi, {user.name} </div>
-          <Link to="/" className="links">Home</Link>
+          <Link to="/" className="links"><i class="fas fa-house-damage"></i><i class="fas fa-ghost"></i><i class="fas fa-house-damage"></i></Link>
           
           <a className="links" href="#" onClick={handleClick}>
             Logout
           </a>
           <Link to="/cart" className="links">
-            Cart ({orders.orders.length})
+          <i class="fas fa-shopping-cart"></i> ({orders.orders.length})
           </Link>
           <Link to='/orderHistory' className="links"> 
             Order History 
           </Link>
           <SearchBar />
+          <ToastContainer />
         </div>
       ) : (
         <div className="nav-container">
           
           {/* The navbar will show these links before you log in */}
           <Link to="/" className="links">
-            Home
+          <i class="fas fa-house-damage"></i><i class="fas fa-ghost"></i><i class="fas fa-house-damage"></i>
           </Link>
           <Link to="/login" className="links">
             Login
@@ -48,7 +51,7 @@ const Navbar = ({handleClick, isLoggedIn, user, orders}) => (
           <Link to="/signup" className="links">
             Sign Up
           </Link>
-          <Link to='/cart' className="links">Cart</Link>
+          <Link to='/cart' className="links"><i class="fas fa-shopping-cart"></i></Link>
           <SearchBar />
         </div>
       )}
