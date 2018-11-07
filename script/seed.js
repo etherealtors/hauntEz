@@ -459,7 +459,8 @@ const carts = await Promise.all([
       locationId: 2
     })
   ])
-  const categories = await Promise.all([
+
+const categories = await Promise.all([
 	Category.create({
 		name: 'Shack',
 		categoryType: 'houseType',
@@ -476,15 +477,19 @@ const carts = await Promise.all([
 		name: 'Boat',
 		categoryType: 'houseType',
 	}).then(function (category) {
-		category.addLocation([2, 4]);
+		category.addLocation([2, 4, 5]);
 	}),
 	Category.create({
 		name: 'House',
 		categoryType: 'houseType',
+	}).then(function (category) {
+		category.addLocation([9, 10]);
 	}),
 	Category.create({
 		name: 'Apartment',
 		categoryType: 'houseType',
+	}).then(function (category) {
+		category.addLocation([6, 7]);
 	}),
 	Category.create({
 		name: 'Castle',
@@ -498,12 +503,13 @@ const carts = await Promise.all([
 		name: 'Has Nearby Graveyard',
 		categoryType: 'amenity',
 	})
-])
+	])
 	console.log(`seeded ${users.length} users`);
 	console.log(`seeded ${locations.length} locations`);
 	console.log(`seeded ${amenities.length} amenities`);
-      console.log(`seeded ${carts.length} carts`)
+    console.log(`seeded ${carts.length} carts`)
 	console.log(`seeded ${reviews.length} reviews`);
+	console.log(`seeded ${categories.length} categories`);
 	console.log(`seeded successfully`);
 }
 
